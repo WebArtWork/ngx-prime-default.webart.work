@@ -50,5 +50,28 @@ export const uikitRoutes: Routes = [
 		loadComponent: () =>
 			import('./timeline-demo/timeline-demo.component').then((m) => m.TimelineDemoComponent),
 	},
+	{
+		path: 'table',
+		loadComponent: () =>
+			import('./table-demo/table-demo.component').then((m) => m.TableDemoComponent),
+	},
+	{
+		path: 'overlay',
+		loadComponent: () =>
+			import('./overlay-demo/overlay-demo.component').then((m) => m.OverlayDemoComponent),
+	},
+	{
+		path: 'charts',
+		loadComponent: () =>
+			import('./chart-demo/chart-demo.component').then((m) => m.ChartDemoComponent),
+	},
+	{
+		path: 'menu',
+		loadComponent: () => import('./menu-demo/menu-demo.component').then((m) => m.MenuDemoComponent),
+	},
+	{
+		path: 'misc',
+		loadComponent: () => import('./misc-demo/misc-demo.component').then((m) => m.MiscDemoComponent),
+	},
 	{ path: '**', redirectTo: '/admin/notfound' },
 ];
