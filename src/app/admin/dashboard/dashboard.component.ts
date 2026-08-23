@@ -1,10 +1,31 @@
 import { Component } from '@angular/core';
+import { BestSellingWidgetComponent } from './components/best-selling-widget.component';
+import { NotificationsWidgetComponent } from './components/notifications-widget.component';
+import { RecentSalesWidgetComponent } from './components/recent-sales-widget.component';
+import { RevenueStreamWidgetComponent } from './components/revenue-stream-widget.component';
+import { StatsWidgetComponent } from './components/stats-widget.component';
 
 @Component({
 	selector: 'app-dashboard',
-	template: `<div class="card">
-		<h1>Dashboard</h1>
-		<p>Sakai dashboard widgets land here in the next roadmap step.</p>
-	</div>`,
+	imports: [
+		StatsWidgetComponent,
+		RecentSalesWidgetComponent,
+		BestSellingWidgetComponent,
+		RevenueStreamWidgetComponent,
+		NotificationsWidgetComponent,
+	],
+	template: `
+		<div class="grid grid-cols-12 gap-8">
+			<app-stats-widget class="contents" />
+			<div class="col-span-12 xl:col-span-6">
+				<app-recent-sales-widget />
+				<app-best-selling-widget />
+			</div>
+			<div class="col-span-12 xl:col-span-6">
+				<app-revenue-stream-widget />
+				<app-notifications-widget />
+			</div>
+		</div>
+	`,
 })
 export class DashboardComponent {}
