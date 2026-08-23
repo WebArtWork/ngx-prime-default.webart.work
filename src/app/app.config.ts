@@ -15,12 +15,15 @@ import {
 	stripTitleSuffix,
 } from '@wawjs/ngx-default';
 import { provideNgxCore } from '@wawjs/ngx-core';
+import { ConfirmationService, MessageService } from '@wawjs/ngx-prime/api';
+import { provideNgxPrime } from '@wawjs/ngx-prime/config';
 import { provideTranslate } from '@wawjs/ngx-translate';
 import { provideNgxUi } from '@wawjs/ngx-ui';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { BootstrapService } from './feature/bootstrap/bootstrap.service';
 import { companyProfile } from './feature/company/company.data';
+import appTheme from './theme/app-theme';
 
 const initializeBootstrapData = (bootstrapService: BootstrapService) => () =>
 	bootstrapService.initialize();
@@ -50,6 +53,12 @@ export const appConfig: ApplicationConfig = {
 			siteUrl: companyProfile.siteUrl,
 		}),
 		provideNgxUi(),
+		provideNgxPrime({
+			theme: appTheme,
+			ripple: true,
+		}),
+		MessageService,
+		ConfirmationService,
 		provideRouter(routes),
 		provideClientHydration(withEventReplay()),
 		provideTranslate({
