@@ -1,5 +1,9 @@
 @use 'tailwindcss';
 @use './styles/theme';
+@use './styles/sakai-layout';
+
+@plugin 'tailwindcss-primeui';
+@custom-variant dark (&:where([data-mode='dark'], [data-mode='dark'] *));
 
 html,
 body {

@@ -58,6 +58,7 @@
 							}
 						],
 						"styles": ["node_modules/@wawjs/ngx-ui/styles.css",
+					"node_modules/primeicons/primeicons.css",
 					"src/styles.scss"],
 						"server": "src/main.server.ts",
 						"outputMode": "server",
@@ -79,7 +80,7 @@
 							"budgets": [
 								{
 									"type": "initial",
-									"maximumWarning": "500kB",
+									"maximumWarning": "650kB",
 									"maximumError": "1MB"
 								},
 								{
