@@ -15,7 +15,22 @@ export const adminRoutes: Routes = [
 				path: 'uikit',
 				loadChildren: () => import('./uikit/uikit.routes').then((m) => m.uikitRoutes),
 			},
+			{
+				path: 'documentation',
+				loadComponent: () =>
+					import('./pages/documentation/documentation.component').then(
+						(m) => m.DocumentationComponent,
+					),
+			},
+			{
+				path: 'pages',
+				loadChildren: () => import('./pages/pages.routes').then((m) => m.pagesRoutes),
+			},
 		],
+	},
+	{
+		path: 'auth',
+		loadChildren: () => import('./auth/auth.routes').then((m) => m.authRoutes),
 	},
 	{
 		path: 'notfound',
