@@ -11,6 +11,16 @@ export const adminRoutes: Routes = [
 				loadComponent: () =>
 					import('./dashboard/dashboard.component').then((m) => m.DashboardComponent),
 			},
+			{
+				path: 'uikit',
+				loadChildren: () => import('./uikit/uikit.routes').then((m) => m.uikitRoutes),
+			},
 		],
 	},
+	{
+		path: 'notfound',
+		loadComponent: () =>
+			import('./pages/notfound/notfound.component').then((m) => m.NotfoundComponent),
+	},
+	{ path: '**', redirectTo: 'notfound' },
 ];
