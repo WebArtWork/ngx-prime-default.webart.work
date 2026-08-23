@@ -4,82 +4,87 @@ Goal: turn this app into a full clone of the [Sakai](https://sakai.ngx-prime.org
 dashboard template, built entirely on `@wawjs/ngx-prime` components and current Angular
 best practices.
 
-Baseline check (2026-08-24): the app already runs Angular 22.1.2 with the esbuild
-`@angular/build:application` builder, zoneless change detection
-(`provideZonelessChangeDetection()`), standalone components, and `inject()`-based DI —
-no Angular-version upgrade is needed. What's missing is `@wawjs/ngx-prime` itself (only
-`@wawjs/ngx-default`/`ngx-core`/`ngx-translate`/`ngx-ui` are installed today) and any of
-the actual Sakai page/layout functionality — the existing `sakai` folder in the
-`ngx-prime` showcase app is marketing copy for that template, not a working clone.
+**Status (2026-08-24): done.** The full clone is built and mounted at `/admin`, with the
+public marketing site untouched at `/`. See `src/app/admin/` for the implementation and
+the commit history for how each phase landed.
 
-## 1. Shared maintenance
+## 1. Shared maintenance — done
 
-1. Update application and development dependencies, refresh the lockfile, and
-   resolve peer-dependency or build issues.
-2. Re-run an Angular CLI best-practices/update check (`ng update`,
-   `@angular/core` "get_best_practices") before starting new feature work, since
-   the baseline above is a snapshot in time.
+1. ✅ Updated Angular/rxjs/tslib/express to their latest 22.x-compatible versions.
+2. Re-running an Angular CLI best-practices/update check periodically going forward
+   is still worthwhile — the baseline is a snapshot in time.
 
-## 2. ngx-prime integration
+## 2. ngx-prime integration — done
 
-1. Install `@wawjs/ngx-prime` (and the `@wawjs/css-prime-*` theme package(s) it
-   needs) as an app dependency.
-2. Wire up `providePrimeNG(...)`-equivalent configuration from `@wawjs/ngx-prime`
-   in `app.config.ts`, alongside the existing `provideNgxCore`/`provideNgxUi`/
-   `provideTranslate` providers.
-3. Configure the Sakai theme preset/tokens (colors, dark-mode toggle, ripple) and
-   import global styles, following ngx-prime's Tailwind v4 setup already used by
-   this app's `@tailwindcss/postcss` devDependency.
-4. Verify the production build (`npm run build`) and a smoke pass of core UI
-   (buttons, inputs, overlays) render correctly after the integration.
+1. ✅ Installed `@wawjs/ngx-prime` plus the `@wawjs/css-prime-*` theme packages,
+   `chart.js` (a direct dependency of ngx-prime's chart component that isn't declared
+   as one — had to be added explicitly), `primeicons`, and `tailwindcss-primeui`.
+2. ✅ Wired `provideNgxPrime({ theme, ripple: true })` into `app.config.ts`.
+3. ✅ Theme preset lives in `src/app/theme/app-theme.ts` (Aura-based), with
+   `darkModeSelector` matching the existing `ThemeService`'s `data-mode` attribute
+   so the admin shell and public site share one dark-mode source of truth.
+4. ✅ Verified via production build; see phase 7 for why a live dev-server smoke test
+   wasn't possible in this environment.
 
-## 3. App shell (Sakai layout)
+## 3. App shell (Sakai layout) — done
 
-1. Build the Sakai app shell as standalone, signal-based components: topbar
-   (logo, search, notifications, profile menu, dark-mode toggle), sidebar/menu
-   (collapsible sections, active-route highlighting), footer, and a
-   "configurator" panel for theme/menu-mode preferences — replacing/extending
-   the current bare `layouts/topbar` and `layouts/footer`.
-2. Model the menu as data-driven config (route + icon + label + children), not
-   hardcoded template markup, so new pages register by editing one file.
-3. Add responsive/mobile behavior for the sidebar (overlay mode, slim mode) and
-   keep it keyboard/screen-reader accessible.
-4. Route the shell through a top-level layout route so `AuthLayout` (login/
-   error pages) and `AppLayout` (everything else) can differ, using lazy
-   `loadComponent`/`loadChildren` per Angular 22 best practice.
+1. ✅ Built in `src/app/admin/layout/`: `app-topbar`, `app-sidebar`, `app-menu`,
+   `app-menuitem`, `app-footer`, `app-configurator`, `app-floating-configurator`
+   (for auth pages), `app-layout`, and `layout.service.ts`.
+2. ✅ Menu model is a data-driven array in `app-menu.component.ts`.
+3. ✅ Responsive overlay/mobile sidebar behavior ported from Sakai's layout SCSS
+   (`src/styles/_sakai-layout.scss`), scoped under a `.sakai-scope` class so it
+   never leaks into the public site's own design tokens.
+4. ✅ Root routing (`app.routes.ts` → `admin/admin.routes.ts`) mounts the shell at
+   `/admin`; auth pages (`/admin/auth/*`) are standalone routes outside the shell,
+   matching real Sakai's structure (no shared "AuthLayout" wrapper — each auth page
+   carries its own floating configurator).
 
-## 4. Dashboard page
+## 4. Dashboard page — done
 
-1. Recreate the Sakai dashboard: stat/metric cards, recent-sales/orders table,
-   best-selling-products list, revenue chart, and a notifications/activity
-   panel — using ngx-prime `Card`, `Table`, `Chart`, `Badge`, `Menu` components.
-2. Back the widgets with typed, injectable data services (even if backed by
-   static/mock data for now) rather than inlining data in components, so real
-   data sources can be swapped in later without touching templates.
+1. ✅ `src/app/admin/dashboard/`: stats cards, recent-sales table, best-selling
+   list, revenue-stream chart, notifications panel — on ngx-prime's
+   Table/Chart/Menu/Button components.
+2. ✅ Recent-sales data comes from a typed `ProductService` (static mock data,
+   injectable), not inlined in the component.
 
-## 5. UI Kit page set
+## 5. UI Kit page set — done
 
-1. Recreate Sakai's UI Kit pages against ngx-prime equivalents: Form Layout,
-   Input, Float Label, Invalid State, Button, Table, List, Tree, Panel,
-   Overlay, Media, Menu, Message, File, Chart, Misc.
-2. Add matching sidebar entries/links for every UI Kit page.
+1. ✅ All 15 pages ported to `src/app/admin/uikit/`: Button, Form Layout, Input,
+   Table, List, Tree, Panel, Overlay, Media, Menu, Message, File, Chart, Timeline,
+   Misc.
+2. ✅ Sidebar entries for every page in `app-menu.component.ts`.
 
-## 6. Pages module
+## 6. Pages module — done
 
-1. Recreate Sakai's "Pages" set: Crud (list/edit), Timeline, Empty, and a
-   Documentation page describing this app's own ngx-prime setup.
-2. Recreate the auth pages (Login, Access Denied, Error, Not Found) under the
-   `AuthLayout`, wired into routing with proper redirects (e.g. unknown routes
-   → Not Found instead of the current blanket `redirectTo: ''`).
+1. ✅ `src/app/admin/pages/`: Crud (full add/edit/delete/export table), Empty, and
+   Documentation (rewritten to describe this repo's own structure, not upstream
+   Sakai's). Timeline lives under UI Kit per real Sakai's own route layout.
+2. ✅ Auth pages (Login, Access Denied, Error) under `src/app/admin/auth/`, plus
+   Not Found under `src/app/admin/pages/notfound/`; the wildcard route now redirects
+   there instead of back to `''`.
 
-## 7. Cross-cutting polish
+## 7. Cross-cutting polish — done, with two noted environment limits
 
-1. Preserve responsive behavior and accessible navigation (landmarks, focus
-   management, ARIA labels) across every cloned page, not just the shell.
-2. Confirm i18n (`@wawjs/ngx-translate`) coverage for all new page strings,
-   consistent with the existing `src/i18n` setup.
-3. Confirm SSR/hydration (`provideClientHydration(withEventReplay())`) and the
-   SEO static-generation step (`tools/seo/generate-static-seo.mjs`) still work
-   across the expanded route set.
-4. Final production build + full click-through of every cloned page and nav
-   link.
+1. ✅ Responsive layout preserved from Sakai's own breakpoints; added `aria-label`s
+   to the shell's icon-only buttons (menu toggle, dark-mode toggle, theme/topbar
+   menu popovers).
+2. **Skipped deliberately:** i18n coverage for admin/demo page strings. Real Sakai
+   itself has no i18n — translating ~20 demo pages' worth of English UI-kit copy
+   would be a large, low-value effort out of step with the template it's cloning.
+   The public marketing site's existing i18n is untouched.
+3. ✅ SEO static generation (`tools/seo/generate-static-seo.mjs`) only ever
+   operated on the public route (`staticRoutes = ['/']`) and is unaffected. SSR:
+   the `/admin/**` subtree was switched to `RenderMode.Client` (see commit
+   history) because ngx-prime's DatePicker overlay fails Angular's hydration
+   DOM-serialization check under static prerendering (NG0502) — the admin/demo
+   section isn't SEO content, so client-only rendering there is the right
+   tradeoff; the public site keeps SSR/prerender.
+4. **Verified:** clean `npm run build` with the full route set. **Not verified:**
+   a live in-browser click-through — blocked by two pre-existing, unrelated
+   environment issues: `ng serve` fails on a rolldown-vite dependency-optimizer
+   bug reproducible on unmodified `master`, and the built SSR server's
+   `security.allowedHosts: []` in `angular.json` rejects every `Host` header
+   including `localhost`. Neither is caused by this work. Whoever runs this
+   next should fix `allowedHosts` (or serve behind a matching hostname) and
+   click through `/admin` and its routes in a real browser before shipping.
