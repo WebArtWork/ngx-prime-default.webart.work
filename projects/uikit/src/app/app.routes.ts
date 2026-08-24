@@ -375,6 +375,25 @@ export const routes: Routes = [
 				loadComponent: () =>
 					import('./pages/media/imagecompare/imagecompare-demo').then((m) => m.ImageCompareDemo),
 			},
+			{
+				path: 'misc/chip',
+				loadComponent: () => import('./pages/misc/chip/chip-demo').then((m) => m.ChipDemo),
+			},
+			{
+				path: 'misc/knob',
+				loadComponent: () => import('./pages/misc/knob/knob-demo').then((m) => m.KnobDemo),
+			},
+			{
+				path: 'misc/terminal',
+				loadComponent: () => import('./pages/misc/terminal/terminal-demo').then((m) => m.TerminalDemo),
+			},
+			{
+				path: 'misc/animateonscroll',
+				loadComponent: () =>
+					import('./pages/misc/animateonscroll/animateonscroll-demo').then(
+						(m) => m.AnimateOnScrollDemo,
+					),
+			},
 		],
 	},
 	{ path: '**', redirectTo: '' },

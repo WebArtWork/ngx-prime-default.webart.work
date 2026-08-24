@@ -142,5 +142,15 @@ export class UikitSidebar {
 				{ label: 'ImageCompare', routerLink: ['/media/imagecompare'] },
 			],
 		},
+		{
+			label: 'Misc',
+			icon: 'pi pi-sparkles',
+			items: [
+				{ label: 'Chip', routerLink: ['/misc/chip'] },
+				{ label: 'Knob', routerLink: ['/misc/knob'] },
+				{ label: 'Terminal', routerLink: ['/misc/terminal'] },
+				{ label: 'AnimateOnScroll', routerLink: ['/misc/animateonscroll'] },
+			],
+		},
 	];
 }
