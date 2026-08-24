@@ -8,7 +8,9 @@
 		"start:showcase": "ng serve showcase",
 		"start:uikit": "ng serve uikit",
 		"build:showcase": "ng build showcase",
-		"build:uikit": "ng build uikit"
+		"build:uikit": "ng build uikit",
+		"start:translator": "ng serve translator",
+		"build:translator": "ng build translator"
 	},
 	"dependencies": {
 		"@angular/cdk": "22.1.2",
