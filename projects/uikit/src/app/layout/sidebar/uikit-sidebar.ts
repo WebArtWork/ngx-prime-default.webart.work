@@ -17,6 +17,7 @@ export class UikitSidebar {
 			items: [
 				{ label: 'Input', routerLink: ['/form/input'] },
 				{ label: 'Select', routerLink: ['/form/select'] },
+				{ label: 'Checkbox', routerLink: ['/form/checkbox'] },
 			],
 		},
 		{

@@ -16,6 +16,10 @@ export const routes: Routes = [
 				loadComponent: () => import('./pages/form/select/select-demo').then((m) => m.SelectDemo),
 			},
 			{
+				path: 'form/checkbox',
+				loadComponent: () => import('./pages/form/checkbox/checkbox-demo').then((m) => m.CheckboxDemo),
+			},
+			{
 				path: 'button/button',
 				loadComponent: () => import('./pages/button/button/button-demo').then((m) => m.ButtonDemo),
 			},
