@@ -4,12 +4,12 @@ Umbrella roadmap for everything under `projects/` in this repo (`showcase`, `uik
 and the new `translator`). Component-level detail for uikit lives in
 `projects/uikit/ROADMAP.md`; this file tracks cross-project and per-project work.
 
-**Status as of the latest session**: `projects/uikit/ROADMAP.md` sections 1 (full
-component coverage), 1b (composites), 2 (Design Lab baseline), and 3 (Download
-Config baseline) are all done and build clean. Section 2's remaining subsections
-(primitive/semantic/component token trees, global config, pt preview) are still
-open in that file. Sections 2 and 3 below (translator, showcase expansion) and the
-root README (section 1) have not been started yet — pick up here next.
+**Status as of the latest session**: all of `projects/uikit/ROADMAP.md` (sections
+1, 1b, 2, 3 — full component coverage, composites, full Design Lab including
+primitive/semantic/component tokens + global config + pt preview, and Download
+Config) is done and builds clean. Sections 2 and 3 below (translator, showcase
+expansion) and the root README (section 1) have not been started yet — pick up
+here next.
 
 ## 1. Documentation pass — pending, do this last
 

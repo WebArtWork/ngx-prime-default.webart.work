@@ -69,7 +69,7 @@ Concretely for uikit:
 
 These live alongside the atomic pages (same sidebar categories), not instead of them.
 
-## 2. Design Lab — full ngx-prime configuration surface — baseline DONE, rest pending
+## 2. Design Lab — full ngx-prime configuration surface — DONE
 
 Baseline controls exist at `/design-lab` (new top-level sidebar entry), each wired
 live: preset switcher (Aura/Lara/Nora) via `usePreset`, primary color swatches
@@ -78,47 +78,50 @@ live: preset switcher (Aura/Lara/Nora) via `usePreset`, primary color swatches
 `updateSurfacePalette`, menu mode (Static/Overlay) as a uikit-shell-only setting
 backed by `layout/design-lab-state.ts` (read by `uikit-shell` to change sidebar
 behavior, not routed through the preset system), and a dark mode toggle grouped on
-the same page. Implemented as a dedicated page rather than a topbar popover — still
-satisfies "one place, not a lone icon button", but if a popover is specifically
-wanted later, move the same controls into one.
+the same page. Implemented as a dedicated page rather than a topbar popover.
 
-Still pending — in order, once resumed:
-- More candidates once the baseline above is in: font family, scale/density
-  (compact/comfortable — mirrors the default app's own `data-density` tokens),
-  focus-ring style, and per-component color overrides surfaced as a search/filter
-  over the component-token tree instead of one long flat list.
-- **Primitive tokens**: full color palette per hue (50–950), border radius scale.
-- **Semantic tokens**: primary/surface palette pickers, focus ring, form-field
-  paddings — the "base" section of a preset.
-- **Component tokens**: per-component overrides (the same tree the ngx-prime
-  showcase's own `apps/showcase/components/layout/designer` exposes, without its
-  licensing/backend coupling — pure client-side preset editing).
-- **Global config**: `ripple` on/off, `inputVariant` (outlined/filled),
-  `overlayAppendTo`, `zIndex` (modal/overlay/menu/tooltip), `darkModeSelector` /
-  dark-mode toggle, RTL toggle.
-- **Pass-through preview**: at least one example of per-component `pt` customization,
-  so the pattern is documented even if full PT editing isn't built yet.
+Remaining subsections are now also done, added directly to `pages/design-lab/`:
 
-## 3. Download Config button — baseline DONE
+- **Primitive tokens**: a border radius scale editor (`none`/`xs`/`sm`/`md`/`lg`/`xl`)
+  applied via `updatePreset({ primitive: { borderRadius } })`. Full 50-950 color
+  scale editing per hue was *not* built beyond what the primary/surface swatch
+  pickers already give (those call `updatePrimaryPalette`/`updateSurfacePalette`,
+  which already regenerate the full scale from one seed color) — a from-scratch
+  per-step hue editor was judged out of proportion to the value it'd add on top of
+  the swatch pickers, and is called out here rather than silently skipped.
+- **Semantic tokens**: focus ring (width + style) and form-field padding (X/Y),
+  applied via `updatePreset({ semantic: { focusRing, formField } })`, with a live
+  preview input field.
+- **Component tokens**: a searchable token tree, deliberately scoped to three
+  representative components (Button, Card, Table/`datatable`) rather than all
+  ~90 — documents the pattern (search/filter, path-based override, `updatePreset`
+  with `{ components: { <name>: {...} } }`) without claiming full coverage that
+  doesn't exist. Verified the real preset shape first by reading
+  `node_modules/@wawjs/css-prime-themes/dist/aura/{button,card,base}/index.mjs`
+  (preset = `{ primitive, semantic, components: { button, card, datatable, ... } }`).
+- **Global config**: ripple on/off and inputVariant (outlined/filled) via the
+  injected `NgxPrime` service's writable signals (`ripple`, `inputVariant`,
+  confirmed in `@wawjs/ngx-prime/config`'s `wawjs-ngx-prime-config.d.ts`), a dark
+  mode selector text field, an RTL toggle (toggles `document.documentElement`'s
+  `dir` attribute), and a zIndex.modal number field (sets `ngxPrime.zIndex.modal`
+  directly, since `ZIndex` isn't a signal). `overlayAppendTo` was left out of the
+  UI — it takes an element/template ref, not a simple value a text field can hold.
+- **Pass-through (pt) preview**: one worked example — a toggle applies a `pt`
+  object (`{ root: {...}, label: {...} }`) to a demo button, with the object's
+  source shown inline, documenting the pattern per the task's minimum bar.
+
+## 3. Download Config button — DONE
 
 A "Download Config" button lives in `uikit-topbar.ts`/`.html` next to the dark-mode
-toggle. It reads `DesignLabState` (preset name / primary color / surface color —
-only set once the user actually changes them via `/design-lab`) and downloads a
-small diff-only JSON (e.g. `{ "preset": "Lara", "primaryPalette": { "name": "teal",
-"color": "#14b8a6" } }`), disabled until at least one change has been made. Live
-preview via `usePreset`/`updatePrimaryPalette`/`updateSurfacePalette` stays fully
-separate from the download, as specified. Not yet covered: once the primitive/
-semantic/component token trees and global config controls from section 2 exist,
-the diff calculation should be extended to include those changes too — right now
-it only tracks preset/primary/surface.
+toggle. It reads `DesignLabState` and downloads a diff-only JSON of everything the
+user has actually changed — preset/primary/surface (baseline) plus the section 2
+additions: `primitive.borderRadius`, `semantic.focusRing`/`formField`,
+`components.<name>` overrides, and `globalConfig` (ripple/inputVariant/
+darkModeSelector/rtl/zIndex.modal) — disabled until at least one change has been
+made. Live preview stays fully separate from the download, as specified.
 
 ## Continuation notes for the next session
 
-uikit sections 1, 1b, 2 (baseline), and 3 (baseline) are all done and every commit
-so far builds clean (`npx ng build uikit`). Suggested order to resume:
-
-1. Finish section 2's remaining subsections (primitive/semantic/component token
-   trees, global config, pt preview example) — the biggest remaining uikit item.
-2. Extend the Download Config diff (section 3) to cover whatever section 2 adds.
-3. Then move to `projects/ROADMAP.md` sections 2 and 3 (translator, showcase
-   expansion), and the root README last, per that file's own ordering.
+uikit sections 1, 1b, 2, and 3 are all done and build clean (`npx ng build uikit`).
+Next: `projects/ROADMAP.md` sections 2 and 3 (translator, showcase expansion), and
+the root README last, per that file's own ordering.

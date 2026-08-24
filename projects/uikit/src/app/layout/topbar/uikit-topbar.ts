@@ -44,6 +44,51 @@ export class UikitTopbar {
 			diff['surfacePalette'] = { name: surfaceName, color: this.designLabState.surfaceColorHex() };
 		}
 
+		const borderRadiusScale = this.designLabState.borderRadiusScale();
+		if (borderRadiusScale !== undefined) {
+			diff['primitive'] = { borderRadius: borderRadiusScale };
+		}
+
+		const focusRingWidth = this.designLabState.focusRingWidth();
+		const focusRingStyle = this.designLabState.focusRingStyle();
+		const formFieldPaddingX = this.designLabState.formFieldPaddingX();
+		const formFieldPaddingY = this.designLabState.formFieldPaddingY();
+		if (
+			focusRingWidth !== undefined ||
+			focusRingStyle !== undefined ||
+			formFieldPaddingX !== undefined ||
+			formFieldPaddingY !== undefined
+		) {
+			diff['semantic'] = {
+				...(focusRingWidth !== undefined || focusRingStyle !== undefined
+					? { focusRing: { width: focusRingWidth, style: focusRingStyle } }
+					: {}),
+				...(formFieldPaddingX !== undefined || formFieldPaddingY !== undefined
+					? { formField: { paddingX: formFieldPaddingX, paddingY: formFieldPaddingY } }
+					: {}),
+			};
+		}
+
+		const componentOverrides = this.designLabState.componentTokenOverrides();
+		if (Object.keys(componentOverrides).length > 0) {
+			diff['components'] = componentOverrides;
+		}
+
+		const globalConfig: Record<string, unknown> = {};
+		const ripple = this.designLabState.ripple();
+		if (ripple !== undefined) globalConfig['ripple'] = ripple;
+		const inputVariant = this.designLabState.inputVariant();
+		if (inputVariant !== undefined) globalConfig['inputVariant'] = inputVariant;
+		const darkModeSelector = this.designLabState.darkModeSelector();
+		if (darkModeSelector !== undefined) globalConfig['darkModeSelector'] = darkModeSelector;
+		const rtl = this.designLabState.rtl();
+		if (rtl !== undefined) globalConfig['rtl'] = rtl;
+		const zIndexModal = this.designLabState.zIndexModal();
+		if (zIndexModal !== undefined) globalConfig['zIndex'] = { modal: zIndexModal };
+		if (Object.keys(globalConfig).length > 0) {
+			diff['globalConfig'] = globalConfig;
+		}
+
 		const json = JSON.stringify(diff, null, 2);
 		const blob = new Blob([json], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
