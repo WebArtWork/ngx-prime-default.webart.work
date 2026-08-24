@@ -1,4 +1,6 @@
 User-agent: *
-Allow: /
+Allow: /$
+Allow: /sign$
+Disallow: /
 
-Sitemap: https://ngx.itkamianets.com/sitemap.xml
+Sitemap: https://example.com/sitemap.xml

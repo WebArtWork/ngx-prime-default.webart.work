@@ -1,33 +1,11 @@
-@use 'tailwindcss';
-@use './styles/theme';
-@use './styles/sakai-layout';
+@use 'scss';
 
-@plugin 'tailwindcss-primeui';
-@custom-variant dark (&:where([data-mode='dark'], [data-mode='dark'] *));
-
-html,
-body {
-	background: var(--c-bg-primary);
-	color: var(--c-text);
-	font-family: var(--ff-base);
-	font-size: var(--fs);
-	letter-spacing: var(--letter-spacing);
-}
-
-body {
-	min-height: 100vh;
-	margin: 0;
-}
-
-.theme-interactive {
-	transition-duration: var(--motion-fast);
-	transition-property: background-color, border-color, box-shadow, color, opacity, transform;
-	transition-timing-function: var(--easing);
-}
-
-.theme-focus {
-	&:focus-visible {
-		outline: none;
-		box-shadow: var(--focus-ring);
-	}
+/* Keep TinyMCE menus / dialogs above app modals */
+.tox-tinymce,
+.tox-tinymce-aux,
+.tox .tox-dialog,
+.tox .tox-menu,
+.tox .tox-menu-wrap,
+.tox .tox-pop {
+	z-index: 999999 !important; // higher than your modal overlay
 }

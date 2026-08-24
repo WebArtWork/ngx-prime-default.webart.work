@@ -1,0 +1,13 @@
+@use '../styles/theme';
+@use 'utils/fonts';
+@use 'utils/icons';
+
+@import 'primeicons/primeicons.css';
+
+@use 'tailwindcss';
+@use 'tailwindcss-primeui';
+
+@use 'layout/base';
+@use 'layout/scroll';
+
+@use 'atom/a11y';

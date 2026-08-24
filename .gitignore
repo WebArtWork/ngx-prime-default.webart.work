@@ -1,14 +1,16 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
 # Compiled output
-/dist
 /tmp
 /out-tsc
 /bazel-out
 
 # Node
 /node_modules
+/test-results
+/playwright-report
 npm-debug.log
 yarn-error.log
-pnpm-debug.log
 
 # IDEs and editors
 .idea/
@@ -18,20 +20,25 @@ pnpm-debug.log
 *.launch
 .settings/
 *.sublime-workspace
-*.sublime-project
-.vscode/
-.history/
 
-# Angular / tooling
-/.angular/cache
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+*.angular
 .sass-cache/
-/coverage
 /connect.lock
+/coverage
 /libpeerconnection.log
 testem.log
 /typings
-__screenshots__/
 
 # System files
 .DS_Store
 Thumbs.db
+dist/

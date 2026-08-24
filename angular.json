@@ -1,10 +1,6 @@
 {
 	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
 	"version": 1,
-	"cli": {
-		"packageManager": "npm",
-		"analytics": false
-	},
 	"newProjectRoot": "projects",
 	"projects": {
 		"app": {
@@ -12,7 +8,6 @@
 			"schematics": {
 				"@schematics/angular:component": {
 					"type": "component",
-					"skipTests": true,
 					"style": "scss"
 				},
 				"@schematics/angular:directive": {
@@ -43,8 +38,11 @@
 				"build": {
 					"builder": "@angular/build:application",
 					"options": {
-						"browser": "src/main.ts",
+						"outputPath": "dist/app",
+						"index": "src/index.html",
+						"polyfills": ["src/polyfills.ts"],
 						"tsConfig": "tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
 						"assets": [
 							{
 								"glob": "**/*",
@@ -52,36 +50,156 @@
 								"output": "/"
 							},
 							{
-								"glob": "**/*.json",
+								"glob": "**/*",
 								"input": "src/i18n",
-								"output": "/i18n/"
+								"output": "/i18n"
+							},
+							{
+								"glob": "README.md",
+								"input": ".",
+								"output": "/assets"
+							},
+							{
+								"glob": "**/*",
+								"input": "node_modules/tinymce",
+								"output": "assets/tinymce"
 							}
 						],
-						"styles": ["node_modules/@wawjs/ngx-ui/styles.css",
-					"node_modules/primeicons/primeicons.css",
-					"src/styles.scss"],
-						"server": "src/main.server.ts",
-						"outputMode": "server",
-						"security": {
-							"allowedHosts": []
+						"styles": ["src/styles.scss"],
+						"scripts": [],
+						"stylePreprocessorOptions": {
+							"includePaths": ["src/scss/utils", "."]
 						},
-						"ssr": {
-							"entry": "src/server.ts"
-						}
+						"allowedCommonJsDependencies": ["brace", "ace-builds"],
+						"browser": "src/main.ts"
 					},
 					"configurations": {
 						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "1.5mb",
+									"maximumError": "3mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "20kb",
+									"maximumError": "100kb"
+								}
+							],
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
+							"outputHashing": "all",
+							"outputPath": "dist/app"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true,
+							"outputPath": "dist/app"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "@angular/build:dev-server",
+					"options": {
+						"proxyConfig": "proxy.conf.json"
+					},
+					"configurations": {
+						"production": {
+							"buildTarget": "app:build:production"
+						},
+						"development": {
+							"buildTarget": "app:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
+				}
+			}
+		},
+		"ngx-bos": {
+			"projectType": "library",
+			"root": "projects/ngx-bos",
+			"sourceRoot": "projects/ngx-bos/src",
+			"prefix": "ngx-bos",
+			"architect": {
+				"build": {
+					"builder": "@angular/build:ng-packagr",
+					"options": {
+						"project": "projects/ngx-bos/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/ngx-bos/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/ngx-bos/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				}
+			}
+		},
+		"showcase": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss",
+					"skipTests": true
+				},
+				"@schematics/angular:class": {
+					"skipTests": true
+				},
+				"@schematics/angular:directive": {
+					"skipTests": true
+				},
+				"@schematics/angular:guard": {
+					"skipTests": true
+				},
+				"@schematics/angular:interceptor": {
+					"skipTests": true
+				},
+				"@schematics/angular:pipe": {
+					"skipTests": true
+				},
+				"@schematics/angular:resolver": {
+					"skipTests": true
+				},
+				"@schematics/angular:service": {
+					"skipTests": true
+				}
+			},
+			"root": "projects/showcase",
+			"sourceRoot": "projects/showcase/src",
+			"prefix": "sc",
+			"architect": {
+				"build": {
+					"builder": "@angular/build:application",
+					"options": {
+						"browser": "projects/showcase/src/main.ts",
+						"tsConfig": "projects/showcase/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/showcase/public"
+							}
+						],
+						"styles": ["projects/showcase/src/styles.css"]
+					},
+					"configurations": {
+						"production": {
 							"budgets": [
 								{
 									"type": "initial",
-									"maximumWarning": "900kB",
-									"maximumError": "1MB"
+									"maximumWarning": "800kB",
+									"maximumError": "1.5MB"
 								},
 								{
 									"type": "anyComponentStyle",
@@ -103,41 +221,129 @@
 					"builder": "@angular/build:dev-server",
 					"configurations": {
 						"production": {
-							"buildTarget": "app:build:production"
+							"buildTarget": "showcase:build:production"
 						},
 						"development": {
-							"buildTarget": "app:build:development"
+							"buildTarget": "showcase:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				}
 			}
 		},
-		"ngx-default": {
-			"projectType": "library",
-			"root": "projects/ngx-default",
-			"sourceRoot": "projects/ngx-default/src",
-			"prefix": "default",
+		"uikit": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss",
+					"skipTests": true
+				},
+				"@schematics/angular:class": {
+					"skipTests": true
+				},
+				"@schematics/angular:directive": {
+					"skipTests": true
+				},
+				"@schematics/angular:guard": {
+					"skipTests": true
+				},
+				"@schematics/angular:interceptor": {
+					"skipTests": true
+				},
+				"@schematics/angular:pipe": {
+					"skipTests": true
+				},
+				"@schematics/angular:resolver": {
+					"skipTests": true
+				},
+				"@schematics/angular:service": {
+					"skipTests": true
+				}
+			},
+			"root": "projects/uikit",
+			"sourceRoot": "projects/uikit/src",
+			"prefix": "uk",
 			"architect": {
 				"build": {
-					"builder": "@angular/build:ng-packagr",
+					"builder": "@angular/build:application",
+					"options": {
+						"browser": "projects/uikit/src/main.ts",
+						"tsConfig": "projects/uikit/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/uikit/public"
+							}
+						],
+						"styles": ["projects/uikit/src/styles.css"]
+					},
 					"configurations": {
 						"production": {
-							"tsConfig": "projects/ngx-default/tsconfig.lib.prod.json"
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "800kB",
+									"maximumError": "1.5MB"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "4kB",
+									"maximumError": "8kB"
+								}
+							],
+							"outputHashing": "all"
 						},
 						"development": {
-							"tsConfig": "projects/ngx-default/tsconfig.lib.json"
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true
 						}
 					},
 					"defaultConfiguration": "production"
 				},
-				"test": {
-					"builder": "@angular/build:unit-test",
-					"options": {
-						"tsConfig": "projects/ngx-default/tsconfig.spec.json"
-					}
+				"serve": {
+					"builder": "@angular/build:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "uikit:build:production"
+						},
+						"development": {
+							"buildTarget": "uikit:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
 				}
 			}
+		}
+	},
+	"cli": {
+		"analytics": false
+	},
+	"schematics": {
+		"@schematics/angular:component": {
+			"type": "component"
+		},
+		"@schematics/angular:directive": {
+			"type": "directive"
+		},
+		"@schematics/angular:service": {
+			"type": "service"
+		},
+		"@schematics/angular:guard": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:interceptor": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:module": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:pipe": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:resolver": {
+			"typeSeparator": "."
 		}
 	}
 }

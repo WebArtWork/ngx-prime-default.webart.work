@@ -1,7 +1,13 @@
+import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { App } from './app/app.component';
+import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
+import { environment } from './environments/environment';
 
-bootstrapApplication(App, appConfig).catch((err) => {
-	console.error(err);
-});
+if (environment.production) {
+	enableProdMode();
+}
+
+bootstrapApplication(AppComponent, appConfig)
+	// eslint-disable-next-line no-console
+	.catch((err) => console.error(err));

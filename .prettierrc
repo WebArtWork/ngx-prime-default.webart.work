@@ -1,29 +1,25 @@
 {
-	"printWidth": 100,
+	"quoteProps": "as-needed",
+	"trailingComma": "all",
+	"bracketSpacing": true,
+	"arrowParens": "always",
 	"singleQuote": true,
+	"endOfLine": "auto",
+	"printWidth": 80,
+	"useTabs": true,
+	"tabWidth": 4,
+	"semi": true,
 	"overrides": [
 		{
-			"files": "*.html",
+			"files": "*.component.html",
 			"options": {
 				"parser": "angular"
 			}
 		},
 		{
-			"files": "*.scss",
+			"files": "*.html",
 			"options": {
-				"parser": "scss"
-			}
-		},
-		{
-			"files": "*.ts",
-			"options": {
-				"parser": "typescript"
-			}
-		},
-		{
-			"files": "*.json",
-			"options": {
-				"parser": "json"
+				"parser": "html"
 			}
 		}
 	]

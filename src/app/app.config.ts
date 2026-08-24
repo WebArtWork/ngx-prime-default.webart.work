@@ -1,76 +1,90 @@
 import {
-	APP_INITIALIZER,
 	ApplicationConfig,
-	provideBrowserGlobalErrorListeners,
 	provideZonelessChangeDetection,
 } from '@angular/core';
-
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
 import {
-	buildAbsoluteUrl,
-	buildSeoTitleSuffix,
-	provideNgxDefaultSeo,
-	stripTitleSuffix,
-} from '@wawjs/ngx-default';
+	PreloadAllModules,
+	provideRouter,
+	withInMemoryScrolling,
+	withPreloading,
+} from '@angular/router';
+import {
+	provideNgxAce,
+	registerAceMode,
+	registerAceTheme,
+} from '@wawjs/ngx-ace';
 import { provideNgxCore } from '@wawjs/ngx-core';
-import { ConfirmationService, MessageService } from '@wawjs/ngx-prime/api';
-import { provideNgxPrime } from '@wawjs/ngx-prime/config';
+import { provideNgxCrud } from '@wawjs/ngx-crud';
+import { provideNgxHttp } from '@wawjs/ngx-http';
+import { provideNgxSocket } from '@wawjs/ngx-socket';
+import { provideNgxTinymce } from '@wawjs/ngx-tinymce';
 import { provideTranslate } from '@wawjs/ngx-translate';
-import { provideNgxUi } from '@wawjs/ngx-ui';
-import { environment } from '../environments/environment';
+import { provideNgxPrime } from '@wawjs/ngx-prime/config';
+import Aura from '@wawjs/css-prime-themes/aura';
+import { NgxBosConfig, ngxBosProvide } from '@wawjs/ngx-bos';
+import { io } from 'socket.io-client';
+import { environment } from '@env';
+import { provideFormComponents } from './app.formcomponents';
 import { routes } from './app.routes';
-import { BootstrapService } from './feature/bootstrap/bootstrap.service';
-import { companyProfile } from './feature/company/company.data';
-import appTheme from './theme/app-theme';
+import { tinymceConfig } from './tinymce.config';
+import { wawjsConfig } from './wawjs.config';
 
-const initializeBootstrapData = (bootstrapService: BootstrapService) => () =>
-	bootstrapService.initialize();
+registerAceMode('javascript', () =>
+	import('ace-builds/src-noconflict/mode-javascript'),
+);
+registerAceTheme('clouds', () =>
+	import('ace-builds/src-noconflict/theme-clouds'),
+);
+registerAceTheme('github', () =>
+	import('ace-builds/src-noconflict/theme-github'),
+);
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		provideBrowserGlobalErrorListeners(),
 		provideZonelessChangeDetection(),
-		provideHttpClient(withFetch()),
-		provideNgxCore({
-			meta: {
-				applyFromRoutes: true,
-				useTitleSuffix: true,
-				defaults: {
-					title: stripTitleSuffix(companyProfile.defaultSeo.title, companyProfile.name),
-					titleSuffix: buildSeoTitleSuffix(companyProfile),
-					description: companyProfile.defaultSeo.description,
-					image: buildAbsoluteUrl(
-						companyProfile.siteUrl,
-						companyProfile.defaultSeo.image,
-					),
-					robots: companyProfile.defaultSeo.robots,
-				},
-			},
+		ngxBosProvide({
+			appId: environment.appId,
+			url: environment.url,
+			roles: environment.roles,
+			userFields:
+				(environment as unknown as { userFields?: string[] })
+					.userFields ?? [],
+			userForm:
+				(environment as unknown as {
+					userForm?: NgxBosConfig['userForm'];
+				}).userForm ?? [],
+			defaultUserThumb: 'default.png',
 		}),
-		provideNgxDefaultSeo({
-			siteUrl: companyProfile.siteUrl,
+		provideFormComponents(),
+		provideNgxCore(wawjsConfig),
+		provideNgxHttp(wawjsConfig),
+		provideNgxCrud(wawjsConfig),
+		provideNgxSocket({ ...wawjsConfig, io }),
+		provideNgxAce({
+			mode: 'text',
+			theme: 'github',
+			useWorker: false,
 		}),
-		provideNgxUi(),
-		provideNgxPrime({
-			theme: appTheme,
-			ripple: true,
-		}),
-		MessageService,
-		ConfirmationService,
-		provideRouter(routes),
-		provideClientHydration(withEventReplay()),
 		provideTranslate({
-			defaultLanguage: environment.defaultLanguage,
+			defaultLanguage: environment.defaultLanguageCode,
 			languages: environment.languages,
 			folder: '/i18n/',
+			persistLanguage: true,
 		}),
-		{
-			provide: APP_INITIALIZER,
-			useFactory: initializeBootstrapData,
-			deps: [BootstrapService],
-			multi: true,
-		},
+		provideNgxPrime({
+			theme: {
+				preset: Aura,
+				options: { darkModeSelector: "[data-mode='dark']" },
+			},
+		}),
+		// TODO(future work): @wawjs/ngx-ui's ModalService used to back NGX_FORM_CONFIG's
+		// modal helpers via a factory here. Re-wire this using ngx-prime's dialog service
+		// once the rest of the app's modal usage is migrated off ngx-ui.
+		provideNgxTinymce(tinymceConfig),
+		provideRouter(
+			routes,
+			withPreloading(PreloadAllModules),
+			withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+		),
 	],
 };

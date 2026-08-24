@@ -1,93 +1,66 @@
-import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { LanguageService, TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
-import { ThemeService } from '@wawjs/ngx-ui';
-import type { Language } from '@wawjs/ngx-translate';
-import type { AppLanguage } from '../../../environments/environment.prod';
-import { CompanyService } from '../../feature/company/company.service';
+import {
+	Component,
+	computed,
+	inject,
+	input,
+	output,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { BurgerComponent, BurgerState, MaterialComponent } from '@wawjs/ngx-ui';
+import { CoreService } from '@wawjs/ngx-core';
+import { TranslateService } from '@wawjs/ngx-translate';
+import { SidebarService } from '../sidebar/sidebar.service';
 
 @Component({
-	selector: 'app-topbar',
-	imports: [NgOptimizedImage, RouterLink, TranslateDirective],
+	selector: 'layout-topbar',
 	templateUrl: './topbar.component.html',
-	styleUrl: './topbar.component.scss',
+	imports: [RouterLink, MaterialComponent, BurgerComponent],
 })
 export class TopbarComponent {
-	private readonly _translateService = inject(TranslateService);
-	private readonly _themeService = inject(ThemeService);
-	private readonly _languageService = inject(LanguageService);
-	private readonly _companyService = inject(CompanyService);
-	private readonly _router = inject(Router);
+	private readonly _coreService = inject(CoreService);
+	private readonly _sidebarService = inject(SidebarService);
+	readonly translateService = inject(TranslateService);
 
-	protected readonly mode = computed(() => this._themeService.mode() ?? 'light');
-	protected readonly languageMenuOpen = signal(false);
-	protected readonly languages = computed(() =>
-		this._languageService.languages().map((language) => _toAppLanguage(language)),
-	);
-	protected readonly company = this._companyService.company;
-	protected readonly activeLanguage = this._languageService.language;
-	protected readonly currentLanguage = computed(() =>
-		_toAppLanguage(this._languageService.getLanguage(this.activeLanguage())),
-	);
-	protected readonly toggleIcon = computed(() =>
-		this.mode() === 'dark' ? 'light_mode' : 'dark_mode',
-	);
-	protected readonly toggleLabel = computed(() => {
-		this.activeLanguage();
-		return this.mode() === 'dark'
-			? this._translateService.translate('Увімкнути світлий режим')()
-			: this._translateService.translate('Увімкнути темний режим')();
-	});
-	protected readonly languageMenuLabel = computed(() => {
-		this.activeLanguage();
-		return this._translateService.translate('Відкрити меню мов')();
-	});
-	protected readonly languageCycleLabel = computed(() => {
-		this.activeLanguage();
-		return `${this._translateService.translate('Перемкнути мову на')()} ${this.getNextLanguage().nativeName}`;
+	readonly isOpen = input(false);
+	readonly sidebarToggler = input(false);
+	readonly sidebarOpen = output<boolean>();
+	readonly showProfile = input(false);
+	readonly viewport = this._coreService.viewport;
+
+	readonly burgerState = computed<BurgerState>(() => {
+		if (this._sidebarService.isMobile()) {
+			return this._sidebarService.mobileOpen() ? 'cross' : 'three-lines';
+		}
+
+		switch (this._sidebarService.webMode()) {
+			case 'shown':
+				return 'three-lines';
+			case 'minimized':
+				return 'two-lines';
+			case 'hidden':
+			default:
+				return 'one-line';
+		}
 	});
 
-	protected toggleMode() {
-		const nextMode = this.mode() === 'dark' ? 'light' : 'dark';
-		this._themeService.setMode(nextMode);
+	onBurgerClick(): void {
+		this._sidebarService.burgerClick();
 	}
 
-	protected async nextLanguage() {
-		const nextLanguage = this.getNextLanguage();
-		await this._translateService.setLanguage(nextLanguage.code);
-		await this._router.navigateByUrl(this._router.url);
-		this.languageMenuOpen.set(false);
+	private _onBurgerHover: ReturnType<typeof setTimeout> | null = null;
+	onBurgerHover(hovered: boolean): void {
+		if (this._onBurgerHover) {
+			clearTimeout(this._onBurgerHover);
+			this._onBurgerHover = null;
+		}
+
+		if (hovered) {
+			this._sidebarService.onBurgerHover(hovered);
+		} else {
+			this._onBurgerHover = setTimeout(() => {
+				this._sidebarService.onBurgerHover(hovered);
+				this._onBurgerHover = null;
+			}, 2000);
+		}
 	}
-
-	protected toggleLanguageMenu() {
-		this.languageMenuOpen.update((open) => !open);
-	}
-
-	protected async setLanguage(language: AppLanguage) {
-		await this._translateService.setLanguage(language.code);
-		await this._router.navigateByUrl(this._router.url);
-		this.languageMenuOpen.set(false);
-	}
-
-	protected getNextLanguage() {
-		const languages = this.languages();
-		const currentCode = this.currentLanguage().code;
-		const currentIndex = languages.findIndex((language) => language.code === currentCode);
-
-		return languages[(currentIndex + 1) % languages.length] ?? languages[0]!;
-	}
-}
-
-function _toAppLanguage(language: Language | undefined): AppLanguage {
-	const fallback: AppLanguage = {
-		code: 'en',
-		name: 'English',
-		nativeName: 'English',
-		flagSrc: 'flags/united-kingdom.svg',
-		htmlLang: 'en',
-		population: 0,
-	};
-
-	return { ...fallback, ...(language as Partial<AppLanguage> | undefined) };
 }

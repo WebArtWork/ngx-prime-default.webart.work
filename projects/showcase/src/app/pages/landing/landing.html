@@ -1,0 +1,23 @@
+<div class="landing">
+	<section class="landing__hero">
+		<h1 class="landing__hero-title">Build faster with ngx-prime</h1>
+		<p class="landing__hero-subtitle">
+			A showcase of complete, ready-to-adapt pages built entirely with the ngx-prime component library.
+		</p>
+		<p-button label="View Dashboard" routerLink="/" />
+	</section>
+
+	<section class="landing__features">
+		@for (feature of features; track feature.title) {
+			<p-card class="landing__feature-card">
+				<i class="landing__feature-icon" [class]="feature.icon"></i>
+				<h3 class="landing__feature-title">{{ feature.title }}</h3>
+				<p class="landing__feature-description">{{ feature.description }}</p>
+			</p-card>
+		}
+	</section>
+
+	<footer class="landing__footer">
+		<p>ngx-prime Showcase</p>
+	</footer>
+</div>

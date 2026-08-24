@@ -1,32 +1,142 @@
 import { Routes } from '@angular/router';
-import { buildRouteMeta } from '@wawjs/ngx-default';
-import { companyProfile } from './feature/company/company.data';
-import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { MetaGuard } from '@wawjs/ngx-core';
+import { adminsGuard, authenticatedGuard, guestGuard } from '@wawjs/ngx-bos';
 
 export const routes: Routes = [
 	{
 		path: '',
-		component: PublicLayoutComponent,
+		redirectTo: 'sign',
+		pathMatch: 'full',
+	},
+	{
+		path: '',
+		canActivate: [guestGuard],
+		loadComponent: () =>
+			import('./layouts/guest/guest.component').then(
+				(m) => m.GuestComponent,
+			),
 		children: [
 			{
-				path: '',
+				path: 'sign',
+				canActivate: [MetaGuard],
 				data: {
 					meta: {
-						...buildRouteMeta(companyProfile, '/'),
-						titleSuffix: '',
+						title: 'Вхід',
 					},
 				},
-				loadComponent: () =>
-					import('./pages/landing/landing.component').then((m) => m.LandingComponent),
+				loadChildren: () =>
+					import('./pages/guest/sign/sign.routes').then(
+						(m) => m.routes,
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		canActivate: [authenticatedGuard],
+		loadComponent: () =>
+			import('./layouts/user/user.component').then(
+				(m) => m.UserComponent,
+			),
+		children: [
+			{
+				path: 'dashboard',
+				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Панель',
+					},
+				},
+				loadChildren: () =>
+					import('./pages/user/dashboard/dashboard.routes').then(
+						(m) => m.routes,
+					),
+			},
+			{
+				path: 'profile',
+				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Мій профіль',
+					},
+				},
+				loadChildren: () =>
+					import('./pages/user/profile/profile.routes').then(
+						(m) => m.routes,
+					),
+			},
+			{
+				path: 'settings',
+				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Мої налаштування',
+					},
+				},
+				loadChildren: () =>
+					import('./pages/user/settings/settings.routes').then(
+						(m) => m.routes,
+					),
 			},
 		],
 	},
 	{
 		path: 'admin',
-		loadChildren: () => import('./admin/admin.routes').then((m) => m.adminRoutes),
+		canActivate: [adminsGuard],
+		loadComponent: () =>
+			import('./layouts/user/user.component').then(
+				(m) => m.UserComponent,
+			),
+		children: [
+			{
+				path: 'users',
+				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Користувачі',
+					},
+				},
+				loadChildren: () =>
+					import('@wawjs/ngx-bos').then((m) => m.usersRoutes),
+			},
+			{
+				path: 'clients',
+				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Клієнти',
+					},
+				},
+				loadChildren: () =>
+					import('@wawjs/ngx-bos').then((m) => m.clientsRoutes),
+			},
+			{
+				path: 'forms',
+				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Форми',
+					},
+				},
+				loadChildren: () =>
+					import('@wawjs/ngx-bos').then((m) => m.formsRoutes),
+			},
+			{
+				path: 'form/:formId',
+				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Форми',
+					},
+				},
+				loadChildren: () =>
+					import('@wawjs/ngx-bos').then((m) => m.formRoutes),
+			},
+		],
 	},
 	{
 		path: '**',
-		redirectTo: '',
+		redirectTo: 'profile',
+		pathMatch: 'full',
 	},
 ];

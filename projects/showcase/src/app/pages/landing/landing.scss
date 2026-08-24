@@ -1,0 +1,48 @@
+.landing {
+	max-width: 64rem;
+	margin: 0 auto;
+	padding: 3rem 1.5rem;
+}
+
+.landing__hero {
+	text-align: center;
+	padding: 4rem 0;
+}
+
+.landing__hero-title {
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+}
+
+.landing__hero-subtitle {
+	color: var(--p-text-muted-color);
+	max-width: 36rem;
+	margin: 0 auto 2rem;
+}
+
+.landing__features {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+	gap: 1.5rem;
+	padding: 2rem 0;
+}
+
+.landing__feature-icon {
+	font-size: 1.5rem;
+	color: var(--p-primary-color);
+}
+
+.landing__feature-title {
+	margin: 0.75rem 0 0.5rem;
+}
+
+.landing__feature-description {
+	margin: 0;
+	color: var(--p-text-muted-color);
+}
+
+.landing__footer {
+	text-align: center;
+	padding-top: 2rem;
+	color: var(--p-text-muted-color);
+}
