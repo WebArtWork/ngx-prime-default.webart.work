@@ -13,15 +13,9 @@ Navigation, Feedback, Media, and Misc were added as new sidebar sections during 
 pass. `chart.js` was added as an explicit dependency (required transitively by
 ngx-prime's chart component, was missing from package.json).
 
-Still pending, in order: section 1b composites → section 2 Design Lab → section 3
-Download Config, following the established `*-demo.ts`/`.html` pattern (see
-`pages/form/checkbox` or `pages/form/radiobutton` for reference) and registering each
-new page in `app.routes.ts` + `uikit-sidebar.ts`.
-
-The library has ~90 real component/directive folders under `packages/ngx-prime/src`;
-uikit currently demos 6. Add one demo page per component, grouped into the existing
-sidebar categories (add categories as needed — Navigation, Feedback, Media, Misc are
-not represented yet):
+New pages follow the established `*-demo.ts`/`.html` pattern (see `pages/form/checkbox`
+or `pages/form/radiobutton` for reference) and are registered in `app.routes.ts` +
+`uikit-sidebar.ts`. Full list covered, for reference:
 
 - **Form**: autocomplete, cascadeselect, checkbox, colorpicker, datepicker, editor,
   fieldset, floatlabel, iconfield, inputgroup, inputmask, inputnumber, inputotp,
@@ -75,26 +69,20 @@ Concretely for uikit:
 
 These live alongside the atomic pages (same sidebar categories), not instead of them.
 
-## 2. Design Lab — full ngx-prime configuration surface — pending
+## 2. Design Lab — full ngx-prime configuration surface — baseline DONE, rest pending
 
-Add a new top-level "Design Lab" section (its own sidebar entry, e.g. `/design-lab`)
-that exposes everything `provideNgxPrime` and the `@wawjs/css-prime-styled` preset
-system can change, with every control bound live via `usePreset` /
-`updatePrimaryPalette` / `updateSurfacePalette` / `definePreset` so every demo
-component on screen updates instantly as controls move:
+Baseline controls exist at `/design-lab` (new top-level sidebar entry), each wired
+live: preset switcher (Aura/Lara/Nora) via `usePreset`, primary color swatches
+(green/lime/orange/amber/yellow/teal/cyan/blue/indigo/violet/purple/pink/rose) via
+`updatePrimaryPalette`, surface color swatches (slate/gray/zinc/neutral/stone) via
+`updateSurfacePalette`, menu mode (Static/Overlay) as a uikit-shell-only setting
+backed by `layout/design-lab-state.ts` (read by `uikit-shell` to change sidebar
+behavior, not routed through the preset system), and a dark mode toggle grouped on
+the same page. Implemented as a dedicated page rather than a topbar popover — still
+satisfies "one place, not a lone icon button", but if a popover is specifically
+wanted later, move the same controls into one.
 
-- **Baseline controls (minimum — match Sakai's own topbar configurator popover)**:
-  - Primary color swatches (a fixed palette row, e.g. green/lime/orange/amber/
-    yellow/teal/cyan/blue/indigo/violet/purple/pink/rose) → `updatePrimaryPalette`.
-  - Surface color swatches (slate/gray/zinc/neutral/stone, etc.) →
-    `updateSurfacePalette`.
-  - Preset switcher: Aura / Lara / Nora (all three exist under
-    `css-prime/packages/themes/src/presets/`, plus Material) → `usePreset`.
-  - Menu mode: Static / Overlay — this isn't a prime token, it's uikit's own shell
-    layout setting (mirrors Sakai's `LayoutService.layoutConfig.menuMode`); wire it
-    to the uikit shell's sidebar behavior, not to the preset system.
-  - Dark mode toggle already exists in the topbar — keep it, just relocate/group it
-    with these controls in one popover instead of a lone icon button.
+Still pending — in order, once resumed:
 - More candidates once the baseline above is in: font family, scale/density
   (compact/comfortable — mirrors the default app's own `data-density` tokens),
   focus-ring style, and per-component color overrides surfaced as a search/filter
@@ -124,14 +112,13 @@ semantic/component token trees and global config controls from section 2 exist,
 the diff calculation should be extended to include those changes too — right now
 it only tracks preset/primary/surface.
 
-Add a "Download Config" button next to the dark-mode toggle in the uikit topbar
-(`uikit-topbar.ts`/`.html`), alongside the Design Lab controls from #2:
+## Continuation notes for the next session
 
-- Exports the **diff only** (tokens actually changed from the base preset) as a
-  downloadable JSON file — not the full preset, to keep the output small and easy
-  for a human or an AI to read and merge into the project's real theme file.
-- Live preview (via `usePreset`) stays separate from the download — adjusting
-  controls always previews instantly; downloading is just a snapshot of the current
-  diff at the moment the button is pressed.
-- No attempt to write files or auto-apply the config into the project — the button's
-  only job is producing a clean, generic JSON handoff.
+uikit sections 1, 1b, 2 (baseline), and 3 (baseline) are all done and every commit
+so far builds clean (`npx ng build uikit`). Suggested order to resume:
+
+1. Finish section 2's remaining subsections (primitive/semantic/component token
+   trees, global config, pt preview example) — the biggest remaining uikit item.
+2. Extend the Download Config diff (section 3) to cover whatever section 2 adds.
+3. Then move to `projects/ROADMAP.md` sections 2 and 3 (translator, showcase
+   expansion), and the root README last, per that file's own ordering.
