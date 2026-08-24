@@ -48,7 +48,12 @@ export class UikitSidebar {
 		{
 			label: 'Button',
 			icon: 'pi pi-stop',
-			items: [{ label: 'Button', routerLink: ['/button/button'] }],
+			items: [
+				{ label: 'Button', routerLink: ['/button/button'] },
+				{ label: 'ButtonGroup', routerLink: ['/button/buttongroup'] },
+				{ label: 'SplitButton', routerLink: ['/button/splitbutton'] },
+				{ label: 'SpeedDial', routerLink: ['/button/speeddial'] },
+			],
 		},
 		{
 			label: 'Data',

@@ -139,6 +139,21 @@ export const routes: Routes = [
 				loadComponent: () => import('./pages/button/button/button-demo').then((m) => m.ButtonDemo),
 			},
 			{
+				path: 'button/buttongroup',
+				loadComponent: () =>
+					import('./pages/button/buttongroup/buttongroup-demo').then((m) => m.ButtonGroupDemo),
+			},
+			{
+				path: 'button/splitbutton',
+				loadComponent: () =>
+					import('./pages/button/splitbutton/splitbutton-demo').then((m) => m.SplitButtonDemo),
+			},
+			{
+				path: 'button/speeddial',
+				loadComponent: () =>
+					import('./pages/button/speeddial/speeddial-demo').then((m) => m.SpeedDialDemo),
+			},
+			{
 				path: 'data/table',
 				loadComponent: () => import('./pages/data/table/table-demo').then((m) => m.TableDemo),
 			},
