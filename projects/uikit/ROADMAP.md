@@ -5,7 +5,21 @@ Card) into a full ngx-prime component reference plus a live design-token configu
 that developers can use to tune a project's theme and hand the result to a human or an
 AI to apply in code.
 
-## 1. Full component coverage — pending
+## 1. Full component coverage — in progress
+
+Done so far: Button, Input, Select, Table, Dialog, Card, Checkbox, RadioButton,
+Rating, Slider, Textarea, ToggleButton, ToggleSwitch, FloatLabel, InputNumber,
+Password, SelectButton (17/~90). Remaining Form items: autocomplete, cascadeselect,
+colorpicker, datepicker, editor, fieldset, iconfield, inputgroup, inputmask,
+inputotp, keyfilter, listbox, multiselect, treeselect, fileupload — plus all of
+Data, Button (group/split/speeddial), Overlay, Navigation, Feedback, Layout, Media,
+Misc categories below, then section 1b composites, section 2 Design Lab, and
+section 3 Download Config are all still pending. This is a large, multi-session
+effort — continue in the same order (Form → Data → Button → Overlay → Navigation →
+Feedback → Layout → Media → Misc → composites → Design Lab → Download Config),
+following the established `*-demo.ts`/`.html` pattern (see `pages/form/checkbox` or
+`pages/form/radiobutton` for reference) and registering each new page in
+`app.routes.ts` + `uikit-sidebar.ts`.
 
 The library has ~90 real component/directive folders under `packages/ngx-prime/src`;
 uikit currently demos 6. Add one demo page per component, grouped into the existing
