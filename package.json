@@ -22,7 +22,7 @@
 		"@wawjs/css-prime-utils": "1.0.0",
 		"@wawjs/ngx-default": "22.0.2",
 		"@wawjs/ngx-core": "22.0.3",
-		"@wawjs/ngx-prime": "22.0.0",
+		"@wawjs/ngx-prime": "file:vendor/wawjs-ngx-prime-22.0.0-patch1.tgz",
 		"@wawjs/ngx-translate": "22.0.3",
 		"@wawjs/ngx-ui": "22.0.3",
 		"chart.js": "4.5.1",
@@ -51,11 +51,11 @@
 		"@hono/node-server": "2.0.11"
 	},
 	"allowScripts": {
-		"esbuild@0.28.1": true,
-		"@tailwindcss/oxide@4.1.12": true,
-		"lmdb@3.5.6": true,
-		"msgpackr-extract@3.0.4": true,
-		"fsevents@2.3.3": true,
-		"@parcel/watcher@2.6.0": true
+		"esbuild": true,
+		"lmdb": true,
+		"msgpackr-extract": true,
+		"@parcel/watcher": true,
+		"@tailwindcss/oxide": true,
+		"fsevents": true
 	}
 }
