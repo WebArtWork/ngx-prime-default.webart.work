@@ -106,5 +106,19 @@ export class UikitSidebar {
 				{ label: 'Dock', routerLink: ['/navigation/dock'] },
 			],
 		},
+		{
+			label: 'Feedback',
+			icon: 'pi pi-bell',
+			items: [
+				{ label: 'Message', routerLink: ['/feedback/message'] },
+				{ label: 'Toast', routerLink: ['/feedback/toast'] },
+				{ label: 'ProgressBar', routerLink: ['/feedback/progressbar'] },
+				{ label: 'ProgressSpinner', routerLink: ['/feedback/progressspinner'] },
+				{ label: 'Skeleton', routerLink: ['/feedback/skeleton'] },
+				{ label: 'Badge', routerLink: ['/feedback/badge'] },
+				{ label: 'Tag', routerLink: ['/feedback/tag'] },
+				{ label: 'MeterGroup', routerLink: ['/feedback/metergroup'] },
+			],
+		},
 	];
 }

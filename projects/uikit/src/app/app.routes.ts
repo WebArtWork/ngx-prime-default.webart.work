@@ -279,6 +279,43 @@ export const routes: Routes = [
 				path: 'navigation/dock',
 				loadComponent: () => import('./pages/navigation/dock/dock-demo').then((m) => m.DockDemo),
 			},
+			{
+				path: 'feedback/message',
+				loadComponent: () => import('./pages/feedback/message/message-demo').then((m) => m.MessageDemo),
+			},
+			{
+				path: 'feedback/toast',
+				loadComponent: () => import('./pages/feedback/toast/toast-demo').then((m) => m.ToastDemo),
+			},
+			{
+				path: 'feedback/progressbar',
+				loadComponent: () =>
+					import('./pages/feedback/progressbar/progressbar-demo').then((m) => m.ProgressBarDemo),
+			},
+			{
+				path: 'feedback/progressspinner',
+				loadComponent: () =>
+					import('./pages/feedback/progressspinner/progressspinner-demo').then(
+						(m) => m.ProgressSpinnerDemo,
+					),
+			},
+			{
+				path: 'feedback/skeleton',
+				loadComponent: () => import('./pages/feedback/skeleton/skeleton-demo').then((m) => m.SkeletonDemo),
+			},
+			{
+				path: 'feedback/badge',
+				loadComponent: () => import('./pages/feedback/badge/badge-demo').then((m) => m.BadgeDemo),
+			},
+			{
+				path: 'feedback/tag',
+				loadComponent: () => import('./pages/feedback/tag/tag-demo').then((m) => m.TagDemo),
+			},
+			{
+				path: 'feedback/metergroup',
+				loadComponent: () =>
+					import('./pages/feedback/metergroup/metergroup-demo').then((m) => m.MeterGroupDemo),
+			},
 		],
 	},
 	{ path: '**', redirectTo: '' },
