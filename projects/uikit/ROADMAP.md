@@ -45,7 +45,15 @@ not represented yet):
 Each new page follows the existing `*-demo.ts` pattern (basic → sizes → states →
 variants → icons, single file per component).
 
-## 1b. Composite "in-context" pages — pending
+## 1b. Composite "in-context" pages — DONE
+
+All ten composite pages exist, each alongside its category's atomic pages: Form
+Layout (`form/form-layout`), File (`form/file-composite`), List
+(`data/list-composite`), Tree (`data/tree-composite`), Timeline
+(`data/timeline-composite`), Menu in Context (`navigation/menu-in-context`),
+Message/Toast Stack (`feedback/message-toast-stack`), Panel
+(`layout/panel-composite`), Media Gallery (`media/media-gallery`), Chart Dashboard
+(`media/chart-dashboard`).
 
 Atomic per-component pages (above) show a control in isolation. Also add a small set
 of composite pages that show several components assembled into a real usage pattern —

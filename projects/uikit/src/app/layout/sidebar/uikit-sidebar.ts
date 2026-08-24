@@ -43,6 +43,8 @@ export class UikitSidebar {
 				{ label: 'MultiSelect', routerLink: ['/form/multiselect'] },
 				{ label: 'TreeSelect', routerLink: ['/form/treeselect'] },
 				{ label: 'FileUpload', routerLink: ['/form/fileupload'] },
+				{ label: 'Form Layout', routerLink: ['/form/form-layout'] },
+				{ label: 'File', routerLink: ['/form/file-composite'] },
 			],
 		},
 		{
@@ -68,6 +70,9 @@ export class UikitSidebar {
 				{ label: 'Timeline', routerLink: ['/data/timeline'] },
 				{ label: 'Tree', routerLink: ['/data/tree'] },
 				{ label: 'TreeTable', routerLink: ['/data/treetable'] },
+				{ label: 'List', routerLink: ['/data/list-composite'] },
+				{ label: 'Tree (Composite)', routerLink: ['/data/tree-composite'] },
+				{ label: 'Timeline (Composite)', routerLink: ['/data/timeline-composite'] },
 			],
 		},
 		{
@@ -97,6 +102,7 @@ export class UikitSidebar {
 				{ label: 'Splitter', routerLink: ['/layout/splitter'] },
 				{ label: 'Toolbar', routerLink: ['/layout/toolbar'] },
 				{ label: 'Inplace', routerLink: ['/layout/inplace'] },
+				{ label: 'Panel (Composite)', routerLink: ['/layout/panel-composite'] },
 			],
 		},
 		{
@@ -113,6 +119,7 @@ export class UikitSidebar {
 				{ label: 'Tabs', routerLink: ['/navigation/tabs'] },
 				{ label: 'TieredMenu', routerLink: ['/navigation/tieredmenu'] },
 				{ label: 'Dock', routerLink: ['/navigation/dock'] },
+				{ label: 'Menu in Context', routerLink: ['/navigation/menu-in-context'] },
 			],
 		},
 		{
@@ -127,6 +134,7 @@ export class UikitSidebar {
 				{ label: 'Badge', routerLink: ['/feedback/badge'] },
 				{ label: 'Tag', routerLink: ['/feedback/tag'] },
 				{ label: 'MeterGroup', routerLink: ['/feedback/metergroup'] },
+				{ label: 'Message/Toast Stack', routerLink: ['/feedback/message-toast-stack'] },
 			],
 		},
 		{
@@ -140,6 +148,8 @@ export class UikitSidebar {
 				{ label: 'Galleria', routerLink: ['/media/galleria'] },
 				{ label: 'Image', routerLink: ['/media/image'] },
 				{ label: 'ImageCompare', routerLink: ['/media/imagecompare'] },
+				{ label: 'Media Gallery', routerLink: ['/media/media-gallery'] },
+				{ label: 'Chart Dashboard', routerLink: ['/media/chart-dashboard'] },
 			],
 		},
 		{

@@ -394,6 +394,66 @@ export const routes: Routes = [
 						(m) => m.AnimateOnScrollDemo,
 					),
 			},
+			{
+				path: 'form/form-layout',
+				loadComponent: () =>
+					import('./pages/form/form-layout/form-layout-demo').then((m) => m.FormLayoutDemo),
+			},
+			{
+				path: 'form/file-composite',
+				loadComponent: () =>
+					import('./pages/form/file-composite/file-composite-demo').then((m) => m.FileCompositeDemo),
+			},
+			{
+				path: 'data/list-composite',
+				loadComponent: () =>
+					import('./pages/data/list-composite/list-composite-demo').then((m) => m.ListCompositeDemo),
+			},
+			{
+				path: 'data/tree-composite',
+				loadComponent: () =>
+					import('./pages/data/tree-composite/tree-composite-demo').then((m) => m.TreeCompositeDemo),
+			},
+			{
+				path: 'data/timeline-composite',
+				loadComponent: () =>
+					import('./pages/data/timeline-composite/timeline-composite-demo').then(
+						(m) => m.TimelineCompositeDemo,
+					),
+			},
+			{
+				path: 'navigation/menu-in-context',
+				loadComponent: () =>
+					import('./pages/navigation/menu-in-context/menu-in-context-demo').then(
+						(m) => m.MenuInContextDemo,
+					),
+			},
+			{
+				path: 'feedback/message-toast-stack',
+				loadComponent: () =>
+					import('./pages/feedback/message-toast-stack/message-toast-stack-demo').then(
+						(m) => m.MessageToastStackDemo,
+					),
+			},
+			{
+				path: 'layout/panel-composite',
+				loadComponent: () =>
+					import('./pages/layout/panel-composite/panel-composite-demo').then(
+						(m) => m.PanelCompositeDemo,
+					),
+			},
+			{
+				path: 'media/media-gallery',
+				loadComponent: () =>
+					import('./pages/media/media-gallery/media-gallery-demo').then((m) => m.MediaGalleryDemo),
+			},
+			{
+				path: 'media/chart-dashboard',
+				loadComponent: () =>
+					import('./pages/media/chart-dashboard/chart-dashboard-demo').then(
+						(m) => m.ChartDashboardDemo,
+					),
+			},
 		],
 	},
 	{ path: '**', redirectTo: '' },
