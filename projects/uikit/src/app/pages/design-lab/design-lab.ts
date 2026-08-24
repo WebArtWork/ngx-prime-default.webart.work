@@ -64,16 +64,21 @@ export class DesignLab {
 	protected selectPreset(option: PresetOption): void {
 		usePreset(option.preset as Record<string, unknown>);
 		this.activePreset.set(option.name);
+		this.designLabState.presetName.set(option.name === 'Aura' ? undefined : option.name);
 	}
 
 	protected selectPrimary(swatch: SwatchOption): void {
 		updatePrimaryPalette(swatch.color);
 		this.activePrimary.set(swatch.name);
+		this.designLabState.primaryColorName.set(swatch.name);
+		this.designLabState.primaryColorHex.set(swatch.color);
 	}
 
 	protected selectSurface(swatch: SwatchOption): void {
 		updateSurfacePalette(swatch.color);
 		this.activeSurface.set(swatch.name);
+		this.designLabState.surfaceColorName.set(swatch.name);
+		this.designLabState.surfaceColorHex.set(swatch.color);
 	}
 
 	protected setMenuMode(mode: MenuMode): void {

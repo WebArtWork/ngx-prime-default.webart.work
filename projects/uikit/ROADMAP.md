@@ -111,7 +111,18 @@ component on screen updates instantly as controls move:
 - **Pass-through preview**: at least one example of per-component `pt` customization,
   so the pattern is documented even if full PT editing isn't built yet.
 
-## 3. Download Config button — pending
+## 3. Download Config button — baseline DONE
+
+A "Download Config" button lives in `uikit-topbar.ts`/`.html` next to the dark-mode
+toggle. It reads `DesignLabState` (preset name / primary color / surface color —
+only set once the user actually changes them via `/design-lab`) and downloads a
+small diff-only JSON (e.g. `{ "preset": "Lara", "primaryPalette": { "name": "teal",
+"color": "#14b8a6" } }`), disabled until at least one change has been made. Live
+preview via `usePreset`/`updatePrimaryPalette`/`updateSurfacePalette` stays fully
+separate from the download, as specified. Not yet covered: once the primitive/
+semantic/component token trees and global config controls from section 2 exist,
+the diff calculation should be extended to include those changes too — right now
+it only tracks preset/primary/surface.
 
 Add a "Download Config" button next to the dark-mode toggle in the uikit topbar
 (`uikit-topbar.ts`/`.html`), alongside the Design Lab controls from #2:

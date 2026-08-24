@@ -11,6 +11,16 @@
 	<span class="uikit-topbar__title">ngx-prime UI Kit</span>
 
 	<p-button
+		class="uikit-topbar__download-config"
+		icon="pi pi-download"
+		label="Download Config"
+		[text]="true"
+		[disabled]="!designLabState.hasChanges()"
+		ariaLabel="Download changed theme config as JSON"
+		(onClick)="downloadConfig()"
+	/>
+
+	<p-button
 		class="uikit-topbar__theme-toggle"
 		[icon]="dark() ? 'pi pi-sun' : 'pi pi-moon'"
 		[text]="true"
