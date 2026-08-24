@@ -88,7 +88,16 @@ export class UikitSidebar {
 		{
 			label: 'Layout',
 			icon: 'pi pi-th-large',
-			items: [{ label: 'Card', routerLink: ['/layout/card'] }],
+			items: [
+				{ label: 'Card', routerLink: ['/layout/card'] },
+				{ label: 'Accordion', routerLink: ['/layout/accordion'] },
+				{ label: 'Divider', routerLink: ['/layout/divider'] },
+				{ label: 'Panel', routerLink: ['/layout/panel'] },
+				{ label: 'ScrollPanel', routerLink: ['/layout/scrollpanel'] },
+				{ label: 'Splitter', routerLink: ['/layout/splitter'] },
+				{ label: 'Toolbar', routerLink: ['/layout/toolbar'] },
+				{ label: 'Inplace', routerLink: ['/layout/inplace'] },
+			],
 		},
 		{
 			label: 'Navigation',

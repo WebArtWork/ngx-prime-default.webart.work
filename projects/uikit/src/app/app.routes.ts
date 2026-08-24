@@ -237,6 +237,35 @@ export const routes: Routes = [
 				loadComponent: () => import('./pages/layout/card/card-demo').then((m) => m.CardDemo),
 			},
 			{
+				path: 'layout/accordion',
+				loadComponent: () => import('./pages/layout/accordion/accordion-demo').then((m) => m.AccordionDemo),
+			},
+			{
+				path: 'layout/divider',
+				loadComponent: () => import('./pages/layout/divider/divider-demo').then((m) => m.DividerDemo),
+			},
+			{
+				path: 'layout/panel',
+				loadComponent: () => import('./pages/layout/panel/panel-demo').then((m) => m.PanelDemo),
+			},
+			{
+				path: 'layout/scrollpanel',
+				loadComponent: () =>
+					import('./pages/layout/scrollpanel/scrollpanel-demo').then((m) => m.ScrollPanelDemo),
+			},
+			{
+				path: 'layout/splitter',
+				loadComponent: () => import('./pages/layout/splitter/splitter-demo').then((m) => m.SplitterDemo),
+			},
+			{
+				path: 'layout/toolbar',
+				loadComponent: () => import('./pages/layout/toolbar/toolbar-demo').then((m) => m.ToolbarDemo),
+			},
+			{
+				path: 'layout/inplace',
+				loadComponent: () => import('./pages/layout/inplace/inplace-demo').then((m) => m.InplaceDemo),
+			},
+			{
 				path: 'navigation/breadcrumb',
 				loadComponent: () =>
 					import('./pages/navigation/breadcrumb/breadcrumb-demo').then((m) => m.BreadcrumbDemo),
