@@ -143,6 +143,41 @@ export const routes: Routes = [
 				loadComponent: () => import('./pages/data/table/table-demo').then((m) => m.TableDemo),
 			},
 			{
+				path: 'data/dataview',
+				loadComponent: () => import('./pages/data/dataview/dataview-demo').then((m) => m.DataViewDemo),
+			},
+			{
+				path: 'data/orderlist',
+				loadComponent: () => import('./pages/data/orderlist/orderlist-demo').then((m) => m.OrderListDemo),
+			},
+			{
+				path: 'data/organizationchart',
+				loadComponent: () =>
+					import('./pages/data/organizationchart/organizationchart-demo').then(
+						(m) => m.OrganizationChartDemo,
+					),
+			},
+			{
+				path: 'data/paginator',
+				loadComponent: () => import('./pages/data/paginator/paginator-demo').then((m) => m.PaginatorDemo),
+			},
+			{
+				path: 'data/picklist',
+				loadComponent: () => import('./pages/data/picklist/picklist-demo').then((m) => m.PickListDemo),
+			},
+			{
+				path: 'data/timeline',
+				loadComponent: () => import('./pages/data/timeline/timeline-demo').then((m) => m.TimelineDemo),
+			},
+			{
+				path: 'data/tree',
+				loadComponent: () => import('./pages/data/tree/tree-demo').then((m) => m.TreeDemo),
+			},
+			{
+				path: 'data/treetable',
+				loadComponent: () => import('./pages/data/treetable/treetable-demo').then((m) => m.TreeTableDemo),
+			},
+			{
 				path: 'overlay/dialog',
 				loadComponent: () => import('./pages/overlay/dialog/dialog-demo').then((m) => m.DialogDemo),
 			},

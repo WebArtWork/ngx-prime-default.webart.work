@@ -53,7 +53,17 @@ export class UikitSidebar {
 		{
 			label: 'Data',
 			icon: 'pi pi-table',
-			items: [{ label: 'Table', routerLink: ['/data/table'] }],
+			items: [
+				{ label: 'Table', routerLink: ['/data/table'] },
+				{ label: 'DataView', routerLink: ['/data/dataview'] },
+				{ label: 'OrderList', routerLink: ['/data/orderlist'] },
+				{ label: 'OrganizationChart', routerLink: ['/data/organizationchart'] },
+				{ label: 'Paginator', routerLink: ['/data/paginator'] },
+				{ label: 'PickList', routerLink: ['/data/picklist'] },
+				{ label: 'Timeline', routerLink: ['/data/timeline'] },
+				{ label: 'Tree', routerLink: ['/data/tree'] },
+				{ label: 'TreeTable', routerLink: ['/data/treetable'] },
+			],
 		},
 		{
 			label: 'Overlay',
