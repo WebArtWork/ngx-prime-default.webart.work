@@ -90,5 +90,21 @@ export class UikitSidebar {
 			icon: 'pi pi-th-large',
 			items: [{ label: 'Card', routerLink: ['/layout/card'] }],
 		},
+		{
+			label: 'Navigation',
+			icon: 'pi pi-compass',
+			items: [
+				{ label: 'Breadcrumb', routerLink: ['/navigation/breadcrumb'] },
+				{ label: 'Menu', routerLink: ['/navigation/menu'] },
+				{ label: 'Menubar', routerLink: ['/navigation/menubar'] },
+				{ label: 'MegaMenu', routerLink: ['/navigation/megamenu'] },
+				{ label: 'PanelMenu', routerLink: ['/navigation/panelmenu'] },
+				{ label: 'Steps', routerLink: ['/navigation/steps'] },
+				{ label: 'Stepper', routerLink: ['/navigation/stepper'] },
+				{ label: 'Tabs', routerLink: ['/navigation/tabs'] },
+				{ label: 'TieredMenu', routerLink: ['/navigation/tieredmenu'] },
+				{ label: 'Dock', routerLink: ['/navigation/dock'] },
+			],
+		},
 	];
 }

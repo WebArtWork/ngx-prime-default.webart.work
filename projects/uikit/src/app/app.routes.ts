@@ -236,6 +236,49 @@ export const routes: Routes = [
 				path: 'layout/card',
 				loadComponent: () => import('./pages/layout/card/card-demo').then((m) => m.CardDemo),
 			},
+			{
+				path: 'navigation/breadcrumb',
+				loadComponent: () =>
+					import('./pages/navigation/breadcrumb/breadcrumb-demo').then((m) => m.BreadcrumbDemo),
+			},
+			{
+				path: 'navigation/menu',
+				loadComponent: () => import('./pages/navigation/menu/menu-demo').then((m) => m.MenuDemo),
+			},
+			{
+				path: 'navigation/menubar',
+				loadComponent: () => import('./pages/navigation/menubar/menubar-demo').then((m) => m.MenubarDemo),
+			},
+			{
+				path: 'navigation/megamenu',
+				loadComponent: () => import('./pages/navigation/megamenu/megamenu-demo').then((m) => m.MegaMenuDemo),
+			},
+			{
+				path: 'navigation/panelmenu',
+				loadComponent: () =>
+					import('./pages/navigation/panelmenu/panelmenu-demo').then((m) => m.PanelMenuDemo),
+			},
+			{
+				path: 'navigation/steps',
+				loadComponent: () => import('./pages/navigation/steps/steps-demo').then((m) => m.StepsDemo),
+			},
+			{
+				path: 'navigation/stepper',
+				loadComponent: () => import('./pages/navigation/stepper/stepper-demo').then((m) => m.StepperDemo),
+			},
+			{
+				path: 'navigation/tabs',
+				loadComponent: () => import('./pages/navigation/tabs/tabs-demo').then((m) => m.TabsDemo),
+			},
+			{
+				path: 'navigation/tieredmenu',
+				loadComponent: () =>
+					import('./pages/navigation/tieredmenu/tieredmenu-demo').then((m) => m.TieredMenuDemo),
+			},
+			{
+				path: 'navigation/dock',
+				loadComponent: () => import('./pages/navigation/dock/dock-demo').then((m) => m.DockDemo),
+			},
 		],
 	},
 	{ path: '**', redirectTo: '' },
