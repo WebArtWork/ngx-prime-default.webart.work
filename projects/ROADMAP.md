@@ -5,9 +5,8 @@ and the new `translator`). Component-level detail for uikit lives in
 `projects/uikit/ROADMAP.md`; this file tracks cross-project and per-project work.
 
 **Status as of the latest session**: all of `projects/uikit/ROADMAP.md` is done and
-builds clean. Section 2 below (`projects/translator`) is now also done. Section 3
-(showcase expansion) and the root README (section 1) have not been started yet —
-pick up here next.
+builds clean. Sections 2 (`projects/translator`) and 3 (showcase expansion) below
+are both now done. Only the root README (section 1) remains — pick up here next.
 
 ## 1. Documentation pass — pending, do this last
 
@@ -53,46 +52,55 @@ documented in the page itself, not a silent limitation.
 Out of scope for v1 (per the original spec, confirmed unimplemented): adding
 brand-new languages, machine translation, pluralization tooling.
 
-## 3. `projects/showcase` — expand page set — pending
+## 3. `projects/showcase` — expand page set — DONE
 
-Reorganize existing pages into a fuller site structure, and build out the missing
-ones with real ngx-prime content (no empty placeholder pages):
+The full tree described below now exists under `projects/showcase/src/app/pages/`,
+routed in `app.routes.ts` and linked from the nested `p-panelMenu` in
+`layout/sidebar/showcase-sidebar.ts`:
 
 ```
 showcase/
 ├── dashboards/
-│   ├── default/         — the existing Dashboard page, moved here as-is
-│   └── analytics/       — new: KPI cards + Chart + MeterGroup/ProgressBar-driven view
+│   ├── default/         — the original Dashboard page, moved here as-is
+│   └── analytics/       — KPI cards + Chart (line) + MeterGroup + ProgressBar rows
 ├── users/
-│   ├── list/             — the existing Users page, moved here as-is
-│   ├── profile/          — the existing Profile page, moved here as-is
-│   └── create-edit/      — new: form page (InputText, Select, FileUpload for avatar)
+│   ├── list/             — the original Users page, moved here as-is
+│   ├── profile/          — the original Profile page, moved here as-is
+│   └── create-edit/      — form page (InputText, Select, FileUpload for avatar)
 ├── ecommerce/
-│   ├── products/         — new: Table or DataView grid of products (Card, Tag for stock)
-│   ├── product-create-edit/ — new: form (InputNumber, Editor, FileUpload, Select)
-│   ├── orders/            — new: Table with status Tags, filtering, pagination
-│   └── order-details/     — new: Timeline (order status) + Table (line items) + Card (customer)
+│   ├── products/         — Table of products (Card wrapper, Tag for stock status)
+│   ├── product-create-edit/ — form (InputNumber currency mode, Editor, FileUpload, Select)
+│   ├── orders/            — Table with status Tags, global search, pagination
+│   └── order-details/     — Timeline (order status) + Table (line items) + Card (customer)
 ├── projects/
-│   ├── list/              — new: Card/DataView grid of projects with ProgressBar
-│   ├── project-details/   — new: Tabs + Timeline + Table (tasks)
-│   └── tasks/              — new: task list/board (Table or drag/drop via OrderList/PickList)
+│   ├── list/              — Card grid of projects with ProgressBar + status Tag
+│   ├── project-details/   — Tabs (Activity/Tasks) + Timeline + Table
+│   └── tasks/              — 3-column board built from three independent p-orderList
+│                              instances (drag to reprioritize within a column) —
+│                              ngx-prime has no dedicated Kanban component
 ├── applications/
-│   ├── calendar/          — new: scheduling UI built on DatePicker (no ready-made
-│   │                          "calendar app" component in ngx-prime — this is a
-│   │                          custom composition, flag before building)
-│   ├── chat/              — new: message list UI (Avatar + custom bubbles + InputText —
-│   │                          also custom composition, no ngx-prime chat component)
-│   └── files/             — new: file browser (Table/DataView + FileUpload + Breadcrumb)
+│   ├── calendar/          — p-datePicker (inline) + a plain event list keyed by ISO
+│   │                          date — no ready-made "calendar app" component in
+│   │                          ngx-prime, called out in the component's own doc comment
+│   ├── chat/              — p-avatar (initials) + custom message bubbles + InputText —
+│   │                          also custom composition, no ngx-prime chat component
+│   └── files/             — Table + FileUpload (basic mode) + Breadcrumb
 ├── account/
-│   └── settings/          — new: Tabs + form fields (InputText, ToggleSwitch, Password)
+│   └── settings/          — Tabs (Profile/Security/Notifications) + InputText/Password/ToggleSwitch
 ├── authentication/
-│   ├── login/             — new: standalone page outside the shell (InputText, Password,
+│   ├── login/             — standalone page outside the shell (InputText, Password,
 │   │                          Checkbox, Button) — same "no chrome" pattern as landing
-│   └── register/          — new: same pattern as login
+│   └── register/          — same pattern as login
 └── errors/
-    └── 404/               — new: standalone not-found page outside the shell
+    └── 404 (not-found)/    — standalone not-found page outside the shell
 ```
 
-Two pages (`applications/calendar`, `applications/chat`) don't map to a single
-ready-made ngx-prime component — call this out explicitly before building so it's a
-conscious design decision, not a surprise mid-implementation.
+`applications/calendar` and `applications/chat` don't map to a single ready-made
+ngx-prime component, as flagged in the original plan — both compose existing
+primitives (DatePicker/Avatar/InputText) instead, documented inline in their
+`.ts` files' doc comments rather than silently improvised.
+
+All pages use real ngx-prime components with concrete demo data (no empty
+placeholders), follow the existing showcase conventions (standalone, OnPush,
+`<name>.ts`/`.html`/`.scss`/`.data.ts` file split), and the full `npx ng build
+showcase` passes.
