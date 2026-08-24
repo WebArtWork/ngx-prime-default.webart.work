@@ -454,6 +454,10 @@ export const routes: Routes = [
 						(m) => m.ChartDashboardDemo,
 					),
 			},
+			{
+				path: 'design-lab',
+				loadComponent: () => import('./pages/design-lab/design-lab').then((m) => m.DesignLab),
+			},
 		],
 	},
 	{ path: '**', redirectTo: '' },

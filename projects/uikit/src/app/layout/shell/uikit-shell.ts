@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DesignLabState } from '../design-lab-state';
 import { UikitSidebar } from '../sidebar/uikit-sidebar';
 import { UikitTopbar } from '../topbar/uikit-topbar';
 
@@ -11,6 +12,7 @@ import { UikitTopbar } from '../topbar/uikit-topbar';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UikitShell {
+	protected readonly designLabState = inject(DesignLabState);
 	protected readonly sidebarOpen = signal(false);
 
 	protected toggleSidebar(): void {

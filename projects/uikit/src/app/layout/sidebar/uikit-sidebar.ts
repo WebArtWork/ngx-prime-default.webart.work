@@ -12,6 +12,11 @@ import { PanelMenuModule } from '@wawjs/ngx-prime/panelmenu';
 export class UikitSidebar {
 	protected readonly items: MenuItem[] = [
 		{
+			label: 'Design Lab',
+			icon: 'pi pi-palette',
+			items: [{ label: 'Theme Configurator', routerLink: ['/design-lab'] }],
+		},
+		{
 			label: 'Form',
 			icon: 'pi pi-file-edit',
 			items: [

@@ -1,0 +1,83 @@
+<h1 class="demo-page__title">Design Lab</h1>
+
+<p class="demo-page__note">
+	Live configuration surface for the ngx-prime theme. Every control below updates the running
+	app instantly via <code>usePreset</code> / <code>updatePrimaryPalette</code> /
+	<code>updateSurfacePalette</code> — the same functions a real project would call in its own
+	theme setup.
+</p>
+
+<section class="demo-section">
+	<h2 class="demo-section__title">Preset</h2>
+	<div class="demo-section__row">
+		@for (option of presets; track option.name) {
+			<p-button
+				[label]="option.name"
+				[outlined]="activePreset() !== option.name"
+				(onClick)="selectPreset(option)"
+			/>
+		}
+	</div>
+</section>
+
+<section class="demo-section">
+	<h2 class="demo-section__title">Primary Color</h2>
+	<div class="demo-section__row">
+		@for (swatch of primaryColors; track swatch.name) {
+			<button
+				type="button"
+				[attr.aria-label]="swatch.name"
+				[attr.aria-pressed]="activePrimary() === swatch.name"
+				(click)="selectPrimary(swatch)"
+				style="width: 2rem; height: 2rem; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0"
+				[style.background]="swatch.color"
+				[style.border-color]="activePrimary() === swatch.name ? 'var(--p-text-color)' : 'transparent'"
+			></button>
+		}
+	</div>
+</section>
+
+<section class="demo-section">
+	<h2 class="demo-section__title">Surface Color</h2>
+	<div class="demo-section__row">
+		@for (swatch of surfaceColors; track swatch.name) {
+			<button
+				type="button"
+				[attr.aria-label]="swatch.name"
+				[attr.aria-pressed]="activeSurface() === swatch.name"
+				(click)="selectSurface(swatch)"
+				style="width: 2rem; height: 2rem; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0"
+				[style.background]="swatch.color"
+				[style.border-color]="activeSurface() === swatch.name ? 'var(--p-text-color)' : 'transparent'"
+			></button>
+		}
+	</div>
+</section>
+
+<section class="demo-section">
+	<h2 class="demo-section__title">Menu Mode</h2>
+	<p class="demo-page__note" style="margin-top: 0">
+		Not a prime token — this is the uikit shell's own sidebar layout setting.
+	</p>
+	<div class="demo-section__row">
+		<p-button
+			label="Static"
+			[outlined]="designLabState.menuMode() !== 'static'"
+			(onClick)="setMenuMode('static')"
+		/>
+		<p-button
+			label="Overlay"
+			[outlined]="designLabState.menuMode() !== 'overlay'"
+			(onClick)="setMenuMode('overlay')"
+		/>
+	</div>
+</section>
+
+<section class="demo-section">
+	<h2 class="demo-section__title">Dark Mode</h2>
+	<p-button
+		[label]="dark() ? 'Switch to Light' : 'Switch to Dark'"
+		[icon]="dark() ? 'pi pi-sun' : 'pi pi-moon'"
+		(onClick)="toggleDarkMode()"
+	/>
+</section>
