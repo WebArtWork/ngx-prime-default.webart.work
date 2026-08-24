@@ -197,6 +197,42 @@ export const routes: Routes = [
 				loadComponent: () => import('./pages/overlay/dialog/dialog-demo').then((m) => m.DialogDemo),
 			},
 			{
+				path: 'overlay/dynamicdialog',
+				loadComponent: () =>
+					import('./pages/overlay/dynamicdialog/dynamicdialog-demo').then((m) => m.DynamicDialogDemo),
+			},
+			{
+				path: 'overlay/drawer',
+				loadComponent: () => import('./pages/overlay/drawer/drawer-demo').then((m) => m.DrawerDemo),
+			},
+			{
+				path: 'overlay/popover',
+				loadComponent: () => import('./pages/overlay/popover/popover-demo').then((m) => m.PopoverDemo),
+			},
+			{
+				path: 'overlay/confirmdialog',
+				loadComponent: () =>
+					import('./pages/overlay/confirmdialog/confirmdialog-demo').then((m) => m.ConfirmDialogDemo),
+			},
+			{
+				path: 'overlay/confirmpopup',
+				loadComponent: () =>
+					import('./pages/overlay/confirmpopup/confirmpopup-demo').then((m) => m.ConfirmPopupDemo),
+			},
+			{
+				path: 'overlay/contextmenu',
+				loadComponent: () =>
+					import('./pages/overlay/contextmenu/contextmenu-demo').then((m) => m.ContextMenuDemo),
+			},
+			{
+				path: 'overlay/tooltip',
+				loadComponent: () => import('./pages/overlay/tooltip/tooltip-demo').then((m) => m.TooltipDemo),
+			},
+			{
+				path: 'overlay/blockui',
+				loadComponent: () => import('./pages/overlay/blockui/blockui-demo').then((m) => m.BlockUIDemo),
+			},
+			{
 				path: 'layout/card',
 				loadComponent: () => import('./pages/layout/card/card-demo').then((m) => m.CardDemo),
 			},

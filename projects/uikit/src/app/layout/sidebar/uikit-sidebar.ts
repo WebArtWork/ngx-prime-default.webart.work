@@ -73,7 +73,17 @@ export class UikitSidebar {
 		{
 			label: 'Overlay',
 			icon: 'pi pi-window-maximize',
-			items: [{ label: 'Dialog', routerLink: ['/overlay/dialog'] }],
+			items: [
+				{ label: 'Dialog', routerLink: ['/overlay/dialog'] },
+				{ label: 'DynamicDialog', routerLink: ['/overlay/dynamicdialog'] },
+				{ label: 'Drawer', routerLink: ['/overlay/drawer'] },
+				{ label: 'Popover', routerLink: ['/overlay/popover'] },
+				{ label: 'ConfirmDialog', routerLink: ['/overlay/confirmdialog'] },
+				{ label: 'ConfirmPopup', routerLink: ['/overlay/confirmpopup'] },
+				{ label: 'ContextMenu', routerLink: ['/overlay/contextmenu'] },
+				{ label: 'Tooltip', routerLink: ['/overlay/tooltip'] },
+				{ label: 'BlockUI', routerLink: ['/overlay/blockui'] },
+			],
 		},
 		{
 			label: 'Layout',
