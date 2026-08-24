@@ -345,6 +345,36 @@ export const routes: Routes = [
 				loadComponent: () =>
 					import('./pages/feedback/metergroup/metergroup-demo').then((m) => m.MeterGroupDemo),
 			},
+			{
+				path: 'media/avatar',
+				loadComponent: () => import('./pages/media/avatar/avatar-demo').then((m) => m.AvatarDemo),
+			},
+			{
+				path: 'media/avatargroup',
+				loadComponent: () =>
+					import('./pages/media/avatargroup/avatargroup-demo').then((m) => m.AvatarGroupDemo),
+			},
+			{
+				path: 'media/carousel',
+				loadComponent: () => import('./pages/media/carousel/carousel-demo').then((m) => m.CarouselDemo),
+			},
+			{
+				path: 'media/chart',
+				loadComponent: () => import('./pages/media/chart/chart-demo').then((m) => m.ChartDemo),
+			},
+			{
+				path: 'media/galleria',
+				loadComponent: () => import('./pages/media/galleria/galleria-demo').then((m) => m.GalleriaDemo),
+			},
+			{
+				path: 'media/image',
+				loadComponent: () => import('./pages/media/image/image-demo').then((m) => m.ImageDemo),
+			},
+			{
+				path: 'media/imagecompare',
+				loadComponent: () =>
+					import('./pages/media/imagecompare/imagecompare-demo').then((m) => m.ImageCompareDemo),
+			},
 		],
 	},
 	{ path: '**', redirectTo: '' },

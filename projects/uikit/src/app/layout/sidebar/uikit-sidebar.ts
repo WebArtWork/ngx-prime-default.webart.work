@@ -129,5 +129,18 @@ export class UikitSidebar {
 				{ label: 'MeterGroup', routerLink: ['/feedback/metergroup'] },
 			],
 		},
+		{
+			label: 'Media',
+			icon: 'pi pi-image',
+			items: [
+				{ label: 'Avatar', routerLink: ['/media/avatar'] },
+				{ label: 'AvatarGroup', routerLink: ['/media/avatargroup'] },
+				{ label: 'Carousel', routerLink: ['/media/carousel'] },
+				{ label: 'Chart', routerLink: ['/media/chart'] },
+				{ label: 'Galleria', routerLink: ['/media/galleria'] },
+				{ label: 'Image', routerLink: ['/media/image'] },
+				{ label: 'ImageCompare', routerLink: ['/media/imagecompare'] },
+			],
+		},
 	];
 }
