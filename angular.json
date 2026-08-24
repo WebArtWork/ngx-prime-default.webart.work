@@ -40,7 +40,9 @@
 					"options": {
 						"outputPath": "dist/app",
 						"index": "src/index.html",
-						"polyfills": ["src/polyfills.ts"],
+						"polyfills": [
+							"src/polyfills.ts"
+						],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
@@ -65,12 +67,20 @@
 								"output": "assets/tinymce"
 							}
 						],
-						"styles": ["src/styles.scss"],
+						"styles": [
+							"src/styles.scss"
+						],
 						"scripts": [],
 						"stylePreprocessorOptions": {
-							"includePaths": ["src/scss/utils", "."]
+							"includePaths": [
+								"src/scss/utils",
+								"."
+							]
 						},
-						"allowedCommonJsDependencies": ["brace", "ace-builds"],
+						"allowedCommonJsDependencies": [
+							"brace",
+							"ace-builds"
+						],
 						"browser": "src/main.ts"
 					},
 					"configurations": {
@@ -191,7 +201,9 @@
 								"input": "projects/showcase/public"
 							}
 						],
-						"styles": ["projects/showcase/src/styles.css"]
+						"styles": [
+							"projects/showcase/src/styles.css"
+						]
 					},
 					"configurations": {
 						"production": {
@@ -276,7 +288,9 @@
 								"input": "projects/uikit/public"
 							}
 						],
-						"styles": ["projects/uikit/src/styles.css"]
+						"styles": [
+							"projects/uikit/src/styles.css"
+						]
 					},
 					"configurations": {
 						"production": {
@@ -310,6 +324,98 @@
 						},
 						"development": {
 							"buildTarget": "uikit:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
+				}
+			}
+		},
+		"translator": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss",
+					"skipTests": true
+				},
+				"@schematics/angular:class": {
+					"skipTests": true
+				},
+				"@schematics/angular:directive": {
+					"skipTests": true
+				},
+				"@schematics/angular:guard": {
+					"skipTests": true
+				},
+				"@schematics/angular:interceptor": {
+					"skipTests": true
+				},
+				"@schematics/angular:pipe": {
+					"skipTests": true
+				},
+				"@schematics/angular:resolver": {
+					"skipTests": true
+				},
+				"@schematics/angular:service": {
+					"skipTests": true
+				}
+			},
+			"root": "projects/translator",
+			"sourceRoot": "projects/translator/src",
+			"prefix": "tr",
+			"architect": {
+				"build": {
+					"builder": "@angular/build:application",
+					"options": {
+						"browser": "projects/translator/src/main.ts",
+						"tsConfig": "projects/translator/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/translator/public"
+							},
+							{
+								"glob": "*.json",
+								"input": "src/i18n",
+								"output": "i18n"
+							}
+						],
+						"styles": [
+							"projects/translator/src/styles.css"
+						]
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "800kB",
+									"maximumError": "1.5MB"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "4kB",
+									"maximumError": "8kB"
+								}
+							],
+							"outputHashing": "all"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "@angular/build:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "translator:build:production"
+						},
+						"development": {
+							"buildTarget": "translator:build:development"
 						}
 					},
 					"defaultConfiguration": "development"

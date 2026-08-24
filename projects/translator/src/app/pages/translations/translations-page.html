@@ -1,0 +1,80 @@
+<div class="tr-page">
+	<h1 class="tr-page__title">Translator</h1>
+	<p class="tr-page__note">
+		Browses and edits the real translation files this repo's main app (<code>src/app</code>) reads
+		via <code>@wawjs/ngx-translate</code>: <code>src/i18n/en.json</code> (default language — each
+		string is both the source text shown to translators and the lookup key used in code) and
+		<code>src/i18n/ua.json</code> (a same-length array, positionally aligned to the English one).
+		A row is flagged <strong>missing</strong> when a language's array doesn't reach that index yet,
+		and <strong>untranslated</strong> when its value still equals the English source text.
+	</p>
+
+	@if (loading()) {
+		<p>Loading translation files…</p>
+	} @else if (loadError()) {
+		<p class="tr-page__note" style="color: var(--p-red-500)">{{ loadError() }}</p>
+	} @else {
+		<div class="tr-toolbar">
+			<input
+				pInputText
+				placeholder="Search key or value…"
+				[(ngModel)]="filterText"
+				style="width: 18rem"
+			/>
+			<label style="display: flex; align-items: center; gap: 0.5rem">
+				<p-toggleswitch [(ngModel)]="onlyIssues" />
+				Only missing / untranslated ({{ issueCount() }})
+			</label>
+			<span style="flex: 1"></span>
+			@for (lang of languages; track lang.code) {
+				<p-button
+					[label]="'Download ' + lang.code + '.json'"
+					size="small"
+					severity="secondary"
+					(onClick)="downloadLanguage(lang.code)"
+				/>
+			}
+		</div>
+
+		<p-table [value]="filteredRows()" dataKey="index" [scrollable]="true" scrollHeight="65vh">
+			<ng-template #header>
+				<tr>
+					<th style="width: 3rem">#</th>
+					<th>English (key)</th>
+					@for (lang of otherLanguages; track lang.code) {
+						<th>{{ lang.name }}</th>
+					}
+				</tr>
+			</ng-template>
+			<ng-template #body let-row>
+				<tr>
+					<td>{{ row.index }}</td>
+					<td style="max-width: 22rem">{{ row.key }}</td>
+					@for (lang of otherLanguages; track lang.code) {
+						<td>
+							<div style="display: flex; align-items: center; gap: 0.5rem">
+								<input
+									pInputText
+									size="small"
+									style="width: 100%"
+									[ngModel]="row.values[lang.code]"
+									(ngModelChange)="setValue(row, lang.code, $event)"
+								/>
+								@if (row.missing.includes(lang.code)) {
+									<p-tag severity="danger" value="missing" />
+								} @else if (row.untranslated.includes(lang.code)) {
+									<p-tag severity="warn" value="untranslated" />
+								}
+							</div>
+						</td>
+					}
+				</tr>
+			</ng-template>
+			<ng-template #emptymessage>
+				<tr>
+					<td [attr.colspan]="2 + otherLanguages.length">No keys match the current filter.</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	}
+</div>
