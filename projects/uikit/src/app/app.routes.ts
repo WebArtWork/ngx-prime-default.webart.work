@@ -65,6 +65,76 @@ export const routes: Routes = [
 					import('./pages/form/selectbutton/selectbutton-demo').then((m) => m.SelectButtonDemo),
 			},
 			{
+				path: 'form/autocomplete',
+				loadComponent: () =>
+					import('./pages/form/autocomplete/autocomplete-demo').then((m) => m.AutoCompleteDemo),
+			},
+			{
+				path: 'form/cascadeselect',
+				loadComponent: () =>
+					import('./pages/form/cascadeselect/cascadeselect-demo').then((m) => m.CascadeSelectDemo),
+			},
+			{
+				path: 'form/colorpicker',
+				loadComponent: () =>
+					import('./pages/form/colorpicker/colorpicker-demo').then((m) => m.ColorPickerDemo),
+			},
+			{
+				path: 'form/datepicker',
+				loadComponent: () =>
+					import('./pages/form/datepicker/datepicker-demo').then((m) => m.DatePickerDemo),
+			},
+			{
+				path: 'form/editor',
+				loadComponent: () => import('./pages/form/editor/editor-demo').then((m) => m.EditorDemo),
+			},
+			{
+				path: 'form/fieldset',
+				loadComponent: () => import('./pages/form/fieldset/fieldset-demo').then((m) => m.FieldsetDemo),
+			},
+			{
+				path: 'form/iconfield',
+				loadComponent: () => import('./pages/form/iconfield/iconfield-demo').then((m) => m.IconFieldDemo),
+			},
+			{
+				path: 'form/inputgroup',
+				loadComponent: () =>
+					import('./pages/form/inputgroup/inputgroup-demo').then((m) => m.InputGroupDemo),
+			},
+			{
+				path: 'form/inputmask',
+				loadComponent: () =>
+					import('./pages/form/inputmask/inputmask-demo').then((m) => m.InputMaskDemo),
+			},
+			{
+				path: 'form/inputotp',
+				loadComponent: () => import('./pages/form/inputotp/inputotp-demo').then((m) => m.InputOtpDemo),
+			},
+			{
+				path: 'form/keyfilter',
+				loadComponent: () =>
+					import('./pages/form/keyfilter/keyfilter-demo').then((m) => m.KeyFilterDemo),
+			},
+			{
+				path: 'form/listbox',
+				loadComponent: () => import('./pages/form/listbox/listbox-demo').then((m) => m.ListboxDemo),
+			},
+			{
+				path: 'form/multiselect',
+				loadComponent: () =>
+					import('./pages/form/multiselect/multiselect-demo').then((m) => m.MultiSelectDemo),
+			},
+			{
+				path: 'form/treeselect',
+				loadComponent: () =>
+					import('./pages/form/treeselect/treeselect-demo').then((m) => m.TreeSelectDemo),
+			},
+			{
+				path: 'form/fileupload',
+				loadComponent: () =>
+					import('./pages/form/fileupload/fileupload-demo').then((m) => m.FileUploadDemo),
+			},
+			{
 				path: 'button/button',
 				loadComponent: () => import('./pages/button/button/button-demo').then((m) => m.ButtonDemo),
 			},
