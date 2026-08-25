@@ -28,6 +28,9 @@
 	font-size: 1.125rem;
 }
 
-.uikit-topbar__theme-toggle {
+.uikit-topbar__actions {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
 	margin-left: auto;
 }

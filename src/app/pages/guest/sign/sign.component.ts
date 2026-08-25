@@ -5,6 +5,7 @@ import {
 	signal,
 } from '@angular/core';
 import {
+	FormField,
 	form,
 	pattern,
 	required,
@@ -14,16 +15,15 @@ import {
 import { Router } from '@angular/router';
 import { environment } from '@env';
 import { SpiderComponent } from '@wawjs/ngx-bos';
-import {
-	AlertService,
-	ButtonComponent,
-	InputComponent,
-	ThemeComponent,
-	ThemeService,
-} from '@wawjs/ngx-ui';
 import { User, UserService } from '@wawjs/ngx-bos';
 import { HttpService } from '@wawjs/ngx-http';
+import { MessageService } from '@wawjs/ngx-prime/api';
+import { ButtonModule } from '@wawjs/ngx-prime/button';
+import { InputTextModule } from '@wawjs/ngx-prime/inputtext';
+import { PasswordModule } from '@wawjs/ngx-prime/password';
 import { TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
+import { FieldErrorComponent } from '../../../shared/field-error/field-error.component';
+import { ThemeState } from '../../../theme/theme-state';
 import { RespStatus, SignModel } from './sign.interface';
 
 const signSchema = schema<SignModel>((path) => {
@@ -37,18 +37,20 @@ const signSchema = schema<SignModel>((path) => {
 @Component({
 	imports: [
 		SpiderComponent,
-		InputComponent,
-		ButtonComponent,
-		ThemeComponent,
+		FormField,
+		ButtonModule,
+		InputTextModule,
+		PasswordModule,
+		FieldErrorComponent,
 		TranslateDirective,
 	],
 	templateUrl: './sign.component.html',
 })
 export class SignComponent {
-	themeService = inject(ThemeService);
+	themeService = inject(ThemeState);
 	userService = inject(UserService);
 	readonly translateService = inject(TranslateService);
-	private _alertService = inject(AlertService);
+	private _messageService = inject(MessageService);
 	private _httpService = inject(HttpService);
 	private _router = inject(Router);
 
@@ -133,8 +135,9 @@ export class SignComponent {
 			this.isSubmitting.set(false);
 			this.showCode.set(true);
 
-			this._alertService.info({
-				text: this.translateService.translate('Лист буде надіслано на ваш email')(),
+			this._messageService.add({
+				severity: 'info',
+				detail: this.translateService.translate('Лист буде надіслано на ваш email')(),
 			});
 		}, this._handleRequestError.bind(this));
 	}
@@ -142,12 +145,14 @@ export class SignComponent {
 	private _change(payload: SignModel) {
 		this._httpService.post('/api/user/change', payload, (resp: boolean) => {
 			if (resp) {
-				this._alertService.info({
-					text: this.translateService.translate('Пароль успішно змінено')(),
+				this._messageService.add({
+					severity: 'info',
+					detail: this.translateService.translate('Пароль успішно змінено')(),
 				});
 			} else {
-				this._alertService.error({
-					text: this.translateService.translate('Неправильний код')(),
+				this._messageService.add({
+					severity: 'error',
+					detail: this.translateService.translate('Неправильний код')(),
 				});
 			}
 
@@ -158,8 +163,9 @@ export class SignComponent {
 	private _set(user: User) {
 		if (!user) {
 			this.isSubmitting.set(false);
-			this._alertService.error({
-				text: this.translateService.translate('Щось пішло не так')(),
+			this._messageService.add({
+				severity: 'error',
+				detail: this.translateService.translate('Щось пішло не так')(),
 			});
 			return;
 		}
@@ -175,8 +181,9 @@ export class SignComponent {
 
 	private _handleRequestError(): void {
 		this.isSubmitting.set(false);
-		this._alertService.error({
-			text: this.translateService.translate('Щось пішло не так')(),
+		this._messageService.add({
+			severity: 'error',
+			detail: this.translateService.translate('Щось пішло не так')(),
 		});
 	}
 }

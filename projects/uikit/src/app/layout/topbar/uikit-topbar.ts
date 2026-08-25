@@ -1,24 +1,24 @@
-import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
+import { Router } from '@angular/router';
 import { ButtonModule } from '@wawjs/ngx-prime/button';
+import { TooltipModule } from '@wawjs/ngx-prime/tooltip';
 import { DesignLabState } from '../design-lab-state';
 
 @Component({
 	selector: 'uk-topbar',
-	imports: [ButtonModule],
+	imports: [ButtonModule, TooltipModule],
 	templateUrl: './uikit-topbar.html',
 	styleUrl: './uikit-topbar.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UikitTopbar {
 	protected readonly designLabState = inject(DesignLabState);
+	private readonly router = inject(Router);
 
 	readonly menuToggle = output<void>();
 
-	protected readonly dark = signal(false);
-
-	protected toggleDarkMode(): void {
-		this.dark.update((value) => !value);
-		document.documentElement.classList.toggle('app-dark', this.dark());
+	protected goToDesignLab(): void {
+		this.router.navigate(['/design-lab']);
 	}
 
 	/**

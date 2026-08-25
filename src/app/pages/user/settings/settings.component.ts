@@ -6,30 +6,22 @@ import {
 	signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { form, submit } from '@angular/forms/signals';
-import {
-	ButtonComponent,
-	InputComponent,
-	MaterialComponent,
-	ThemeComponent,
-} from '@wawjs/ngx-ui';
+import { FormField, form, submit } from '@angular/forms/signals';
 import { UserService } from '@wawjs/ngx-bos';
+import { ButtonModule } from '@wawjs/ngx-prime/button';
+import { PasswordModule } from '@wawjs/ngx-prime/password';
 import {
 	LanguageService,
 	TranslateDirective,
 	TranslateService,
 } from '@wawjs/ngx-translate';
+import { FieldErrorComponent } from '../../../shared/field-error/field-error.component';
+import { ThemeState } from '../../../theme/theme-state';
 import { SecurityModel } from './settings.interface';
 import { securitySchema } from './settings.schema';
 
 @Component({
-	imports: [
-		InputComponent,
-		ButtonComponent,
-		ThemeComponent,
-		MaterialComponent,
-		TranslateDirective,
-	],
+	imports: [FormField, ButtonModule, PasswordModule, FieldErrorComponent, TranslateDirective],
 	templateUrl: './settings.component.html',
 	styleUrl: './settings.component.scss',
 })
@@ -37,6 +29,7 @@ export class SettingsComponent {
 	readonly userService = inject(UserService);
 	readonly languageService = inject(LanguageService);
 	readonly translateService = inject(TranslateService);
+	readonly themeService = inject(ThemeState);
 	private readonly _destroyRef = inject(DestroyRef);
 
 	readonly languageName = computed(() => {
@@ -44,17 +37,27 @@ export class SettingsComponent {
 
 		return language?.name ?? '';
 	});
-	readonly languageFlagSrc = computed(() => {
-		switch (this.languageService.language()) {
-			case 'ua':
-			case 'uk':
-				return 'flags/ukraine.svg';
-			case 'en':
-				return 'flags/united-kingdom.svg';
-			default:
-				return '';
-		}
-	});
+	private static readonly LANGUAGE_FLAG_EMOJI: Record<string, string> = {
+		cs: '🇨🇿',
+		de: '🇩🇪',
+		el: '🇬🇷',
+		en: '🇬🇧',
+		es: '🇪🇸',
+		fr: '🇫🇷',
+		hu: '🇭🇺',
+		it: '🇮🇹',
+		nl: '🇳🇱',
+		pl: '🇵🇱',
+		pt: '🇵🇹',
+		ro: '🇷🇴',
+		sv: '🇸🇪',
+		ua: '🇺🇦',
+		uk: '🇺🇦',
+	};
+
+	readonly languageFlagEmoji = computed(
+		() => SettingsComponent.LANGUAGE_FLAG_EMOJI[this.languageService.language()] ?? '🌐',
+	);
 
 	readonly securityModel = signal<SecurityModel>({
 		currentPassword: '',

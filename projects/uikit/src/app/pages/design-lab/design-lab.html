@@ -10,13 +10,12 @@
 <section class="demo-section">
 	<h2 class="demo-section__title">Preset</h2>
 	<div class="demo-section__row">
-		@for (option of presets; track option.name) {
-			<p-button
-				[label]="option.name"
-				[outlined]="activePreset() !== option.name"
-				(onClick)="selectPreset(option)"
-			/>
-		}
+		<p-selectButton
+			[options]="presets"
+			optionLabel="name"
+			[ngModel]="selectedPresetOption()"
+			(ngModelChange)="selectPreset($event)"
+		/>
 	</div>
 </section>
 
@@ -60,26 +59,14 @@
 		Not a prime token — this is the uikit shell's own sidebar layout setting.
 	</p>
 	<div class="demo-section__row">
-		<p-button
-			label="Static"
-			[outlined]="designLabState.menuMode() !== 'static'"
-			(onClick)="setMenuMode('static')"
-		/>
-		<p-button
-			label="Overlay"
-			[outlined]="designLabState.menuMode() !== 'overlay'"
-			(onClick)="setMenuMode('overlay')"
+		<p-selectButton
+			[options]="menuModeOptions"
+			optionLabel="label"
+			optionValue="value"
+			[ngModel]="designLabState.menuMode()"
+			(ngModelChange)="setMenuMode($event)"
 		/>
 	</div>
-</section>
-
-<section class="demo-section">
-	<h2 class="demo-section__title">Dark Mode</h2>
-	<p-button
-		[label]="dark() ? 'Switch to Light' : 'Switch to Dark'"
-		[icon]="dark() ? 'pi pi-sun' : 'pi pi-moon'"
-		(onClick)="toggleDarkMode()"
-	/>
 </section>
 
 <section class="demo-section">
@@ -102,7 +89,6 @@
 			</label>
 		}
 	</div>
-	<p-button label="Apply Border Radius Scale" (onClick)="applyBorderRadiusScale()" size="small" />
 </section>
 
 <section class="demo-section">
@@ -112,30 +98,46 @@
 	<div class="demo-section__row" style="align-items: end; flex-wrap: wrap">
 		<label style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem">
 			Width
-			<input pInputText size="small" [(ngModel)]="focusRingWidth" style="width: 6rem" />
+			<input
+				pInputText
+				size="small"
+				[ngModel]="focusRingWidth()"
+				(ngModelChange)="setFocusRingWidth($event)"
+				style="width: 6rem"
+			/>
 		</label>
 		<label style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem">
 			Style
 			<p-selectButton
 				[options]="focusRingStyleOptions"
 				[ngModel]="focusRingStyle()"
-				(ngModelChange)="focusRingStyle.set($event)"
+				(ngModelChange)="setFocusRingStyle($event)"
 			/>
 		</label>
-		<p-button label="Apply Focus Ring" (onClick)="applyFocusRing()" size="small" />
 	</div>
 
 	<h3 style="margin: 1rem 0 0.5rem">Form Field Padding</h3>
 	<div class="demo-section__row" style="align-items: end; flex-wrap: wrap">
 		<label style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem">
 			Padding X
-			<input pInputText size="small" [(ngModel)]="formFieldPaddingX" style="width: 6rem" />
+			<input
+				pInputText
+				size="small"
+				[ngModel]="formFieldPaddingX()"
+				(ngModelChange)="setFormFieldPaddingX($event)"
+				style="width: 6rem"
+			/>
 		</label>
 		<label style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem">
 			Padding Y
-			<input pInputText size="small" [(ngModel)]="formFieldPaddingY" style="width: 6rem" />
+			<input
+				pInputText
+				size="small"
+				[ngModel]="formFieldPaddingY()"
+				(ngModelChange)="setFormFieldPaddingY($event)"
+				style="width: 6rem"
+			/>
 		</label>
-		<p-button label="Apply Form Field Padding" (onClick)="applyFormFieldPadding()" size="small" />
 	</div>
 
 	<div class="demo-section__row" style="margin-top: 1rem">
@@ -167,16 +169,11 @@
 							pInputText
 							size="small"
 							[ngModel]="field.value"
-							(ngModelChange)="setComponentTokenValue(group.name, field.path, $event)"
+							(ngModelChange)="setComponentTokenValue(group, field.path, $event)"
 							style="width: 9rem"
 						/>
 					</label>
 				}
-				<p-button
-					label="Apply {{ group.label }} Tokens"
-					size="small"
-					(onClick)="group.fields.forEach((f) => applyComponentToken(group, f))"
-				/>
 			</div>
 		</div>
 	}
@@ -211,9 +208,14 @@
 	<div class="demo-section__row" style="align-items: end; margin-top: 1rem; flex-wrap: wrap">
 		<label style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem">
 			Dark Mode Selector
-			<input pInputText size="small" [(ngModel)]="darkModeSelectorValue" style="width: 10rem" />
+			<input
+				pInputText
+				size="small"
+				[ngModel]="darkModeSelectorValue()"
+				(ngModelChange)="setDarkModeSelector($event)"
+				style="width: 10rem"
+			/>
 		</label>
-		<p-button label="Apply Selector" size="small" (onClick)="applyDarkModeSelector()" />
 
 		<label style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.875rem">
 			zIndex.modal
@@ -221,11 +223,11 @@
 				pInputText
 				type="number"
 				size="small"
-				[(ngModel)]="zIndexModal"
+				[ngModel]="zIndexModal()"
+				(ngModelChange)="setZIndexModal($event)"
 				style="width: 6rem"
 			/>
 		</label>
-		<p-button label="Apply zIndex" size="small" (onClick)="applyZIndexModal()" />
 	</div>
 </section>
 

@@ -8,24 +8,36 @@
 		<i class="pi pi-bars"></i>
 	</button>
 
-	<span class="uikit-topbar__title">ngx-prime UI Kit</span>
+	<span class="uikit-topbar__title">NGX Prime Default UI Kit</span>
 
-	<p-button
-		class="uikit-topbar__download-config"
-		icon="pi pi-download"
-		label="Download Config"
-		[text]="true"
-		[disabled]="!designLabState.hasChanges()"
-		ariaLabel="Download changed theme config as JSON"
-		(onClick)="downloadConfig()"
-	/>
+	<div class="uikit-topbar__actions">
+		<p-button
+			icon="pi pi-palette"
+			[text]="true"
+			[rounded]="true"
+			ariaLabel="Design Lab"
+			pTooltip="Design Lab"
+			tooltipPosition="bottom"
+			(onClick)="goToDesignLab()"
+		/>
 
-	<p-button
-		class="uikit-topbar__theme-toggle"
-		[icon]="dark() ? 'pi pi-sun' : 'pi pi-moon'"
-		[text]="true"
-		[rounded]="true"
-		[ariaLabel]="dark() ? 'Switch to light mode' : 'Switch to dark mode'"
-		(onClick)="toggleDarkMode()"
-	/>
+		<p-button
+			icon="pi pi-download"
+			[text]="true"
+			[rounded]="true"
+			[disabled]="!designLabState.hasChanges()"
+			ariaLabel="Download changed theme config as JSON"
+			pTooltip="Download Config"
+			tooltipPosition="bottom"
+			(onClick)="downloadConfig()"
+		/>
+
+		<p-button
+			[icon]="designLabState.dark() ? 'pi pi-sun' : 'pi pi-moon'"
+			[text]="true"
+			[rounded]="true"
+			[ariaLabel]="designLabState.dark() ? 'Switch to light mode' : 'Switch to dark mode'"
+			(onClick)="designLabState.toggleDarkMode()"
+		/>
+	</div>
 </header>

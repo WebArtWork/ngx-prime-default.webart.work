@@ -6,7 +6,7 @@ export const routes: Routes = [
 		path: '',
 		component: ShowcaseShell,
 		children: [
-			{ path: '', redirectTo: 'dashboards/default', pathMatch: 'full' },
+			{ path: '', loadComponent: () => import('./pages/landing/landing').then((m) => m.Landing) },
 			{
 				path: 'dashboards/default',
 				loadComponent: () =>
@@ -86,10 +86,6 @@ export const routes: Routes = [
 					import('./pages/account/settings/settings').then((m) => m.AccountSettings),
 			},
 		],
-	},
-	{
-		path: 'landing',
-		loadComponent: () => import('./pages/landing/landing').then((m) => m.Landing),
 	},
 	{
 		path: 'authentication/login',

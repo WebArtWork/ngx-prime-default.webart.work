@@ -2,14 +2,21 @@
 @import 'tailwindcss-primeui';
 @import 'primeicons/primeicons.css';
 
+html,
 body {
 	margin: 0;
+	height: 100%;
 }
 
 .tr-page {
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 4rem);
 	max-width: 72rem;
 	margin: 0 auto;
 	padding: 1.5rem;
+	box-sizing: border-box;
+	overflow: hidden;
 }
 
 .tr-page__title {
@@ -28,5 +35,11 @@ body {
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 1rem;
-	margin-bottom: 1rem;
+	flex-shrink: 0;
+	margin-bottom: 1.5rem;
+}
+
+.tr-table-wrap {
+	flex: 1;
+	min-height: 0;
 }

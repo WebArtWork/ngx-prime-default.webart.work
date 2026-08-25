@@ -42,53 +42,53 @@
 		</a>
 	</div>
 
-	<material-icon
+	<app-nav-icon
 		[class.sidebar--minimized-icon]="!showNames()"
 		[name]="showNames() ? translateService.translate('Settings')() : ''"
 		[ariaLabel]="translateService.translate('Settings')()"
 		(click)="closeIfOverlay()"
 		routerLink="/settings"
-		icon="settings"
-	></material-icon>
+		icon="cog"
+	/>
 
 	<hr class="my-2 border-0 border-t-2 border-t-[var(--c-text-primary)]" />
 
 	@if (userService.role('admin')) {
-	<material-icon
+	<app-nav-icon
 		[class.sidebar--minimized-icon]="!showNames()"
 		[name]="showNames() ? translateService.translate('Users')() : ''"
 		[ariaLabel]="translateService.translate('Users')()"
 		(click)="closeIfOverlay()"
 		routerLink="/admin/users"
-		icon="manage_accounts"
-	></material-icon>
+		icon="user-edit"
+	/>
 
-	<material-icon
+	<app-nav-icon
 		[class.sidebar--minimized-icon]="!showNames()"
 		[name]="showNames() ? translateService.translate('Clients')() : ''"
 		[ariaLabel]="translateService.translate('Clients')()"
 		routerLink="/admin/clients"
 		(click)="closeIfOverlay()"
-		icon="people"
-	></material-icon>
+		icon="users"
+	/>
 
-	<material-icon
+	<app-nav-icon
 		[class.sidebar--minimized-icon]="!showNames()"
 		[name]="showNames() ? translateService.translate('Forms')() : ''"
 		[ariaLabel]="translateService.translate('Forms')()"
 		(click)="closeIfOverlay()"
 		routerLink="/admin/forms"
-		icon="backup_table"
-	></material-icon>
+		icon="table"
+	/>
 
-	<material-icon
+	<app-nav-icon
 		[class.sidebar--minimized-icon]="!showNames()"
 		[name]="showNames() ? translateService.translate('Translates')() : ''"
 		[ariaLabel]="translateService.translate('Translates')()"
 		routerLink="/admin/translates"
 		(click)="closeIfOverlay()"
-		icon="translate"
-	></material-icon>
+		icon="language"
+	/>
 
 	<hr class="my-2 border-0 border-t-2 border-t-[var(--c-text-primary)]" />
 	}

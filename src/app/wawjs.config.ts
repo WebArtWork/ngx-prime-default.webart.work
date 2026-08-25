@@ -1,5 +1,6 @@
 import { environment } from '@env';
 import { DEFAULT_NETWORK_CONFIG } from '@wawjs/ngx-http';
+import { companyProfile } from './company/company.data';
 
 const dbName = 'wawjs-store';
 const storeName = 'kv';
@@ -206,11 +207,11 @@ export const wawjsConfig = {
 		warnMissingGuard: false,
 		useTitleSuffix: true,
 		defaults: {
-			title: environment.meta.title,
-			favicon: environment.meta.favicon,
-			description: environment.meta.description,
-			titleSuffix: ' | ' + environment.meta.title,
-			'og:image': environment.meta.image,
+			title: companyProfile.title,
+			favicon: companyProfile.favicon,
+			description: companyProfile.description,
+			titleSuffix: ' | ' + companyProfile.title,
+			'og:image': companyProfile.image,
 		},
 	},
 };

@@ -30,10 +30,11 @@
 							class="inline-flex overflow-hidden rounded-[var(--radius-btn)] border border-[var(--c-border)]"
 						>
 							@for (m of modes(); track m) {
-							<wbutton
-								[type]="mode() === m ? 'primary' : 'link'"
-								[isMultipleClicksAllowed]="true"
-								(wClick)="setMode(m)"
+							<button
+								pButton
+								type="button"
+								[text]="mode() !== m"
+								(click)="setMode(m)"
 								[class]="{
 									'!text-[var(--c-text-muted)]': mode() !== m,
 									'hover:!text-[var(--c-text-primary)]': mode() !== m
@@ -41,7 +42,7 @@
 								class="!cursor-pointer !rounded-none !px-3 !py-1.5 !text-[0.8rem] !font-semibold hover:!bg-[color-mix(in_srgb,var(--c-text-primary)_6%,transparent)]"
 							>
 								{{ m }}
-							</wbutton>
+							</button>
 							}
 						</div>
 					</div>
@@ -59,10 +60,11 @@
 							class="inline-flex overflow-hidden rounded-[var(--radius-btn)] border border-[var(--c-border)]"
 						>
 							@for (d of densities(); track d) {
-							<wbutton
-								[type]="density() === d ? 'primary' : 'link'"
-								[isMultipleClicksAllowed]="true"
-								(wClick)="setDensity(d)"
+							<button
+								pButton
+								type="button"
+								[text]="density() !== d"
+								(click)="setDensity(d)"
 								[class]="{
 									'!text-[var(--c-text-muted)]': density() !== d,
 									'hover:!text-[var(--c-text-primary)]': density() !== d
@@ -70,7 +72,7 @@
 								class="!cursor-pointer !rounded-none !px-3 !py-1.5 !text-[0.8rem] !font-semibold hover:!bg-[color-mix(in_srgb,var(--c-text-primary)_6%,transparent)]"
 							>
 								{{ d }}
-							</wbutton>
+							</button>
 							}
 						</div>
 					</div>
@@ -88,10 +90,11 @@
 							class="inline-flex overflow-hidden rounded-[var(--radius-btn)] border border-[var(--c-border)]"
 						>
 							@for (r of radiuses(); track r) {
-							<wbutton
-								[type]="radius() === r ? 'primary' : 'link'"
-								[isMultipleClicksAllowed]="true"
-								(wClick)="setRadius(r)"
+							<button
+								pButton
+								type="button"
+								[text]="radius() !== r"
+								(click)="setRadius(r)"
 								[class]="{
 									'!text-[var(--c-text-muted)]': radius() !== r,
 									'hover:!text-[var(--c-text-primary)]': radius() !== r
@@ -99,7 +102,7 @@
 								class="!cursor-pointer !rounded-none !px-3 !py-1.5 !text-[0.8rem] !font-semibold hover:!bg-[color-mix(in_srgb,var(--c-text-primary)_6%,transparent)]"
 							>
 								{{ r }}
-							</wbutton>
+							</button>
 							}
 						</div>
 					</div>
@@ -121,7 +124,7 @@
 							class="inline-flex items-center gap-2 rounded-[var(--radius-btn)] px-2 py-1 no-underline transition hover:bg-[var(--c-bg-tertiary)] text-[var(--c-text-primary)]"
 							[routerLink]="l.to"
 						>
-							<material-icon [icon]="l.icon"></material-icon>
+							<i class="pi pi-{{ l.icon }}"></i>
 							<span class="text-sm" [translate]="l.label"></span>
 						</a>
 					</li>

@@ -11,6 +11,7 @@ import { PanelMenuModule } from '@wawjs/ngx-prime/panelmenu';
 })
 export class ShowcaseSidebar {
 	protected readonly items: MenuItem[] = [
+		{ label: 'Landing', icon: 'pi pi-globe', routerLink: ['/'] },
 		{
 			label: 'Dashboards',
 			icon: 'pi pi-home',
@@ -61,6 +62,5 @@ export class ShowcaseSidebar {
 			icon: 'pi pi-cog',
 			items: [{ label: 'Settings', routerLink: ['/account/settings'] }],
 		},
-		{ label: 'Landing', icon: 'pi pi-globe', routerLink: ['/landing'] },
 	];
 }

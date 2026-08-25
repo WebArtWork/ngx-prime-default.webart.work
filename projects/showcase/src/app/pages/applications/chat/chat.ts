@@ -1,11 +1,36 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from '@wawjs/ngx-prime/avatar';
 import { ButtonModule } from '@wawjs/ngx-prime/button';
 import { CardModule } from '@wawjs/ngx-prime/card';
 import { InputTextModule } from '@wawjs/ngx-prime/inputtext';
 
+import { PagePromptService } from '../../../shared/page-prompt/page-prompt.service';
+import { PagePromptConfig } from '../../../shared/page-prompt/page-prompt.types';
 import { CHAT_CONTACTS, CHAT_MESSAGES, type ChatMessage } from './chat.data';
+
+const PAGE_PROMPT_CONFIG: PagePromptConfig = {
+	pageTitle: 'Chat',
+	sourcePath: 'projects/showcase/src/app/pages/applications/chat',
+	description:
+		'A contact list next to a conversation panel, composing p-avatar initials with custom message bubbles.',
+	elements: [
+		{
+			id: 'contact-list',
+			label: 'Contact list',
+			description:
+				'A p-card listing contacts, each with a p-avatar (initials), name and last message preview; clicking selects the active conversation.',
+			selectedByDefault: true,
+		},
+		{
+			id: 'conversation-panel',
+			label: 'Conversation panel',
+			description:
+				'A message thread with left/right-aligned bubbles for the two participants, plus a pInputText composer with a send p-button.',
+			selectedByDefault: true,
+		},
+	],
+};
 
 /**
  * No ready-made chat component in ngx-prime — this composes `p-avatar` (as
@@ -19,11 +44,21 @@ import { CHAT_CONTACTS, CHAT_MESSAGES, type ChatMessage } from './chat.data';
 	styleUrl: './chat.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Chat {
+export class Chat implements OnDestroy {
+	private readonly pagePromptService = inject(PagePromptService);
+
 	protected readonly contacts = CHAT_CONTACTS;
 	protected readonly activeContactId = signal(CHAT_CONTACTS[0]?.id);
 	protected readonly messages = signal<ChatMessage[]>(CHAT_MESSAGES);
 	protected readonly draft = signal('');
+
+	constructor() {
+		this.pagePromptService.setConfig(PAGE_PROMPT_CONFIG);
+	}
+
+	ngOnDestroy(): void {
+		this.pagePromptService.clearConfig(PAGE_PROMPT_CONFIG);
+	}
 
 	protected selectContact(id: string): void {
 		this.activeContactId.set(id);

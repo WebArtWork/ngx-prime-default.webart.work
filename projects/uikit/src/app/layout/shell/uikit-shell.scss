@@ -14,6 +14,7 @@
 
 .uikit-shell__sidebar {
 	grid-area: sidebar;
+	background: var(--p-content-background);
 	border-right: 1px solid var(--p-content-border-color);
 	overflow-y: auto;
 }

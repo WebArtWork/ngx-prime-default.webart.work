@@ -4,21 +4,32 @@ import {
 	inject,
 	signal,
 } from '@angular/core';
-import { form, submit } from '@angular/forms/signals';
-import { AlertService, ButtonComponent, InputComponent } from '@wawjs/ngx-ui';
+import { FormField, form, submit } from '@angular/forms/signals';
 import { NEW_USER, User, UserService } from '@wawjs/ngx-bos';
+import { MessageService } from '@wawjs/ngx-prime/api';
+import { ButtonModule } from '@wawjs/ngx-prime/button';
+import { InputTextModule } from '@wawjs/ngx-prime/inputtext';
+import { TextareaModule } from '@wawjs/ngx-prime/textarea';
 import { TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
+import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
 import { clientSchema } from './client.schema';
 
 @Component({
 	selector: 'app-client',
-	imports: [ButtonComponent, InputComponent, TranslateDirective],
+	imports: [
+		FormField,
+		ButtonModule,
+		InputTextModule,
+		TextareaModule,
+		FieldErrorComponent,
+		TranslateDirective,
+	],
 	templateUrl: './client.component.html',
 	styleUrl: './client.component.scss',
 })
 export class ClientComponent {
 	private readonly _userService = inject(UserService);
-	private readonly _alertService = inject(AlertService);
+	private readonly _messageService = inject(MessageService);
 	readonly translateService = inject(TranslateService);
 
 	readonly clientModel = signal<User>(NEW_USER);
@@ -28,8 +39,9 @@ export class ClientComponent {
 	wFormSubmit() {
 		submit(this.clientForm, async (field) => {
 			this._userService.create(field().value()).subscribe(() => {
-				this._alertService.success({
-					text: this.translateService.translate('Клієнта створено')(),
+				this._messageService.add({
+					severity: 'success',
+					detail: this.translateService.translate('Клієнта створено')(),
 				});
 			});
 

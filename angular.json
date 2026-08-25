@@ -119,7 +119,8 @@
 				"serve": {
 					"builder": "@angular/build:dev-server",
 					"options": {
-						"proxyConfig": "proxy.conf.json"
+						"proxyConfig": "proxy.conf.json",
+						"port": 4300
 					},
 					"configurations": {
 						"production": {
@@ -193,12 +194,24 @@
 					"builder": "@angular/build:application",
 					"options": {
 						"browser": "projects/showcase/src/main.ts",
+						"server": "projects/showcase/src/main.server.ts",
+						"outputMode": "static",
 						"tsConfig": "projects/showcase/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
 							{
 								"glob": "**/*",
 								"input": "projects/showcase/public"
+							},
+							{
+								"glob": "favicon.png",
+								"input": "src/assets",
+								"output": "/"
+							},
+							{
+								"glob": "logo.png",
+								"input": "src/assets",
+								"output": "/"
 							}
 						],
 						"styles": [
@@ -231,6 +244,9 @@
 				},
 				"serve": {
 					"builder": "@angular/build:dev-server",
+					"options": {
+						"port": 4310
+					},
 					"configurations": {
 						"production": {
 							"buildTarget": "showcase:build:production"
@@ -280,12 +296,24 @@
 					"builder": "@angular/build:application",
 					"options": {
 						"browser": "projects/uikit/src/main.ts",
+						"server": "projects/uikit/src/main.server.ts",
+						"outputMode": "static",
 						"tsConfig": "projects/uikit/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
 							{
 								"glob": "**/*",
 								"input": "projects/uikit/public"
+							},
+							{
+								"glob": "favicon.png",
+								"input": "src/assets",
+								"output": "/"
+							},
+							{
+								"glob": "logo.png",
+								"input": "src/assets",
+								"output": "/"
 							}
 						],
 						"styles": [
@@ -318,6 +346,9 @@
 				},
 				"serve": {
 					"builder": "@angular/build:dev-server",
+					"options": {
+						"port": 4320
+					},
 					"configurations": {
 						"production": {
 							"buildTarget": "uikit:build:production"
@@ -367,6 +398,8 @@
 					"builder": "@angular/build:application",
 					"options": {
 						"browser": "projects/translator/src/main.ts",
+						"server": "projects/translator/src/main.server.ts",
+						"outputMode": "static",
 						"tsConfig": "projects/translator/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
@@ -378,6 +411,16 @@
 								"glob": "*.json",
 								"input": "src/i18n",
 								"output": "i18n"
+							},
+							{
+								"glob": "favicon.png",
+								"input": "src/assets",
+								"output": "/"
+							},
+							{
+								"glob": "logo.png",
+								"input": "src/assets",
+								"output": "/"
 							}
 						],
 						"styles": [
@@ -410,6 +453,9 @@
 				},
 				"serve": {
 					"builder": "@angular/build:dev-server",
+					"options": {
+						"port": 4330
+					},
 					"configurations": {
 						"production": {
 							"buildTarget": "translator:build:production"

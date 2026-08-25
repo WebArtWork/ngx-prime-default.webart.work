@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ButtonModule } from '@wawjs/ngx-prime/button';
 import { CardModule } from '@wawjs/ngx-prime/card';
 import { InputTextModule } from '@wawjs/ngx-prime/inputtext';
@@ -64,7 +64,10 @@ export class DesignLab {
 		{ name: 'Nora', preset: Nora },
 	];
 
-	protected readonly activePreset = signal('Aura');
+	protected readonly activePreset = signal(this.designLabState.presetName() ?? 'Aura');
+	protected readonly selectedPresetOption = computed(() =>
+		this.presets.find((option) => option.name === this.activePreset()),
+	);
 
 	protected readonly primaryColors: SwatchOption[] = [
 		{ name: 'green', color: '#22c55e' },
@@ -90,9 +93,8 @@ export class DesignLab {
 		{ name: 'stone', color: '#78716c' },
 	];
 
-	protected readonly activePrimary = signal('blue');
-	protected readonly activeSurface = signal<string | undefined>(undefined);
-	protected readonly dark = signal(document.documentElement.classList.contains('app-dark'));
+	protected readonly activePrimary = signal(this.designLabState.primaryColorName() ?? 'blue');
+	protected readonly activeSurface = signal(this.designLabState.surfaceColorName());
 
 	protected selectPreset(option: PresetOption): void {
 		usePreset(option.preset as Record<string, unknown>);
@@ -114,13 +116,13 @@ export class DesignLab {
 		this.designLabState.surfaceColorHex.set(swatch.color);
 	}
 
+	protected readonly menuModeOptions: { label: string; value: MenuMode }[] = [
+		{ label: 'Static', value: 'static' },
+		{ label: 'Overlay', value: 'overlay' },
+	];
+
 	protected setMenuMode(mode: MenuMode): void {
 		this.designLabState.menuMode.set(mode);
-	}
-
-	protected toggleDarkMode(): void {
-		this.dark.update((value) => !value);
-		document.documentElement.classList.toggle('app-dark', this.dark());
 	}
 
 	// --- Primitive tokens: border radius scale ------------------------------
@@ -132,27 +134,35 @@ export class DesignLab {
 		md: '6px',
 		lg: '8px',
 		xl: '12px',
+		...this.designLabState.borderRadiusScale(),
 	});
 
 	protected setBorderRadiusStep(step: string, value: string): void {
-		this.borderRadiusScale.update((scale) => ({ ...scale, [step]: value }));
-	}
-
-	protected applyBorderRadiusScale(): void {
-		const scale = this.borderRadiusScale();
+		const scale = { ...this.borderRadiusScale(), [step]: value };
+		this.borderRadiusScale.set(scale);
 		updatePreset({ primitive: { borderRadius: scale } });
 		this.designLabState.borderRadiusScale.set({ ...scale });
 	}
 
 	// --- Semantic tokens: focus ring + form-field padding --------------------
 
-	protected readonly focusRingWidth = signal('1px');
+	protected readonly focusRingWidth = signal(this.designLabState.focusRingWidth() ?? '1px');
 	protected readonly focusRingStyleOptions = ['solid', 'dashed', 'none'];
-	protected readonly focusRingStyle = signal('solid');
-	protected readonly formFieldPaddingX = signal('0.75rem');
-	protected readonly formFieldPaddingY = signal('0.5rem');
+	protected readonly focusRingStyle = signal(this.designLabState.focusRingStyle() ?? 'solid');
+	protected readonly formFieldPaddingX = signal(this.designLabState.formFieldPaddingX() ?? '0.75rem');
+	protected readonly formFieldPaddingY = signal(this.designLabState.formFieldPaddingY() ?? '0.5rem');
 
-	protected applyFocusRing(): void {
+	protected setFocusRingWidth(value: string): void {
+		this.focusRingWidth.set(value);
+		this.applyFocusRing();
+	}
+
+	protected setFocusRingStyle(value: string): void {
+		this.focusRingStyle.set(value);
+		this.applyFocusRing();
+	}
+
+	private applyFocusRing(): void {
 		updatePreset({
 			semantic: {
 				focusRing: { width: this.focusRingWidth(), style: this.focusRingStyle() },
@@ -162,7 +172,17 @@ export class DesignLab {
 		this.designLabState.focusRingStyle.set(this.focusRingStyle());
 	}
 
-	protected applyFormFieldPadding(): void {
+	protected setFormFieldPaddingX(value: string): void {
+		this.formFieldPaddingX.set(value);
+		this.applyFormFieldPadding();
+	}
+
+	protected setFormFieldPaddingY(value: string): void {
+		this.formFieldPaddingY.set(value);
+		this.applyFormFieldPadding();
+	}
+
+	private applyFormFieldPadding(): void {
 		updatePreset({
 			semantic: {
 				formField: {
@@ -184,32 +204,40 @@ export class DesignLab {
 
 	protected readonly componentTokenSearch = signal('');
 
-	protected readonly componentTokenGroups = signal<ComponentTokenGroup[]>([
-		{
-			name: 'button',
-			label: 'Button',
-			fields: [
-				{ label: 'Root border radius', path: ['root', 'borderRadius'], value: '6px' },
-				{ label: 'Root gap', path: ['root', 'gap'], value: '0.5rem' },
-			],
-		},
-		{
-			name: 'card',
-			label: 'Card',
-			fields: [
-				{ label: 'Body padding', path: ['root', 'body', 'padding'], value: '1.25rem' },
-				{ label: 'Body gap', path: ['root', 'body', 'gap'], value: '0.5rem' },
-			],
-		},
-		{
-			name: 'datatable',
-			label: 'Table',
-			fields: [
-				{ label: 'Header cell padding', path: ['header', 'cell', 'padding'], value: '0.75rem 1rem' },
-				{ label: 'Body cell padding', path: ['bodyCell', 'padding'], value: '0.75rem 1rem' },
-			],
-		},
-	]);
+	protected readonly componentTokenGroups = signal<ComponentTokenGroup[]>(
+		[
+			{
+				name: 'button',
+				label: 'Button',
+				fields: [
+					{ label: 'Root border radius', path: ['root', 'borderRadius'], value: '6px' },
+					{ label: 'Root gap', path: ['root', 'gap'], value: '0.5rem' },
+				],
+			},
+			{
+				name: 'card',
+				label: 'Card',
+				fields: [
+					{ label: 'Body padding', path: ['root', 'body', 'padding'], value: '1.25rem' },
+					{ label: 'Body gap', path: ['root', 'body', 'gap'], value: '0.5rem' },
+				],
+			},
+			{
+				name: 'datatable',
+				label: 'Table',
+				fields: [
+					{ label: 'Header cell padding', path: ['header', 'cell', 'padding'], value: '0.75rem 1rem' },
+					{ label: 'Body cell padding', path: ['bodyCell', 'padding'], value: '0.75rem 1rem' },
+				],
+			},
+		].map((group) => ({
+			...group,
+			fields: group.fields.map((field) => ({
+				...field,
+				value: this.designLabState.componentTokenOverrides()[group.name]?.[field.path.join('.')] ?? field.value,
+			})),
+		})),
+	);
 
 	protected filteredComponentTokenGroups(): ComponentTokenGroup[] {
 		const term = this.componentTokenSearch().trim().toLowerCase();
@@ -226,29 +254,25 @@ export class DesignLab {
 			.filter((group) => group.fields.length > 0);
 	}
 
-	protected setComponentTokenValue(groupName: string, fieldPath: string[], value: string): void {
+	protected setComponentTokenValue(group: ComponentTokenGroup, fieldPath: string[], value: string): void {
 		this.componentTokenGroups.update((groups) =>
-			groups.map((group) =>
-				group.name !== groupName
-					? group
+			groups.map((g) =>
+				g.name !== group.name
+					? g
 					: {
-							...group,
-							fields: group.fields.map((field) =>
-								field.path === fieldPath || field.path.join('.') === fieldPath.join('.')
-									? { ...field, value }
-									: field,
+							...g,
+							fields: g.fields.map((field) =>
+								field.path.join('.') === fieldPath.join('.') ? { ...field, value } : field,
 							),
 						},
 			),
 		);
-	}
 
-	protected applyComponentToken(group: ComponentTokenGroup, field: ComponentTokenField): void {
 		const override: Record<string, unknown> = {};
 		let cursor = override;
-		field.path.forEach((key, index) => {
-			if (index === field.path.length - 1) {
-				cursor[key] = field.value;
+		fieldPath.forEach((key, index) => {
+			if (index === fieldPath.length - 1) {
+				cursor[key] = value;
 			} else {
 				cursor[key] = {};
 				cursor = cursor[key] as Record<string, unknown>;
@@ -257,7 +281,7 @@ export class DesignLab {
 		updatePreset({ components: { [group.name]: override } });
 		this.designLabState.componentTokenOverrides.update((overrides) => ({
 			...overrides,
-			[group.name]: { ...(overrides[group.name] ?? {}), [field.path.join('.')]: field.value },
+			[group.name]: { ...(overrides[group.name] ?? {}), [fieldPath.join('.')]: value },
 		}));
 	}
 
@@ -275,16 +299,17 @@ export class DesignLab {
 		this.designLabState.inputVariant.set(value);
 	}
 
-	protected readonly darkModeSelectorValue = signal('.app-dark');
+	protected readonly darkModeSelectorValue = signal(this.designLabState.darkModeSelector() ?? '.app-dark');
 
-	protected applyDarkModeSelector(): void {
+	protected setDarkModeSelector(value: string): void {
+		this.darkModeSelectorValue.set(value);
 		// Re-applying the theme options updates the selector the ThemeProvider
 		// watches for dark mode; the demo app itself still toggles `.app-dark`.
 		usePreset(this.presets.find((preset) => preset.name === this.activePreset())?.preset as any);
-		this.designLabState.darkModeSelector.set(this.darkModeSelectorValue());
+		this.designLabState.darkModeSelector.set(value);
 	}
 
-	protected readonly rtl = signal(false);
+	protected readonly rtl = signal(this.designLabState.rtl() ?? false);
 
 	protected toggleRtl(value: boolean): void {
 		this.rtl.set(value);
@@ -292,16 +317,17 @@ export class DesignLab {
 		this.designLabState.rtl.set(value);
 	}
 
-	protected readonly zIndexModal = signal(1100);
+	protected readonly zIndexModal = signal(this.designLabState.zIndexModal() ?? 1100);
 
-	protected applyZIndexModal(): void {
-		this.ngxPrime.zIndex.modal = this.zIndexModal();
-		this.designLabState.zIndexModal.set(this.zIndexModal());
+	protected setZIndexModal(value: number): void {
+		this.zIndexModal.set(value);
+		this.ngxPrime.zIndex.modal = value;
+		this.designLabState.zIndexModal.set(value);
 	}
 
 	// --- Pass-through (pt) preview --------------------------------------------
 
-	protected readonly ptExampleEnabled = signal(false);
+	protected readonly ptExampleEnabled = signal(this.designLabState.ptExampleEnabled());
 
 	protected readonly ptExample = {
 		root: { style: 'border-width: 2px; border-style: dashed;' },

@@ -5,19 +5,18 @@ import {
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { MaterialComponent, ThemeService } from '@wawjs/ngx-ui';
 import { UserService } from '@wawjs/ngx-bos';
 import { TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
+import { NavIconComponent } from '../../shared/nav-icon/nav-icon.component';
 import { SidebarService } from './sidebar.service';
 
 @Component({
 	selector: 'layout-sidebar',
 	templateUrl: './sidebar.component.html',
 	styleUrl: './sidebar.component.scss',
-	imports: [RouterLink, TranslateDirective, MaterialComponent, NgClass],
+	imports: [RouterLink, TranslateDirective, NavIconComponent, NgClass],
 })
 export class SidebarComponent {
-	readonly themeService = inject(ThemeService);
 	readonly userService = inject(UserService);
 	readonly translateService = inject(TranslateService);
 	readonly sidebarService = inject(SidebarService);

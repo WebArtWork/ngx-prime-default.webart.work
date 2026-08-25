@@ -77,9 +77,6 @@ export const appConfig: ApplicationConfig = {
 				options: { darkModeSelector: "[data-mode='dark']" },
 			},
 		}),
-		// TODO(future work): @wawjs/ngx-ui's ModalService used to back NGX_FORM_CONFIG's
-		// modal helpers via a factory here. Re-wire this using ngx-prime's dialog service
-		// once the rest of the app's modal usage is migrated off ngx-ui.
 		provideNgxTinymce(tinymceConfig),
 		provideRouter(
 			routes,

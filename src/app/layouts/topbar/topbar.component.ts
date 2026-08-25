@@ -6,15 +6,25 @@ import {
 	output,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BurgerComponent, BurgerState, MaterialComponent } from '@wawjs/ngx-ui';
 import { CoreService } from '@wawjs/ngx-core';
 import { TranslateService } from '@wawjs/ngx-translate';
+import { NavIconComponent } from '../../shared/nav-icon/nav-icon.component';
 import { SidebarService } from '../sidebar/sidebar.service';
+
+/** Mirrors the sidebar mode this burger icon represents. */
+type BurgerState = 'three-lines' | 'two-lines' | 'one-line' | 'cross';
+
+const BURGER_ICONS: Record<BurgerState, string> = {
+	'three-lines': 'bars',
+	'two-lines': 'list',
+	'one-line': 'minus',
+	cross: 'times',
+};
 
 @Component({
 	selector: 'layout-topbar',
 	templateUrl: './topbar.component.html',
-	imports: [RouterLink, MaterialComponent, BurgerComponent],
+	imports: [RouterLink, NavIconComponent],
 })
 export class TopbarComponent {
 	private readonly _coreService = inject(CoreService);
@@ -42,6 +52,8 @@ export class TopbarComponent {
 				return 'one-line';
 		}
 	});
+
+	readonly burgerIcon = computed(() => BURGER_ICONS[this.burgerState()]);
 
 	onBurgerClick(): void {
 		this._sidebarService.burgerClick();

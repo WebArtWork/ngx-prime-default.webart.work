@@ -30,10 +30,11 @@
 		<div
 			class="relative w-full max-w-[420px] rounded-[var(--radius-card)] bg-[var(--c-bg-secondary)] p-8 shadow-[var(--shadow-md)] md:p-10 border border-[var(--c-border)]"
 		>
-			<icon-theme
-				class="absolute right-3 top-3 grid h-12 w-12"
-				size="48px"
-			></icon-theme>
+			<i
+				class="pi absolute right-3 top-3 grid h-12 w-12 place-items-center text-2xl text-[var(--c-text-muted)]"
+				[class.pi-sun]="themeService.mode() !== 'dark'"
+				[class.pi-moon]="themeService.mode() === 'dark'"
+			></i>
 
 			<h1 class="m-0 text-2xl font-bold text-[var(--c-text-secondary)]" translate>
 				Увійти / Зареєструватися
@@ -45,42 +46,51 @@
 			>
 				<div class="space-y-3">
 					<div>
-						<winput
+						<input
+							pInputText
+							class="w-full"
 							[placeholder]="translateService.translate('Введіть email...')()"
 							[formField]="signForm.email"
-							[focused]="true"
+							autofocus
 							type="email"
-						></winput>
+						/>
+						<app-field-error [field]="signForm.email" />
 					</div>
 
 					<div>
-						<winput
+						<input
+							pPassword
+							class="w-full"
 							[placeholder]="translateService.translate('Введіть пароль...')()"
 							[formField]="signForm.password"
-							type="password"
-						></winput>
+							[feedback]="false"
+						/>
+						<app-field-error [field]="signForm.password" />
 					</div>
 
 					@if (showCode()) {
 					<div>
-						<winput
+						<input
+							pInputText
+							class="w-full"
 							[placeholder]="translateService.translate('Введіть код з пошти...')()"
 							[formField]="signForm.resetPin"
 							type="number"
-						></winput>
+						/>
+						<app-field-error [field]="signForm.resetPin" />
 					</div>
 					}
 				</div>
 
 				<div class="pt-3">
-					<wbutton
+					<button
+						pButton
+						type="submit"
 						[disabled]="isSubmitDisabled()"
-						[isMultipleClicksAllowed]="true"
-						type="primary"
 						class="w-full"
 					>
 						<span translate>Почати</span>
-					</wbutton>
+					</button>
 				</div>
 			</form>
 		</div>

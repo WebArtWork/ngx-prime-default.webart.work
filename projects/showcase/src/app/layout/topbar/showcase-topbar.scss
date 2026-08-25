@@ -28,6 +28,9 @@
 	font-size: 1.125rem;
 }
 
-.showcase-topbar__theme-toggle {
+.showcase-topbar__actions {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
 	margin-left: auto;
 }

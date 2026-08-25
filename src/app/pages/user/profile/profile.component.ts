@@ -5,21 +5,24 @@ import {
 	signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { form, submit } from '@angular/forms/signals';
-import { ButtonComponent, InputComponent, MaterialComponent } from '@wawjs/ngx-ui';
+import { FormField, form, submit } from '@angular/forms/signals';
 import { FileComponent } from '@wawjs/ngx-bos';
 import { UserService } from '@wawjs/ngx-bos';
 import { EmitterService } from '@wawjs/ngx-core';
+import { ButtonModule } from '@wawjs/ngx-prime/button';
+import { InputTextModule } from '@wawjs/ngx-prime/inputtext';
+import { TextareaModule } from '@wawjs/ngx-prime/textarea';
 import { TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
 import { ProfileModel } from './profile.interface';
 import { profileSchema } from './profile.schema';
 
 @Component({
 	imports: [
-		InputComponent,
-		ButtonComponent,
+		FormField,
+		ButtonModule,
+		InputTextModule,
+		TextareaModule,
 		FileComponent,
-		MaterialComponent,
 		TranslateDirective,
 	],
 	templateUrl: './profile.component.html',

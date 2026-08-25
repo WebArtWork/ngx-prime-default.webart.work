@@ -6,33 +6,49 @@
 			(submit)="wFormSubmit(); $event.preventDefault()"
 			class="flex flex-col gap-3"
 		>
-			<winput
-				[placeholder]="translateService.translate('Введіть ім\'я...')()"
-				[formField]="clientForm.name"
-			></winput>
+			<div>
+				<input
+					pInputText
+					class="w-full"
+					[placeholder]="translateService.translate('Введіть ім\'я...')()"
+					[formField]="clientForm.name"
+				/>
+				<app-field-error [field]="clientForm.name" />
+			</div>
 
-			<winput
-				[placeholder]="translateService.translate('Введіть email...')()"
-				[formField]="clientForm.email"
-				type="email"
-			></winput>
+			<div>
+				<input
+					pInputText
+					class="w-full"
+					[placeholder]="translateService.translate('Введіть email...')()"
+					[formField]="clientForm.email"
+					type="email"
+				/>
+				<app-field-error [field]="clientForm.email" />
+			</div>
 
-			<winput
-				[placeholder]="translateService.translate('Введіть телефон...')()"
-				[formField]="clientForm.phone"
-				type="tel"
-			></winput>
+			<div>
+				<input
+					pInputText
+					class="w-full"
+					[placeholder]="translateService.translate('Введіть телефон...')()"
+					[formField]="clientForm.phone"
+					type="tel"
+				/>
+				<app-field-error [field]="clientForm.phone" />
+			</div>
 
-			<winput
+			<textarea
+				pTextarea
+				class="w-full"
 				[placeholder]="translateService.translate('Введіть опис...')()"
 				[formField]="clientForm.bio"
-				type="textarea"
-			></winput>
+			></textarea>
 
 			<div class="mt-2 flex flex-wrap gap-2">
-				<wbutton [disabled]="isSubmitDisabled()" type="primary">
+				<button pButton type="submit" [disabled]="isSubmitDisabled()">
 					<span translate>Створити</span>
-				</wbutton>
+				</button>
 			</div>
 		</form>
 	</div>

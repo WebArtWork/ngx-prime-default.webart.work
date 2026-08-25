@@ -2,13 +2,15 @@
 	<header class="dashboard__header">
 		<nav class="dashboard__nav">
 			@for (_view of views; track $index) {
-			<wbutton
+			<button
+				pButton
+				type="button"
+				severity="secondary"
 				[class.is-active]="view() === _view"
-				(wClick)="onSelectView(_view)"
-				type="secondary"
+				(click)="onSelectView(_view)"
 			>
 				{{_view.replace('-', ' ') | titlecase}}
-			</wbutton>
+			</button>
 			}
 		</nav>
 	</header>
