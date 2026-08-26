@@ -121,7 +121,7 @@
 					"builder": "@angular/build:dev-server",
 					"options": {
 						"proxyConfig": "proxy.conf.json",
-						"port": 4300
+						"port": 4200
 					},
 					"configurations": {
 						"production": {
@@ -132,29 +132,6 @@
 						}
 					},
 					"defaultConfiguration": "development"
-				}
-			}
-		},
-		"ngx-bos": {
-			"projectType": "library",
-			"root": "projects/ngx-bos",
-			"sourceRoot": "projects/ngx-bos/src",
-			"prefix": "ngx-bos",
-			"architect": {
-				"build": {
-					"builder": "@angular/build:ng-packagr",
-					"options": {
-						"project": "projects/ngx-bos/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "projects/ngx-bos/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "projects/ngx-bos/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
 				}
 			}
 		},
