@@ -32,11 +32,6 @@ export class SettingsComponent {
 	readonly themeService = inject(ThemeState);
 	private readonly _destroyRef = inject(DestroyRef);
 
-	readonly languageName = computed(() => {
-		const language = this.languageService.getLanguage(this.languageService.language());
-
-		return language?.name ?? '';
-	});
 	private static readonly LANGUAGE_FLAG_EMOJI: Record<string, string> = {
 		cs: '🇨🇿',
 		de: '🇩🇪',
@@ -55,9 +50,11 @@ export class SettingsComponent {
 		uk: '🇺🇦',
 	};
 
-	readonly languageFlagEmoji = computed(
-		() => SettingsComponent.LANGUAGE_FLAG_EMOJI[this.languageService.language()] ?? '🌐',
-	);
+	languageFlagEmoji(code: string): string {
+		return SettingsComponent.LANGUAGE_FLAG_EMOJI[code] ?? '🌐';
+	}
+
+	readonly isLanguageListOpen = signal(false);
 
 	readonly securityModel = signal<SecurityModel>({
 		currentPassword: '',
@@ -105,16 +102,8 @@ export class SettingsComponent {
 		this.userService.updateMe();
 	}
 
-	nextLanguage(): void {
-		const languages = this.languageService.languages();
-		if (!languages.length) return;
-
-		const currentIndex = languages.findIndex(
-			language => language.code === this.languageService.language(),
-		);
-		const nextIndex =
-			currentIndex >= 0 && currentIndex < languages.length - 1 ? currentIndex + 1 : 0;
-
-		void this.translateService.setLanguage(languages[nextIndex].code);
+	setLanguage(code: string): void {
+		void this.translateService.setLanguage(code);
+		this.isLanguageListOpen.set(false);
 	}
 }

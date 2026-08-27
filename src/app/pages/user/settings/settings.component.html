@@ -29,7 +29,9 @@
 							pButton
 							type="button"
 							size="small"
+							class="settings__theme-btn"
 							[text]="themeService.mode() !== m"
+							[attr.aria-pressed]="themeService.mode() === m"
 							(click)="themeService.setMode(m)"
 						>
 							{{ m }}
@@ -46,7 +48,9 @@
 							pButton
 							type="button"
 							size="small"
+							class="settings__theme-btn"
 							[text]="themeService.density() !== d"
+							[attr.aria-pressed]="themeService.density() === d"
 							(click)="themeService.setDensity(d)"
 						>
 							{{ d }}
@@ -63,7 +67,9 @@
 							pButton
 							type="button"
 							size="small"
+							class="settings__theme-btn"
 							[text]="themeService.radius() !== r"
+							[attr.aria-pressed]="themeService.radius() === r"
 							(click)="themeService.setRadius(r)"
 						>
 							{{ r }}
@@ -76,12 +82,36 @@
 
 	<section class="settings__section">
 		<h2 class="settings__label" translate>Switch language</h2>
-		@if (languageName()) {
-			<button (click)="nextLanguage()" class="settings__language" [attr.aria-label]="translateService.translate('Switch language')()" type="button">
-				<span class="settings__flag" aria-hidden="true">{{ languageFlagEmoji() }}</span>
-				<span [translate]="languageName()"></span>
+		<div class="settings__language-picker">
+			<button
+				(click)="isLanguageListOpen.set(!isLanguageListOpen())"
+				class="settings__language"
+				[attr.aria-label]="translateService.translate('Switch language')()"
+				[attr.aria-expanded]="isLanguageListOpen()"
+				type="button"
+			>
+				<span class="settings__flag" aria-hidden="true">{{ languageFlagEmoji(languageService.language()) }}</span>
+				<span [translate]="languageService.getLanguage(languageService.language())?.name ?? ''"></span>
+				<i class="pi pi-chevron-down" aria-hidden="true"></i>
 			</button>
-		}
+			@if (isLanguageListOpen()) {
+				<ul class="settings__languages">
+					@for (language of languageService.languages(); track language.code) {
+						<li>
+							<button
+								(click)="setLanguage(language.code)"
+								class="settings__language-option"
+								[class.settings__language-option--active]="language.code === languageService.language()"
+								type="button"
+							>
+								<span class="settings__flag" aria-hidden="true">{{ languageFlagEmoji(language.code) }}</span>
+								<span [translate]="language.name"></span>
+							</button>
+						</li>
+					}
+				</ul>
+			}
+		</div>
 	</section>
 
 	<div class="settings__actions"><button pButton severity="secondary" type="button" (click)="userService.logout()"><i class="pi pi-sign-out"></i><span translate>Logout</span></button></div>
