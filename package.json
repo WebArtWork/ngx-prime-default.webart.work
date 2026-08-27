@@ -10,7 +10,8 @@
 		"build:showcase": "ng build showcase",
 		"build:uikit": "ng build uikit",
 		"start:translator": "ng serve translator",
-		"build:translator": "ng build translator"
+		"build:translator": "ng build translator",
+		"postinstall": "patch-package"
 	},
 	"dependencies": {
 		"@angular/cdk": "22.1.2",
@@ -58,6 +59,7 @@
 		"@types/node": "24.12.4",
 		"baseline-browser-mapping": "2.10.33",
 		"ng-packagr": "22.0.0",
+		"patch-package": "^8.0.1",
 		"prettier": "3.8.4",
 		"typescript": "6.0.3",
 		"zone.js": "0.16.2"

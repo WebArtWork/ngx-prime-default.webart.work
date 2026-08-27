@@ -20,6 +20,14 @@ export class TranslationsPage {
 	protected readonly onlyIssues = signal(false);
 	protected readonly onlyModified = signal(false);
 
+	/**
+	 * `p-table` tracks rows by object identity by default. `setValue()`
+	 * replaces the edited row with a new object on every keystroke, so
+	 * without this the table would recreate that row's DOM (and its
+	 * `<input>`, dropping focus) on every character typed.
+	 */
+	protected readonly trackByIndex = (_index: number, row: TranslationRow): number => row.index;
+
 	protected filteredRows(): TranslationRow[] {
 		const term = this.filterText().trim().toLowerCase();
 		const onlyIssues = this.onlyIssues();

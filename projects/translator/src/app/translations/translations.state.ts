@@ -149,20 +149,25 @@ export class TranslationsState {
 	/**
 	 * v1 scope: this is a static Angular SPA with no backend, so it can't write
 	 * to `src/i18n/*.json` directly from the browser. Instead — mirroring
-	 * uikit's "Download Config" pattern — this downloads the edited array for
-	 * one language as JSON; the developer replaces the matching file under
-	 * `src/i18n/` with it. Not in scope for v1: adding brand-new languages,
-	 * machine translation, pluralization tooling.
+	 * uikit's "Download Config" pattern — this downloads only the rows edited
+	 * in this session, keyed by their English source text, so the developer
+	 * can apply just those changes to `src/i18n/{lang}.json`. Not in scope
+	 * for v1: adding brand-new languages, machine translation, pluralization
+	 * tooling.
 	 */
 	downloadLanguage(langCode: string): void {
-		const rows = this.rows();
-		const array = rows.map((row) => row.values[langCode] ?? '');
-		const json = JSON.stringify(array, null, 2);
+		const changes: Record<string, string> = {};
+		for (const row of this.rows()) {
+			if (this.isRowModified(row)) {
+				changes[row.key] = row.values[langCode] ?? '';
+			}
+		}
+		const json = JSON.stringify(changes, null, 2);
 		const blob = new Blob([json], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
 		const link = document.createElement('a');
 		link.href = url;
-		link.download = `${langCode}.json`;
+		link.download = `${langCode}-changes.json`;
 		link.click();
 		URL.revokeObjectURL(url);
 	}

@@ -13,16 +13,16 @@
 			/>
 			<label style="display: flex; align-items: center; gap: 0.5rem">
 				<p-toggleswitch
-					[ngModel]="onlyIssues() && translationsState.issueCount() > 0"
-					[disabled]="translationsState.issueCount() === 0"
+					[ngModel]="onlyIssues()"
+					[disabled]="translationsState.issueCount() === 0 && !onlyIssues()"
 					(ngModelChange)="onlyIssues.set($event)"
 				/>
 				Missing ({{ translationsState.issueCount() }})
 			</label>
 			<label style="display: flex; align-items: center; gap: 0.5rem">
 				<p-toggleswitch
-					[ngModel]="onlyModified() && translationsState.modifiedCount() > 0"
-					[disabled]="translationsState.modifiedCount() === 0"
+					[ngModel]="onlyModified()"
+					[disabled]="translationsState.modifiedCount() === 0 && !onlyModified()"
 					(ngModelChange)="onlyModified.set($event)"
 				/>
 				Modified ({{ translationsState.modifiedCount() }})
@@ -39,7 +39,13 @@
 		</div>
 
 		<div class="tr-table-wrap">
-		<p-table [value]="filteredRows()" dataKey="index" [scrollable]="true" scrollHeight="flex">
+		<p-table
+			[value]="filteredRows()"
+			dataKey="index"
+			[rowTrackBy]="trackByIndex"
+			[scrollable]="true"
+			scrollHeight="flex"
+		>
 			<ng-template #header>
 				<tr>
 					<th style="width: 3rem">#</th>
@@ -60,8 +66,8 @@
 									pInputText
 									size="small"
 									style="width: 100%"
-									[ngModel]="row.values[translationsState.selectedLanguage()]"
-									(ngModelChange)="setValue(row, translationsState.selectedLanguage(), $event)"
+									[value]="row.values[translationsState.selectedLanguage()]"
+									(input)="setValue(row, translationsState.selectedLanguage(), $any($event.target).value)"
 								/>
 								@if (row.missing.includes(translationsState.selectedLanguage())) {
 									<p-tag severity="danger" value="missing" />
