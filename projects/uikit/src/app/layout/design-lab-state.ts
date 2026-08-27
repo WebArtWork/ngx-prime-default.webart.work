@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { effect, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { updatePreset, updatePrimaryPalette, updateSurfacePalette, usePreset } from '@wawjs/css-prime-styled';
+import { palette, updatePreset, updatePrimaryPalette, updateSurfacePalette, usePreset } from '@wawjs/css-prime-styled';
 import Aura from '@wawjs/css-prime-themes/aura';
 import Lara from '@wawjs/css-prime-themes/lara';
 import Nora from '@wawjs/css-prime-themes/nora';
@@ -148,12 +148,13 @@ export class DesignLabState {
 			this.presetName.set(stored.presetName);
 		}
 		if (stored.primaryColorHex) {
-			updatePrimaryPalette(stored.primaryColorHex);
+			updatePrimaryPalette(palette(stored.primaryColorHex));
 			this.primaryColorName.set(stored.primaryColorName);
 			this.primaryColorHex.set(stored.primaryColorHex);
 		}
 		if (stored.surfaceColorHex) {
-			updateSurfacePalette(stored.surfaceColorHex);
+			const shades = palette(stored.surfaceColorHex) as Record<string, string>;
+			updateSurfacePalette({ 0: '#ffffff', ...shades });
 			this.surfaceColorName.set(stored.surfaceColorName);
 			this.surfaceColorHex.set(stored.surfaceColorHex);
 		}

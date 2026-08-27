@@ -10,6 +10,7 @@ import Aura from '@wawjs/css-prime-themes/aura';
 import Lara from '@wawjs/css-prime-themes/lara';
 import Nora from '@wawjs/css-prime-themes/nora';
 import {
+	palette,
 	updatePreset,
 	updatePrimaryPalette,
 	updateSurfacePalette,
@@ -103,14 +104,15 @@ export class DesignLab {
 	}
 
 	protected selectPrimary(swatch: SwatchOption): void {
-		updatePrimaryPalette(swatch.color);
+		updatePrimaryPalette(palette(swatch.color));
 		this.activePrimary.set(swatch.name);
 		this.designLabState.primaryColorName.set(swatch.name);
 		this.designLabState.primaryColorHex.set(swatch.color);
 	}
 
 	protected selectSurface(swatch: SwatchOption): void {
-		updateSurfacePalette(swatch.color);
+		const shades = palette(swatch.color) as Record<string, string>;
+		updateSurfacePalette({ 0: '#ffffff', ...shades });
 		this.activeSurface.set(swatch.name);
 		this.designLabState.surfaceColorName.set(swatch.name);
 		this.designLabState.surfaceColorHex.set(swatch.color);
