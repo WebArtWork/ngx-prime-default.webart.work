@@ -8,13 +8,7 @@
 		<i class="pi pi-bars"></i>
 	</button>
 
-	<span class="showcase-topbar__title">NGX Prime Default Showcase</span>
-
-	<nav class="showcase-topbar__nav">
-		<a routerLink="/">Home</a>
-		<a routerLink="/uikit">UI Kit</a>
-		<a routerLink="/translations">Translations</a>
-	</nav>
+	<a routerLink="/" class="showcase-topbar__title">NGX Prime Default Development Kit</a>
 
 	<div class="showcase-topbar__actions">
 		@if (pagePromptService.config()) {
@@ -24,6 +18,29 @@
 				[rounded]="true"
 				ariaLabel="Create a page like this one with AI"
 				(onClick)="openPagePrompt()"
+			/>
+		}
+
+		@if (isUikitSection()) {
+			<p-button
+				icon="pi pi-palette"
+				[text]="true"
+				[rounded]="true"
+				ariaLabel="Design Lab"
+				pTooltip="Design Lab"
+				tooltipPosition="bottom"
+				(onClick)="goToDesignLab()"
+			/>
+
+			<p-button
+				icon="pi pi-download"
+				[text]="true"
+				[rounded]="true"
+				[disabled]="!designLabState.hasChanges()"
+				ariaLabel="Download changed theme config as JSON"
+				pTooltip="Download Config"
+				tooltipPosition="bottom"
+				(onClick)="downloadConfig()"
 			/>
 		}
 

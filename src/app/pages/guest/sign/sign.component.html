@@ -30,11 +30,14 @@
 		<div
 			class="relative w-full max-w-[420px] rounded-[var(--radius-card)] bg-[var(--c-bg-secondary)] p-8 shadow-[var(--shadow-md)] md:p-10 border border-[var(--c-border)]"
 		>
-			<i
-				class="pi absolute right-3 top-3 grid h-12 w-12 place-items-center text-2xl text-[var(--c-text-muted)]"
+			<button
+				(click)="themeService.nextTheme()"
+				[attr.aria-label]="translateService.translate('Перемкнути тему')()"
+				type="button"
+				class="pi absolute right-3 top-3 grid h-12 w-12 cursor-pointer place-items-center rounded-xl text-2xl text-[var(--c-text-muted)] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
 				[class.pi-sun]="themeService.mode() !== 'dark'"
 				[class.pi-moon]="themeService.mode() === 'dark'"
-			></i>
+			></button>
 
 			<h1 class="m-0 text-2xl font-bold text-[var(--c-text-secondary)]" translate>
 				Увійти / Зареєструватися

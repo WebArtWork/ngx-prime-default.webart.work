@@ -1,5 +1,4 @@
 <div class="tr-page">
-	<tr-topbar />
 	@if (translationsState.loading()) {
 		<p>Loading translation files…</p>
 	} @else if (translationsState.loadError()) {
@@ -29,6 +28,31 @@
 				Modified ({{ translationsState.modifiedCount() }})
 			</label>
 			<span style="flex: 1"></span>
+			<p-select
+				[options]="translationsState.languages"
+				optionLabel="name"
+				optionValue="code"
+				[ngModel]="translationsState.selectedLanguage()"
+				(ngModelChange)="translationsState.selectedLanguage.set($event)"
+				scrollHeight="none"
+				aria-label="Language"
+			/>
+			<p-button
+				icon="pi pi-download"
+				size="small"
+				severity="secondary"
+				[disabled]="!canDownloadSelected()"
+				ariaLabel="Download selected language JSON"
+				[pTooltip]="
+					translationsState.isDefaultLanguageSelected()
+						? 'English is the source language — nothing to download'
+						: translationsState.modifiedCount() > 0
+							? 'Download your changed rows'
+							: 'No changes to download yet'
+				"
+				tooltipPosition="bottom"
+				(onClick)="downloadSelectedLanguage()"
+			/>
 			<p-button
 				label="Reset"
 				icon="pi pi-refresh"

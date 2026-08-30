@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { ShowcaseShell } from './layout/shell/showcase-shell';
-import { UikitShell } from './uikit/layout/shell/uikit-shell';
 
 export const routes: Routes = [
 	{
@@ -90,7 +89,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'uikit',
-		component: UikitShell,
+		component: ShowcaseShell,
 		children: [
 			{ path: '', redirectTo: 'button/button', pathMatch: 'full' },
 			{
@@ -601,8 +600,16 @@ export const routes: Routes = [
 	},
 	{
 		path: 'translations',
-		loadComponent: () =>
-			import('./translator/pages/translations/translations-page').then((m) => m.TranslationsPage),
+		component: ShowcaseShell,
+		children: [
+			{
+				path: '',
+				loadComponent: () =>
+					import('./translator/pages/translations/translations-page').then(
+						(m) => m.TranslationsPage,
+					),
+			},
+		],
 	},
 	{
 		path: 'authentication/login',

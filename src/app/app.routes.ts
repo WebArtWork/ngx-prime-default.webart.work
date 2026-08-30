@@ -5,20 +5,28 @@ import { adminsGuard, authenticatedGuard, guestGuard } from '@wawjs/ngx-bos';
 export const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'sign',
-		pathMatch: 'full',
-	},
-	{
-		path: '',
-		canActivate: [guestGuard],
 		loadComponent: () =>
-			import('./layouts/guest/guest.component').then(
-				(m) => m.GuestComponent,
+			import('./layouts/user/user.component').then(
+				(m) => m.UserComponent,
 			),
 		children: [
 			{
-				path: 'sign',
+				path: '',
+				pathMatch: 'full',
 				canActivate: [MetaGuard],
+				data: {
+					meta: {
+						title: 'Головна',
+					},
+				},
+				loadChildren: () =>
+					import('./pages/landing/landing.routes').then(
+						(m) => m.routes,
+					),
+			},
+			{
+				path: 'sign',
+				canActivate: [guestGuard, MetaGuard],
 				data: {
 					meta: {
 						title: 'Вхід',
@@ -29,19 +37,9 @@ export const routes: Routes = [
 						(m) => m.routes,
 					),
 			},
-		],
-	},
-	{
-		path: '',
-		canActivate: [authenticatedGuard],
-		loadComponent: () =>
-			import('./layouts/user/user.component').then(
-				(m) => m.UserComponent,
-			),
-		children: [
 			{
 				path: 'dashboard',
-				canActivate: [MetaGuard],
+				canActivate: [authenticatedGuard, MetaGuard],
 				data: {
 					meta: {
 						title: 'Панель',
@@ -54,7 +52,7 @@ export const routes: Routes = [
 			},
 			{
 				path: 'profile',
-				canActivate: [MetaGuard],
+				canActivate: [authenticatedGuard, MetaGuard],
 				data: {
 					meta: {
 						title: 'Мій профіль',
@@ -67,7 +65,7 @@ export const routes: Routes = [
 			},
 			{
 				path: 'settings',
-				canActivate: [MetaGuard],
+				canActivate: [authenticatedGuard, MetaGuard],
 				data: {
 					meta: {
 						title: 'Мої налаштування',

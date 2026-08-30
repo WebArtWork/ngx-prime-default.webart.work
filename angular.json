@@ -224,7 +224,7 @@
 				"serve": {
 					"builder": "@angular/build:dev-server",
 					"options": {
-						"port": 4310
+						"port": 4000
 					},
 					"configurations": {
 						"production": {
