@@ -7,11 +7,18 @@
 		<li
 			class="inline-flex items-center max-md:flex-1 max-md:justify-center"
 		>
-			<app-nav-icon
-				[routerLink]="sidebarToggler() ? '/dashboard' : '/'"
-				[name]="viewport() === 'mobile' ? '' : sidebarToggler() ? translateService.translate('Dashboard')() : ''"
-				[icon]="sidebarToggler() ? 'th-large' : 'home'"
-			/>
+			@if (sidebarToggler()) {
+			<a
+				routerLink="/"
+				routerLinkActive="text-[var(--c-primary)]"
+				[attr.aria-label]="translateService.translate('Головна')()"
+				class="inline-flex items-center rounded-[var(--radius-btn)] px-3 py-2 text-[var(--c-text-secondary)] no-underline transition-colors hover:text-[var(--c-primary)]"
+			>
+				<icon-spider class="block h-11 w-11" />
+			</a>
+			} @else {
+			<app-nav-icon routerLink="/" icon="home" />
+			}
 		</li>
 
 		<li class="mx-auto max-md:hidden"></li>

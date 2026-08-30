@@ -1,9 +1,4 @@
-import {
-	Component,
-	computed,
-	inject,
-	signal,
-} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
 	FormField,
 	form,
@@ -12,18 +7,17 @@ import {
 	schema,
 	submit,
 } from '@angular/forms/signals';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { environment } from '@env';
-import { SpiderComponent } from '@wawjs/ngx-bos';
-import { User, UserService } from '@wawjs/ngx-bos';
+import { SpiderComponent, User, UserService } from '@wawjs/ngx-bos';
 import { HttpService } from '@wawjs/ngx-http';
 import { MessageService } from '@wawjs/ngx-prime/api';
 import { ButtonModule } from '@wawjs/ngx-prime/button';
 import { InputTextModule } from '@wawjs/ngx-prime/inputtext';
 import { PasswordModule } from '@wawjs/ngx-prime/password';
 import { TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
-import { FieldErrorComponent } from '../../../shared/field-error/field-error.component';
-import { ThemeState } from '../../../theme/theme-state';
+import { FieldErrorComponent } from '../../shared/field-error/field-error.component';
+import { ThemeState } from '../../app.theme';
 import { RespStatus, SignModel } from './sign.interface';
 
 const signSchema = schema<SignModel>((path) => {
@@ -37,6 +31,7 @@ const signSchema = schema<SignModel>((path) => {
 @Component({
 	imports: [
 		SpiderComponent,
+		RouterLink,
 		FormField,
 		ButtonModule,
 		InputTextModule,
@@ -131,33 +126,49 @@ export class SignComponent {
 	}
 
 	private _request(payload: SignModel) {
-		this._httpService.post('/api/user/request', payload, () => {
-			this.isSubmitting.set(false);
-			this.showCode.set(true);
+		this._httpService.post(
+			'/api/user/request',
+			payload,
+			() => {
+				this.isSubmitting.set(false);
+				this.showCode.set(true);
 
-			this._messageService.add({
-				severity: 'info',
-				detail: this.translateService.translate('Лист буде надіслано на ваш email')(),
-			});
-		}, this._handleRequestError.bind(this));
+				this._messageService.add({
+					severity: 'info',
+					detail: this.translateService.translate(
+						'Лист буде надіслано на ваш email',
+					)(),
+				});
+			},
+			this._handleRequestError.bind(this),
+		);
 	}
 
 	private _change(payload: SignModel) {
-		this._httpService.post('/api/user/change', payload, (resp: boolean) => {
-			if (resp) {
-				this._messageService.add({
-					severity: 'info',
-					detail: this.translateService.translate('Пароль успішно змінено')(),
-				});
-			} else {
-				this._messageService.add({
-					severity: 'error',
-					detail: this.translateService.translate('Неправильний код')(),
-				});
-			}
+		this._httpService.post(
+			'/api/user/change',
+			payload,
+			(resp: boolean) => {
+				if (resp) {
+					this._messageService.add({
+						severity: 'info',
+						detail: this.translateService.translate(
+							'Пароль успішно змінено',
+						)(),
+					});
+				} else {
+					this._messageService.add({
+						severity: 'error',
+						detail: this.translateService.translate(
+							'Неправильний код',
+						)(),
+					});
+				}
 
-			this._login(payload);
-		}, this._handleRequestError.bind(this));
+				this._login(payload);
+			},
+			this._handleRequestError.bind(this),
+		);
 	}
 
 	private _set(user: User) {

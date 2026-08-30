@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { MetaGuard } from '@wawjs/ngx-core';
 import { adminsGuard, authenticatedGuard, guestGuard } from '@wawjs/ngx-bos';
+import { MetaGuard } from '@wawjs/ngx-core';
 
 export const routes: Routes = [
 	{
@@ -33,22 +33,7 @@ export const routes: Routes = [
 					},
 				},
 				loadChildren: () =>
-					import('./pages/guest/sign/sign.routes').then(
-						(m) => m.routes,
-					),
-			},
-			{
-				path: 'dashboard',
-				canActivate: [authenticatedGuard, MetaGuard],
-				data: {
-					meta: {
-						title: 'Панель',
-					},
-				},
-				loadChildren: () =>
-					import('./pages/user/dashboard/dashboard.routes').then(
-						(m) => m.routes,
-					),
+					import('./pages/sign/sign.routes').then((m) => m.routes),
 			},
 			{
 				path: 'profile',
@@ -59,20 +44,20 @@ export const routes: Routes = [
 					},
 				},
 				loadChildren: () =>
-					import('./pages/user/profile/profile.routes').then(
+					import('./pages/profile/profile.routes').then(
 						(m) => m.routes,
 					),
 			},
 			{
 				path: 'settings',
-				canActivate: [authenticatedGuard, MetaGuard],
+				canActivate: [MetaGuard],
 				data: {
 					meta: {
 						title: 'Мої налаштування',
 					},
 				},
 				loadChildren: () =>
-					import('./pages/user/settings/settings.routes').then(
+					import('./pages/settings/settings.routes').then(
 						(m) => m.routes,
 					),
 			},

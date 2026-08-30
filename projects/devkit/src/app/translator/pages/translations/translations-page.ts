@@ -4,9 +4,7 @@ import { TableModule } from '@wawjs/ngx-prime/table';
 import { TagModule } from '@wawjs/ngx-prime/tag';
 import { ButtonModule } from '@wawjs/ngx-prime/button';
 import { InputTextModule } from '@wawjs/ngx-prime/inputtext';
-import { SelectModule } from '@wawjs/ngx-prime/select';
 import { ToggleSwitchModule } from '@wawjs/ngx-prime/toggleswitch';
-import { TooltipModule } from '@wawjs/ngx-prime/tooltip';
 import { TranslationRow, TranslationsState } from '../../translations/translations.state';
 
 @Component({
@@ -17,9 +15,7 @@ import { TranslationRow, TranslationsState } from '../../translations/translatio
 		TagModule,
 		ButtonModule,
 		InputTextModule,
-		SelectModule,
 		ToggleSwitchModule,
-		TooltipModule,
 	],
 	templateUrl: './translations-page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,14 +54,6 @@ export class TranslationsPage {
 
 	protected reset(): void {
 		this.translationsState.reset();
-	}
-
-	protected downloadSelectedLanguage(): void {
-		this.translationsState.downloadLanguage(this.translationsState.selectedLanguage());
-	}
-
-	protected canDownloadSelected(): boolean {
-		return !this.translationsState.isDefaultLanguageSelected() && this.translationsState.modifiedCount() > 0;
 	}
 
 	protected selectedLanguageName(): string {

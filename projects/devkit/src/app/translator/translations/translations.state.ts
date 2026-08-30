@@ -20,21 +20,22 @@ export interface TranslationRow {
 
 /** Matches `src/environments/environment.prod.ts` (`defaultLanguageCode` + `languages`). */
 const DEFAULT_LANGUAGE = 'en';
+/** Ukrainian first, English second, then the rest by European speaker population (descending). */
 const LANGUAGES = [
-	{ code: 'cs', name: 'Czech' },
-	{ code: 'de', name: 'German' },
-	{ code: 'el', name: 'Greek' },
-	{ code: 'en', name: 'English' },
-	{ code: 'es', name: 'Spanish' },
-	{ code: 'fr', name: 'French' },
-	{ code: 'hu', name: 'Hungarian' },
-	{ code: 'it', name: 'Italian' },
-	{ code: 'nl', name: 'Dutch' },
-	{ code: 'pl', name: 'Polish' },
-	{ code: 'pt', name: 'Portuguese' },
-	{ code: 'ro', name: 'Romanian' },
-	{ code: 'sv', name: 'Swedish' },
 	{ code: 'ua', name: 'Ukrainian' },
+	{ code: 'en', name: 'English' },
+	{ code: 'de', name: 'German' },
+	{ code: 'fr', name: 'French' },
+	{ code: 'it', name: 'Italian' },
+	{ code: 'es', name: 'Spanish' },
+	{ code: 'pl', name: 'Polish' },
+	{ code: 'nl', name: 'Dutch' },
+	{ code: 'ro', name: 'Romanian' },
+	{ code: 'cs', name: 'Czech' },
+	{ code: 'sv', name: 'Swedish' },
+	{ code: 'el', name: 'Greek' },
+	{ code: 'pt', name: 'Portuguese' },
+	{ code: 'hu', name: 'Hungarian' },
 ];
 
 @Injectable({ providedIn: 'root' })

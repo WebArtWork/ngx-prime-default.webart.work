@@ -21,6 +21,35 @@
 			/>
 		}
 
+		@if (isTranslatorSection()) {
+			<p-select
+				[options]="translationsState.languages"
+				optionLabel="name"
+				optionValue="code"
+				[ngModel]="translationsState.selectedLanguage()"
+				(ngModelChange)="translationsState.selectedLanguage.set($event)"
+				scrollHeight="none"
+				aria-label="Language"
+			/>
+
+			<p-button
+				icon="pi pi-download"
+				[text]="true"
+				[rounded]="true"
+				[disabled]="!canDownloadSelected()"
+				ariaLabel="Download selected language JSON"
+				[pTooltip]="
+					translationsState.isDefaultLanguageSelected()
+						? 'English is the source language — nothing to download'
+						: translationsState.modifiedCount() > 0
+							? 'Download your changed rows'
+							: 'No changes to download yet'
+				"
+				tooltipPosition="bottom"
+				(onClick)="downloadSelectedLanguage()"
+			/>
+		}
+
 		@if (isUikitSection()) {
 			<p-button
 				icon="pi pi-palette"

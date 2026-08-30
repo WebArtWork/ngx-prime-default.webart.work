@@ -1,4 +1,9 @@
 .sidebar {
+	/* nav-icon centers its icon+label by default; left-align them in the full-width rail */
+	::ng-deep app-nav-icon .mi {
+		justify-content: flex-start;
+	}
+
 	&__backdrop {
 		z-index: 80;
 		background: color-mix(in_srgb, var(--c-bg-primary) 35%, transparent);
@@ -10,14 +15,14 @@
 		padding-block: var(--sp-4);
 
 		/* center & tighten all menu entries in minimized rail */
-		:deep(app-nav-icon) {
+		::ng-deep app-nav-icon {
 			display: flex;
 			justify-content: center;
 			width: 100%;
 		}
 
 		/* language button already hides text via template, just center it */
-		:deep(button) {
+		::ng-deep button {
 			justify-content: center;
 		}
 	}

@@ -5,8 +5,8 @@ import {
 	input,
 	output,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { CoreService } from '@wawjs/ngx-core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { SpiderComponent } from '@wawjs/ngx-bos';
 import { TranslateService } from '@wawjs/ngx-translate';
 import { NavIconComponent } from '../../shared/nav-icon/nav-icon.component';
 import { SidebarService } from '../sidebar/sidebar.service';
@@ -24,10 +24,9 @@ const BURGER_ICONS: Record<BurgerState, string> = {
 @Component({
 	selector: 'layout-topbar',
 	templateUrl: './topbar.component.html',
-	imports: [RouterLink, NavIconComponent],
+	imports: [RouterLink, RouterLinkActive, NavIconComponent, SpiderComponent],
 })
 export class TopbarComponent {
-	private readonly _coreService = inject(CoreService);
 	private readonly _sidebarService = inject(SidebarService);
 	readonly translateService = inject(TranslateService);
 
@@ -35,7 +34,6 @@ export class TopbarComponent {
 	readonly sidebarToggler = input(false);
 	readonly sidebarOpen = output<boolean>();
 	readonly showProfile = input(false);
-	readonly viewport = this._coreService.viewport;
 
 	readonly burgerState = computed<BurgerState>(() => {
 		if (this._sidebarService.isMobile()) {

@@ -53,7 +53,7 @@ jobs:
                   git add --all .  # Add all changes
                   git commit -m "Deploy devkit to GitHub Pages"
                   git checkout -B gh-pages  # Switch to gh-pages branch
-                  git push git@github.com:WebArtWork/ngx-prime-default-devkit.webart.work.git gh-pages --force
+                  git push git@github.com:WebArtWork/ngx-prime-default.webart.work.git gh-pages --force
 
             - name: Clean up SSH
               run: |

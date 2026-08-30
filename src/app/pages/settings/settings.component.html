@@ -1,4 +1,5 @@
 <div class="settings">
+	@if (isAuthenticated()) {
 	<section class="settings__section">
 		<h2 class="settings__label" translate>Change password</h2>
 		<form (submit)="wSecuritySubmit(); $event.preventDefault()" class="settings__content">
@@ -17,6 +18,7 @@
 			<button pButton type="submit" [disabled]="isSecurityDisabled()"><span translate>Update password</span></button>
 		</form>
 	</section>
+	}
 
 	<section class="settings__section">
 		<h2 class="settings__label" translate>Theme</h2>
@@ -90,7 +92,7 @@
 				[attr.aria-expanded]="isLanguageListOpen()"
 				type="button"
 			>
-				<span class="settings__flag" aria-hidden="true">{{ languageFlagEmoji(languageService.language()) }}</span>
+				<img class="settings__flag" [src]="languageFlagUrl(languageService.language())" alt="" aria-hidden="true" />
 				<span [translate]="languageService.getLanguage(languageService.language())?.name ?? ''"></span>
 				<i class="pi pi-chevron-down" aria-hidden="true"></i>
 			</button>
@@ -104,7 +106,7 @@
 								[class.settings__language-option--active]="language.code === languageService.language()"
 								type="button"
 							>
-								<span class="settings__flag" aria-hidden="true">{{ languageFlagEmoji(language.code) }}</span>
+								<img class="settings__flag" [src]="languageFlagUrl(language.code)" alt="" aria-hidden="true" />
 								<span [translate]="language.name"></span>
 							</button>
 						</li>

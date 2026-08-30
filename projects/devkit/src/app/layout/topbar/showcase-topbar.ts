@@ -1,11 +1,14 @@
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, PLATFORM_ID, inject, output, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, startWith } from 'rxjs';
 import { ButtonModule } from '@wawjs/ngx-prime/button';
+import { SelectModule } from '@wawjs/ngx-prime/select';
 import { TooltipModule } from '@wawjs/ngx-prime/tooltip';
 import { DesignLabState } from '../../uikit/layout/design-lab-state';
+import { TranslationsState } from '../../translator/translations/translations.state';
 import { PagePromptDialog } from '../../shared/page-prompt/page-prompt-dialog';
 import { PagePromptService } from '../../shared/page-prompt/page-prompt.service';
 
@@ -13,7 +16,7 @@ const DARK_MODE_KEY = 'sc-dark-mode';
 
 @Component({
 	selector: 'sc-topbar',
-	imports: [ButtonModule, TooltipModule, PagePromptDialog, RouterLink],
+	imports: [ButtonModule, FormsModule, SelectModule, TooltipModule, PagePromptDialog, RouterLink],
 	templateUrl: './showcase-topbar.html',
 	styleUrl: './showcase-topbar.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +24,7 @@ const DARK_MODE_KEY = 'sc-dark-mode';
 export class ShowcaseTopbar {
 	protected readonly pagePromptService = inject(PagePromptService);
 	protected readonly designLabState = inject(DesignLabState);
+	protected readonly translationsState = inject(TranslationsState);
 
 	private readonly router = inject(Router);
 	private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -37,6 +41,15 @@ export class ShowcaseTopbar {
 			startWith(this.router.url.startsWith('/uikit')),
 		),
 		{ initialValue: this.router.url.startsWith('/uikit') },
+	);
+
+	protected readonly isTranslatorSection = toSignal(
+		this.router.events.pipe(
+			filter((event) => event instanceof NavigationEnd),
+			map((event) => event.urlAfterRedirects.startsWith('/translations')),
+			startWith(this.router.url.startsWith('/translations')),
+		),
+		{ initialValue: this.router.url.startsWith('/translations') },
 	);
 
 	constructor() {
@@ -60,6 +73,14 @@ export class ShowcaseTopbar {
 
 	protected goToDesignLab(): void {
 		this.router.navigate(['/uikit/design-lab']);
+	}
+
+	protected downloadSelectedLanguage(): void {
+		this.translationsState.downloadLanguage(this.translationsState.selectedLanguage());
+	}
+
+	protected canDownloadSelected(): boolean {
+		return !this.translationsState.isDefaultLanguageSelected() && this.translationsState.modifiedCount() > 0;
 	}
 
 	/**

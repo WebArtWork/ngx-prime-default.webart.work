@@ -4,11 +4,10 @@
 	<div
 		class="flex h-full items-center justify-center md:justify-end md:pr-10"
 	>
-		<button
-			(click)="themeService.nextTheme()"
-			[attr.aria-label]="translateService.translate('Перемкнути тему')()"
+		<a
+			routerLink="/"
+			[attr.aria-label]="translateService.translate('Головна')()"
 			class="grid place-items-center rounded-xl focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
-			type="button"
 		>
 			@if (logo) {
 			<img
@@ -21,7 +20,7 @@
 				class="block w-[clamp(120px,20vw,260px)] h-auto md:scale-150 md:origin-center"
 			></icon-spider>
 			}
-		</button>
+		</a>
 	</div>
 
 	<div
