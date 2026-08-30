@@ -12,7 +12,7 @@ export const environment = {
 		default: 'https://ngx.webart.work/logo.png',
 		logo: 'https://ngx.webart.work/logo.png',
 	},
-	defaultLanguageCode: 'en',
+	defaultLanguageCode: 'ua',
 	/** Ukrainian first, English second, then the rest by European speaker population (descending) \u2014 matches devkit's translator list order. */
 	languages: [
 		{
