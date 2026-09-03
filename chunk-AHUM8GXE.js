@@ -1,0 +1,74 @@
+import{$a as zt,$r as gm,Br as em,Da as uw,Dt as L$,Ha as xw,Hn as XH,Ht as Nr,Jr as g,K as Gl,Kr as fb,La as wb,Li as nm,Ln as WV,Nn as Vy,O as Dm,Or as cm,P as Ey,Pr as dh,Pt as MC,Qa as zV,Ra as wl,Rn as Ws,Si as la,Ta as ua,U as GT,W as GV,Z as H_,Zt as P,dn as Ro,fr as am,gt as Jw,h as Aw,hr as b,ir as Zn,j as Em,lt as J2,mn as ST,oi as hb,or as _e,ot as Iy,p as Al,qr as fm,qt as Ob,ra as rH,ua as sa,ut as JH}from"./chunk-CXRXTJ2s.js";import{n as L,t as F}from"./chunk-CerPySWC.js";var ae=`
+    .p-scrollpanel-content-container {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 1;
+        float: left;
+    }
+
+    .p-scrollpanel-content {
+        height: calc(100% + calc(2 * dt('scrollpanel.bar.size')));
+        width: calc(100% + calc(2 * dt('scrollpanel.bar.size')));
+        padding-inline: 0 calc(2 * dt('scrollpanel.bar.size'));
+        padding-block: 0 calc(2 * dt('scrollpanel.bar.size'));
+        position: relative;
+        overflow: auto;
+        box-sizing: border-box;
+        scrollbar-width: none;
+    }
+
+    .p-scrollpanel-content::-webkit-scrollbar {
+        display: none;
+    }
+
+    .p-scrollpanel-bar {
+        position: relative;
+        border-radius: dt('scrollpanel.bar.border.radius');
+        z-index: 2;
+        cursor: pointer;
+        opacity: 0;
+        outline-color: transparent;
+        background: dt('scrollpanel.bar.background');
+        border: 0 none;
+        transition:
+            outline-color dt('scrollpanel.transition.duration'),
+            opacity dt('scrollpanel.transition.duration');
+    }
+
+    .p-scrollpanel-bar:focus-visible {
+        box-shadow: dt('scrollpanel.bar.focus.ring.shadow');
+        outline: dt('scrollpanel.barfocus.ring.width') dt('scrollpanel.bar.focus.ring.style') dt('scrollpanel.bar.focus.ring.color');
+        outline-offset: dt('scrollpanel.barfocus.ring.offset');
+    }
+
+    .p-scrollpanel-bar-y {
+        width: dt('scrollpanel.bar.size');
+        inset-block-start: 0;
+    }
+
+    .p-scrollpanel-bar-x {
+        height: dt('scrollpanel.bar.size');
+        inset-block-end: 0;
+    }
+
+    .p-scrollpanel-hidden {
+        visibility: hidden;
+    }
+
+    .p-scrollpanel:hover .p-scrollpanel-bar,
+    .p-scrollpanel:active .p-scrollpanel-bar {
+        opacity: 1;
+    }
+
+    .p-scrollpanel-grabbed {
+        user-select: none;
+    }
+`;var ce=[`content`];var be=[`xBar`];var ve=[`yBar`];var ge=[`*`];function we(i,he){i&1&&la(0)}function ye(i,he){i&1&&fm(0)}var Be=`
+    ${ae}
+
+    .p-scrollpanel {
+        display: block;
+    }
+`;var Me={root:`p-scrollpanel p-component`,contentContainer:`p-scrollpanel-content-container`,content:`p-scrollpanel-content`,barX:`p-scrollpanel-bar p-scrollpanel-bar-x`,barY:`p-scrollpanel-bar p-scrollpanel-bar-y`};var de=(()=>{class i extends Nr{name=`scrollpanel`;style=Be;classes=Me;static ɵfac=(()=>{let e;return function(t){return(e||(e=dh(i)))(t||i)}})();static ɵprov=P({token:i,factory:i.ɵfac})}return i})();var ue=new b(`SCROLLPANEL_INSTANCE`);var k=(()=>{class i extends J2{componentName=`ScrollPanel`;$pcScrollPanel=g(ue,{optional:!0,skipSelf:!0})??void 0;bindDirectiveInstance=g(L,{self:!0});onAfterViewChecked(){this.bindDirectiveInstance.setAttrs(this.ptms([`host`,`root`]))}styleClass=zt();step=zt(5,{transform:ST});contentViewChild=WV(`content`);xBarViewChild=WV(`xBar`);yBarViewChild=WV(`yBar`);contentTemplate=GV(`content`,{descendants:!1});templates=zV(JH);_contentTemplate;scrollYRatio;scrollXRatio;timeoutFrame=e=>setTimeout(e,0);initialized=!1;lastPageY;lastPageX;isXBarClicked=!1;isYBarClicked=!1;lastScrollLeft=0;lastScrollTop=0;orientation=`vertical`;timer;contentId;windowResizeListener;contentScrollListener;mouseEnterListener;xBarMouseDownListener;yBarMouseDownListener;documentMouseMoveListener;documentMouseUpListener;_componentStyle=g(de);zone=g(_e);onInit(){this.contentId=Vy(`pn_id_`)+`_content`}onAfterViewInit(){L$(this.platformId)&&this.zone.runOutsideAngular(()=>{this.moveBar(),this.moveBar=this.moveBar.bind(this),this.onXBarMouseDown=this.onXBarMouseDown.bind(this),this.onYBarMouseDown=this.onYBarMouseDown.bind(this),this.onDocumentMouseMove=this.onDocumentMouseMove.bind(this),this.onDocumentMouseUp=this.onDocumentMouseUp.bind(this),this.windowResizeListener=this.renderer.listen(window,`resize`,this.moveBar),this.contentScrollListener=this.renderer.listen(this.contentViewChild().nativeElement,`scroll`,this.moveBar),this.mouseEnterListener=this.renderer.listen(this.contentViewChild().nativeElement,`mouseenter`,this.moveBar),this.xBarMouseDownListener=this.renderer.listen(this.xBarViewChild().nativeElement,`mousedown`,this.onXBarMouseDown),this.yBarMouseDownListener=this.renderer.listen(this.yBarViewChild().nativeElement,`mousedown`,this.onYBarMouseDown),this.calculateContainerHeight(),this.initialized=!0})}onAfterContentInit(){this.templates().forEach(e=>{e.getType()===`content`?this._contentTemplate=e.template:this._contentTemplate=e.template})}calculateContainerHeight(){let e=this.el.nativeElement,n=this.contentViewChild().nativeElement,t=this.xBarViewChild().nativeElement,l=this.document.defaultView,o=l.getComputedStyle(e),v=l.getComputedStyle(t),s=rH(e)-parseInt(v.height,10);o[`max-height`]!=`none`&&s==0&&(n.offsetHeight+parseInt(v.height,10)>parseInt(o[`max-height`],10)?e.style.height=o[`max-height`]:e.style.height=n.offsetHeight+parseFloat(o.paddingTop)+parseFloat(o.paddingBottom)+parseFloat(o.borderTopWidth)+parseFloat(o.borderBottomWidth)+`px`)}moveBar(){let e=this.el.nativeElement,n=this.contentViewChild().nativeElement,t=this.xBarViewChild().nativeElement,l=n.scrollWidth,o=n.clientWidth,v=(e.clientHeight-t.clientHeight)*-1;this.scrollXRatio=o/l;let s=this.yBarViewChild().nativeElement,V=n.scrollHeight,A=n.clientHeight,me=(e.clientWidth-s.clientWidth)*-1;this.scrollYRatio=A/V,this.requestAnimationFrame(()=>{if(this.scrollXRatio>=1)t.setAttribute(`data-p-scrollpanel-hidden`,`true`),!this.$unstyled()&&Ey(t,`p-scrollpanel-hidden`);else{t.setAttribute(`data-p-scrollpanel-hidden`,`false`),!this.$unstyled()&&Iy(t,`p-scrollpanel-hidden`);let m=Math.max(this.scrollXRatio*100,10),C=Math.abs(n.scrollLeft*(100-m)/(l-o));t.style.cssText=`width:`+m+`%; inset-inline-start:`+C+`%;bottom:`+v+`px;`}if(this.scrollYRatio>=1)s.setAttribute(`data-p-scrollpanel-hidden`,`true`),!this.$unstyled()&&Ey(s,`p-scrollpanel-hidden`);else{s.setAttribute(`data-p-scrollpanel-hidden`,`false`),!this.$unstyled()&&Iy(s,`p-scrollpanel-hidden`);let m=Math.max(this.scrollYRatio*100,10),C=n.scrollTop*(100-m)/(V-A);s.style.cssText=`height:`+m+`%; top: calc(`+C+`% - `+t.clientHeight+`px); inset-inline-end:`+me+`px;`}}),this.cd.markForCheck()}onScroll(e){this.lastScrollLeft!==e.target.scrollLeft?(this.lastScrollLeft=e.target.scrollLeft,this.orientation=`horizontal`):this.lastScrollTop!==e.target.scrollTop&&(this.lastScrollTop=e.target.scrollTop,this.orientation=`vertical`),this.moveBar()}onKeyDown(e){if(this.orientation===`vertical`)switch(e.code){case`ArrowDown`:this.setTimer(`scrollTop`,this.step()),e.preventDefault();break;case`ArrowUp`:this.setTimer(`scrollTop`,this.step()*-1),e.preventDefault();break;case`ArrowLeft`:case`ArrowRight`:e.preventDefault();break;default:break}else if(this.orientation===`horizontal`)switch(e.code){case`ArrowRight`:this.setTimer(`scrollLeft`,this.step()),e.preventDefault();break;case`ArrowLeft`:this.setTimer(`scrollLeft`,this.step()*-1),e.preventDefault();break;case`ArrowDown`:case`ArrowUp`:e.preventDefault();break;default:break}}onKeyUp(){this.clearTimer()}repeat(e,n){let t=this.contentViewChild();t?.nativeElement&&(t.nativeElement[e]+=n),this.moveBar()}setTimer(e,n){this.clearTimer(),this.timer=setTimeout(()=>{this.repeat(e,n)},40)}clearTimer(){this.timer&&clearTimeout(this.timer)}bindDocumentMouseListeners(){this.documentMouseMoveListener||(this.documentMouseMoveListener=e=>{this.onDocumentMouseMove(e)},this.document.addEventListener(`mousemove`,this.documentMouseMoveListener)),this.documentMouseUpListener||(this.documentMouseUpListener=()=>{this.onDocumentMouseUp()},this.document.addEventListener(`mouseup`,this.documentMouseUpListener))}unbindDocumentMouseListeners(){this.documentMouseMoveListener&&(this.document.removeEventListener(`mousemove`,this.documentMouseMoveListener),this.documentMouseMoveListener=null),this.documentMouseUpListener&&(document.removeEventListener(`mouseup`,this.documentMouseUpListener),this.documentMouseUpListener=null)}onYBarMouseDown(e){this.isYBarClicked=!0;let n=this.yBarViewChild();n?.nativeElement?.focus(),this.lastPageY=e.pageY,n?.nativeElement?.setAttribute(`data-p-scrollpanel-grabbed`,`true`),!this.$unstyled()&&Ey(n.nativeElement,`p-scrollpanel-grabbed`),this.document.body.setAttribute(`data-p-scrollpanel-grabbed`,`true`),!this.$unstyled()&&Ey(this.document.body,`p-scrollpanel-grabbed`),this.bindDocumentMouseListeners(),e.preventDefault()}onXBarMouseDown(e){this.isXBarClicked=!0;let n=this.xBarViewChild();n?.nativeElement?.focus(),this.lastPageX=e.pageX,n?.nativeElement?.setAttribute(`data-p-scrollpanel-grabbed`,`false`),!this.$unstyled()&&Ey(n.nativeElement,`p-scrollpanel-grabbed`),this.document.body.setAttribute(`data-p-scrollpanel-grabbed`,`false`),!this.$unstyled()&&Ey(this.document.body,`p-scrollpanel-grabbed`),this.bindDocumentMouseListeners(),e.preventDefault()}onDocumentMouseMove(e){this.isXBarClicked?this.onMouseMoveForXBar(e):this.isYBarClicked?this.onMouseMoveForYBar(e):(this.onMouseMoveForXBar(e),this.onMouseMoveForYBar(e))}onMouseMoveForXBar(e){let n=e.pageX-this.lastPageX;this.lastPageX=e.pageX,this.requestAnimationFrame(()=>{this.contentViewChild().nativeElement.scrollLeft+=n/this.scrollXRatio})}onMouseMoveForYBar(e){let n=e.pageY-this.lastPageY;this.lastPageY=e.pageY,this.requestAnimationFrame(()=>{this.contentViewChild().nativeElement.scrollTop+=n/this.scrollYRatio})}scrollTop(e){let n=this.contentViewChild().nativeElement.scrollHeight-this.contentViewChild().nativeElement.clientHeight;e=e>n?n:e>0?e:0,this.contentViewChild().nativeElement.scrollTop=e}onFocus(e){this.xBarViewChild()?.nativeElement?.isSameNode(e.target)?this.orientation=`horizontal`:this.yBarViewChild()?.nativeElement?.isSameNode(e.target)&&(this.orientation=`vertical`)}onBlur(){this.orientation===`horizontal`&&(this.orientation=`vertical`)}onDocumentMouseUp(){let e=this.yBarViewChild();e?.nativeElement?.setAttribute(`data-p-scrollpanel-grabbed`,`false`),!this.$unstyled()&&Iy(e.nativeElement,`p-scrollpanel-grabbed`);let n=this.xBarViewChild();n?.nativeElement?.setAttribute(`data-p-scrollpanel-grabbed`,`false`),!this.$unstyled()&&Iy(n.nativeElement,`p-scrollpanel-grabbed`),this.document.body.setAttribute(`data-p-scrollpanel-grabbed`,`false`),!this.$unstyled()&&Iy(this.document.body,`p-scrollpanel-grabbed`),this.unbindDocumentMouseListeners(),this.isXBarClicked=!1,this.isYBarClicked=!1}requestAnimationFrame(e){(window.requestAnimationFrame||this.timeoutFrame)(e)}unbindListeners(){this.windowResizeListener&&(this.windowResizeListener(),this.windowResizeListener=null),this.contentScrollListener&&(this.contentScrollListener(),this.contentScrollListener=null),this.mouseEnterListener&&(this.mouseEnterListener(),this.mouseEnterListener=null),this.xBarMouseDownListener&&(this.xBarMouseDownListener(),this.xBarMouseDownListener=null),this.yBarMouseDownListener&&(this.yBarMouseDownListener(),this.yBarMouseDownListener=null)}onDestroy(){this.initialized&&this.unbindListeners()}refresh(){this.moveBar()}static ɵfac=(()=>{let e;return function(t){return(e||(e=dh(i)))(t||i)}})();static ɵcmp=sa({type:i,selectors:[[`p-scroll-panel`],[`p-scrollPanel`],[`p-scrollpanel`]],contentQueries:function(n,t,l){n&1&&Dm(l,t.contentTemplate,ce,4)(l,t.templates,JH,4),n&2&&Jw(2)},viewQuery:function(n,t){n&1&&Em(t.contentViewChild,ce,5)(t.xBarViewChild,be,5)(t.yBarViewChild,ve,5),n&2&&Jw(3)},hostVars:2,hostBindings:function(n,t){n&2&&hb(t.cn(t.cx(`root`),t.styleClass()))},inputs:{styleClass:[1,`styleClass`],step:[1,`step`]},features:[Al([de,{provide:ue,useExisting:i},{provide:H_,useExisting:i}]),uw([L]),em],ngContentSelectors:ge,decls:9,vars:22,consts:[[`content`,``],[`xBar`,``],[`yBar`,``],[3,`pBind`],[3,`mouseenter`,`scroll`,`pBind`],[4,`ngTemplateOutlet`],[`tabindex`,`0`,`role`,`scrollbar`,3,`mousedown`,`keydown`,`keyup`,`focus`,`blur`,`pBind`],[`tabindex`,`0`,`role`,`scrollbar`,3,`mousedown`,`keydown`,`keyup`,`focus`,`pBind`]],template:function(n,t){n&1&&(ua(),Ws(0,`div`,3)(1,`div`,4,0),gm(`mouseenter`,function(){return t.moveBar()})(`scroll`,function(o){return t.onScroll(o)}),Aw(3,we,1,0),nm(4,ye,1,0,`ng-container`,5),wl()(),Ws(5,`div`,6,1),gm(`mousedown`,function(o){return t.onXBarMouseDown(o)})(`keydown`,function(o){return t.onKeyDown(o)})(`keyup`,function(){return t.onKeyUp()})(`focus`,function(o){return t.onFocus(o)})(`blur`,function(){return t.onBlur()}),wl(),Ws(7,`div`,7,2),gm(`mousedown`,function(o){return t.onYBarMouseDown(o)})(`keydown`,function(o){return t.onKeyDown(o)})(`keyup`,function(){return t.onKeyUp()})(`focus`,function(o){return t.onFocus(o)}),wl()),n&2&&(hb(t.cx(`contentContainer`)),cm(`pBind`,t.ptm(`contentContainer`)),MC(),hb(t.cx(`content`)),cm(`pBind`,t.ptm(`content`)),MC(2),xw(!t.contentTemplate()&&!t._contentTemplate?3:-1),MC(),cm(`ngTemplateOutlet`,t.contentTemplate()||t._contentTemplate),MC(),hb(t.cx(`barX`)),cm(`pBind`,t.ptm(`barX`)),am(`aria-orientation`,`horizontal`)(`aria-valuenow`,t.lastScrollLeft)(`aria-controls`,t.contentId)(`data-pc-group-section`,`bar`),MC(2),hb(t.cx(`barY`)),cm(`pBind`,t.ptm(`barY`)),am(`aria-orientation`,`vertical`)(`aria-valuenow`,t.lastScrollTop)(`aria-controls`,t.contentId)(`data-pc-group-section`,`bar`))},dependencies:[Gl,GT,XH,F,L],encapsulation:2})}return i})();var pe=(()=>{class i{static ɵfac=function(n){return new(n||i)};static ɵmod=Ro({type:i});static ɵinj=Zn({imports:[k,XH,F,XH,F]})}return i})();var Ce=()=>({width:`100%`,height:`10rem`});var Ue=(()=>{class i{static{this.ɵfac=function(n){return new(n||i)}}static{this.ɵcmp=sa({type:i,selectors:[[`uk-scrollpanel-demo`]],decls:8,vars:3,consts:[[1,`demo-page__title`],[1,`demo-section`],[1,`demo-section__title`],[2,`padding`,`0.5rem`,`line-height`,`1.75`]],template:function(n,t){n&1&&(Ws(0,`h1`,0),wb(1,`ScrollPanel`),wl(),Ws(2,`section`,1)(3,`h2`,2),wb(4,`Basic`),wl(),Ws(5,`p-scrollPanel`)(6,`p`,3),wb(7,` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut tincidunt fermentum, metus turpis fringilla justo, non pharetra nibh urna eu urna. Nullam ac risus vel arcu commodo facilisis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec at eros ut lorem posuere posuere. Nulla facilisi. Sed nec dictum justo. Aenean eget massa pretium, egestas nunc ac, luctus lorem. `),wl()()()),n&2&&(MC(5),fb(Ob(2,Ce)))},dependencies:[pe,k],encapsulation:2})}}return i})();export{Ue as ScrollPanelDemo};

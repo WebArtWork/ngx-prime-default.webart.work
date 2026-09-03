@@ -1,0 +1,1 @@
+import{Br as em,Ii as ne,Nr as da,Pr as dh,kn as V,lt as J2,sa as rt}from"./chunk-CXRXTJ2s.js";var v=(()=>{class e extends J2{modelValue=ne(void 0);$filled=da(()=>V(this.modelValue()));writeModelValue(t){this.modelValue.set(t)}static ɵfac=(()=>{let t;return function(m){return(t||(t=dh(e)))(m||e)}})();static ɵdir=rt({type:e,features:[em]})}return e})();export{v as t};
